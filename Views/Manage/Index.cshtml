@@ -1,6 +1,6 @@
 ﻿@model EmailManager.Models.IndexViewModel
 @{
-    ViewBag.Title = "Manage";
+    ViewBag.Title = "Zarządzaj";
 }
 
 <main aria-labelledby="title">
@@ -8,7 +8,7 @@
 
     <p class="text-success">@ViewBag.StatusMessage</p>
     <div>
-        <h4>Change your account settings</h4>
+        <h4>Zmiana ustawień osobistych</h4>
         <hr />
         <dl class="dl-horizontal">
             <dt>Password:</dt>
@@ -16,11 +16,11 @@
                 [
                 @if (Model.HasPassword)
                 {
-                    @Html.ActionLink("Change your password", "ChangePassword")
+                    @Html.ActionLink("Zmień hasło", "ChangePassword")
                 }
                 else
                 {
-                    @Html.ActionLink("Create", "SetPassword")
+                    @Html.ActionLink("Utwórz", "SetPassword")
                 }
                 ]
             </dd>
@@ -57,7 +57,7 @@
                     }
                 </dd>
             *@
-            <dt>Two-Factor Authentication:</dt>
+            <dt>Dwustopniowa autoryzacja:</dt>
             <dd>
                 <p>
                     There are no two-factor authentication providers configured. See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
