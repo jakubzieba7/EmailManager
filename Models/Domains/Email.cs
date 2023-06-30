@@ -11,7 +11,7 @@ namespace EmailManager.Models.Domains
     {
         public Email()
         {
-            Attachments = new Collection<Attachment>();
+            //Attachments = new Collection<Attachment>();
             Receivers = new Collection<Receiver>();
         }
 
@@ -24,7 +24,7 @@ namespace EmailManager.Models.Domains
         public string ReceiverDW { get; set; }
         public int SenderId { get; set; }
         public int FooterId { get; set; }
-        public int AttachementId { get; set; }
+        public int AttachmentId { get; set; }
         public DateTime EmailSendDate { get; set; }
         [Required]
         [ForeignKey("User")]
@@ -33,7 +33,7 @@ namespace EmailManager.Models.Domains
         public ApplicationUser User { get; set; }
         public Sender Sender { get; set; }
         public Footer Footer { get; set; }
-        public ICollection<Attachment> Attachments { get; set; }
+        //public ICollection<Attachment> Attachments { get; set; }
         public ICollection<Receiver> Receivers { get; set; }
 
     }

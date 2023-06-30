@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Net.Mail;
 using EmailManager.Models.Domains;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -20,10 +21,51 @@ namespace EmailManager.Models
         public DbSet<Sender> Senders { get; set; }
         public DbSet<SenderCompanyData> SendersCompanyData { get; set; }
         public DbSet<SenderPersonalData> SendersPersonalData { get; set; }
+        //public DbSet<Attachment> Attachements { get; set; }
 
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Footer>()
+                .HasRequired(x => x.Sender)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Address>()
+                .HasRequired(x => x.User)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(x => x.Emails)
+                .WithRequired(x => x.User)
+                .HasForeignKey(x => x.UserId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(x => x.Footers)
+                .WithRequired(x => x.User)
+                .HasForeignKey(x => x.UserId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(x => x.Receivers)
+                .WithRequired(x => x.User)
+                .HasForeignKey(x => x.UserId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(x => x.Senders)
+                .WithRequired(x => x.User)
+                .HasForeignKey(x => x.UserId)
+                .WillCascadeOnDelete(false);
+
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

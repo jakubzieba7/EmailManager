@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Net.Mail;
 
 namespace EmailManager.Models.Domains
 {
@@ -11,9 +12,10 @@ namespace EmailManager.Models.Domains
         {
             SendersPersonalData = new Collection<SenderPersonalData>();
             SendersCompanyData = new Collection<SenderCompanyData>();
-            SendEmails = new Collection<Email>();
+            SentEmails = new Collection<Email>();
             Receivers = new Collection<Receiver>();
             Footers = new Collection<Footer>();
+            //Attachments = new Collection<Attachment>();
         }
 
         public int Id { get; set; }
@@ -25,13 +27,14 @@ namespace EmailManager.Models.Domains
         [Required]
         [ForeignKey("User")]
         public string UserId { get; set; }
+        //public int AttachmentId { get; set; }
 
         public ApplicationUser User { get; set; }
-
         public ICollection<SenderPersonalData> SendersPersonalData { get; set; }
         public ICollection<SenderCompanyData> SendersCompanyData { get; set; }
-        public ICollection<Email> SendEmails { get; set; }
+        public ICollection<Email> SentEmails { get; set; }
         public ICollection<Receiver> Receivers { get; set; }
         public ICollection<Footer> Footers { get; set; }
+        //public ICollection<Attachment> Attachments { get; set; }
     }
 }
