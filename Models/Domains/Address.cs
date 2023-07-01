@@ -26,11 +26,6 @@ namespace EmailManager.Models.Domains
         [Required]
         [Display(Name = "Numer domu")]
         public string Number { get; set; }
-        [Required]
-        [ForeignKey("User")]
-        public string UserId { get; set; }
-
-        public ApplicationUser User { get; set; }
         public ICollection<ApplicationUser> Users { get; set; }
     }
 }

@@ -177,6 +177,10 @@
     <Compile Include="Migrations\202306301908325_Initial.designer.cs">
       <DependentUpon>202306301908325_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202307010936201_EditedAddressProperties.cs" />
+    <Compile Include="Migrations\202307010936201_EditedAddressProperties.designer.cs">
+      <DependentUpon>202307010936201_EditedAddressProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Domains\Address.cs" />
     <Compile Include="Models\Domains\CompanyData.cs" />
@@ -313,6 +317,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202306301908325_Initial.resx">
       <DependentUpon>202306301908325_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202307010936201_EditedAddressProperties.resx">
+      <DependentUpon>202307010936201_EditedAddressProperties.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
