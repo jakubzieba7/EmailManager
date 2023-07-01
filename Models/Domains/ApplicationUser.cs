@@ -25,6 +25,7 @@ namespace EmailManager.Models
         }
 
         [Required]
+        [Display(Name ="Nazwa użytkownika")]
         public string Name { get; set; }
         public int AddressId { get; set; }
         public Address Address { get; set; }
