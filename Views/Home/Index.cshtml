@@ -1,3 +1,93 @@
-﻿@{
+﻿@model IEnumerable<EmailManager.Models.Domains.Email>
+
+@{
     ViewBag.Title = "Strona główna";
+}
+
+<h1 class="mb-3">Emaile</h1>
+
+<button class="btn btn-primary mb-3" onclick='window.location.href="@Url.Action("Email","Home")"'>Dodaj</button>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-hover table-striped mt-3 mb-5">
+        <thead>
+            <tr>
+                <th scope="col">L.p.</th>
+                <th scope="col">Tytuł</th>
+                <th scope="col">Nadawca</th>
+                <th scope="col">Odbiorcy</th>
+                <th scope="col">Emaile odbiorców</th>
+                <th scope="col">Data wysłania</th>
+                <th scope="col">Treść</th>
+                <th scope="col"></th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var email in Model)
+            {
+                <tr>
+                    <td><a class="font-weight-bold" href="@Url.Action("Invoice","Home",new {id=email.Id})">@email.Id</a></td>
+                    <td>@email.MessageSubject</td>
+                    <td>@string.Join(",", email.Sender.SendersPersonalData.Select(x=>x.Name))</td>
+                    <td>@string.Join(",", email.Receivers.Select(x=>x.Name))</td>
+                    <td>@string.Join(",", email.Receivers.Select(x=>x.EmailAddress))</td>
+                    <td>@email.EmailSendDate.ToString("dd-MM-yyyy")</td>
+                    <td>@email.MessageBody</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" onclick="deleteEmail('@email.Id', this)">Usuń</button>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div>
+        Brak emaili do wyświetlenia
+    </div>
+}
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+        function deleteEmail(id, btn) {
+
+            if (!confirm("Czy na pewno chcesz usunąć Emaila?"))
+                return;
+
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("Delete","Home")",
+                data: {
+                    id: id
+                },
+                success: function (data)
+                {
+                    if (data.Success) {
+                        var row = btn.parentNode.parentNode;
+                        row.parentNode.removeChild(row);
+                    }
+                    else
+                    {
+                        alert(data.Message);
+                    }
+                },
+                error: function (data)
+                {
+                    alert(data.Message);
+                },
+                dataType:'json'
+
+                });
+
+
+        }
+
+    </script>
+
 }
