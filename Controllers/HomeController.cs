@@ -93,7 +93,7 @@ namespace EmailManager.Controllers
             return View(emails);
         }
 
-        public ActionResult Email()
+        public ActionResult Email(int id=0)
         {
             return View();
         }
