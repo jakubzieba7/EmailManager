@@ -1,4 +1,5 @@
 ﻿using EmailManager.Models.Domains;
+using EmailManager.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,9 +94,31 @@ namespace EmailManager.Controllers
             return View(emails);
         }
 
-        public ActionResult Email(int id=0)
+        public ActionResult Email(int id = 0)
         {
-            return View();
+            var vm = new EditEmailViewModel
+            {
+                Senders = new List<Sender>
+                {
+                new Sender
+                    {
+                        Id=1,
+                        SendersPersonalData=new List<SenderPersonalData>
+                        {
+                        new SenderPersonalData { Id=1,Name="Jakub",Surname="Zięba",CompanyPositionPl="Konsultant techniczny"}
+                        }
+                    }
+                },
+                Footers = new List<Footer> { 
+                    new Footer { Id = 1, ComplimentaryClose = "Pozdrawiam", SenderId = 1 },
+                    new Footer { Id = 2, ComplimentaryClose = "Best regards", SenderId = 1 }
+                },
+                Receivers = new List<Receiver> { new Receiver {Id=1,Name="Jacek",Surname="Stokłosa",EmailAddress="jacek.stoklosa@email.com" } },
+                Heading="Edycja maila",
+                Email=new Email()
+            };
+
+            return View(vm);
         }
 
         [AllowAnonymous]

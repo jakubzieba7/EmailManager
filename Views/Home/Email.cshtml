@@ -16,22 +16,25 @@
 
 <div class="row">
     <div class="col-lg-10">
-        @using (Html.BeginForm("Invoice", "Home"))
+        @using (Html.BeginForm("Email", "Home"))
         {
 
             if (Model.Email.Id == 0)
             {
-                <p class="alert alert-info mt-4 mb-4">Pola tytuł wiadomości, odbiorca i termin są <strong>wymagane</strong></p>
+                <p class="alert alert-info mt-4 mb-4">Pola tytuł, odbiorca i data wysłania wiadomości są <strong>wymagane</strong></p>
             }
 
             @Html.HiddenFor(x => x.Email.Id)
             @Html.HiddenFor(x => x.Email.UserId)
 
-            <div class="form-group">
-                @Html.LabelFor(x => x.Email.Sender)
-                @Html.DropDownListFor(x => x.Email.Sender, new SelectList(Model.Email.Sender.SendersPersonalData, "Id", "Name"), "-- Wybierz nadawcę --", new { @class = "form-control" })
-                @Html.ValidationMessageFor(x => x.Email.Sender)
-            </div>
+            @*<div class="form-group">
+                @Html.LabelFor(x => x.Email.Sender.SendersPersonalData)
+                @Html.DropDownListFor(x => x.Email.Sender.SendersPersonalData.Select(x => x.Name).ToList(),
+               new SelectList(Model.Senders,
+               "Id", "Name"), "-- Wybierz nadawcę --",
+               new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Email.Sender.SendersPersonalData.Select(x => x.Name))
+            </div>*@
 
             <div class="form-group">
                 @Html.LabelFor(x => x.Email.MessageSubject)
@@ -59,7 +62,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(x => x.Email.Footer)
-                @Html.DropDownListFor(x => x.Email.Footer, new SelectList(Model.Footers, "Id", "Name"), "-- Wybierz stopkę --", new { @class = "form-control" })
+                @Html.DropDownListFor(x => x.Email.Footer, new SelectList(Model.Footers, "Id", "ComplimentaryClose"), "-- Wybierz stopkę --", new { @class = "form-control" })
                 @Html.ValidationMessageFor(x => x.Email.Footer)
             </div>
 
