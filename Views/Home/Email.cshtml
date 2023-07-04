@@ -8,7 +8,7 @@
 
 @if (Model.Email.Id != 0)
 {
-    <button class="btn btn-primary mb-3" onclick='window.location.href="@Url.Action("InvoicePosition","Home", new {emailId=Model.Email.Id})"'>Wyślij</button>
+    <button class="btn btn-primary mb-3" onclick='window.location.href="@Url.Action("Attachment","Home", new {emailId=Model.Email.Id})"'>Dodaj załącznik</button>
     <button class="btn btn-secondary mb-3" onclick="generatePdf()">Generuj PDF</button>
     <button class="btn btn-secondary mb-3" onclick='window.location.href="@Url.Action("EmailTemplate","Print", new {emailId=Model.Email.Id})"'>Podgląd Email</button>
     <button class="btn btn-secondary mb-3" onclick="printEmail()">Drukuj Email</button>
@@ -28,13 +28,13 @@
             @Html.HiddenFor(x => x.Email.UserId)
 
             @*<div class="form-group">
-                @Html.LabelFor(x => x.Email.Sender.SendersPersonalData)
-                @Html.DropDownListFor(x => x.Email.Sender.SendersPersonalData.Select(x => x.Name).ToList(),
-               new SelectList(Model.Senders,
-               "Id", "Name"), "-- Wybierz nadawcę --",
-               new { @class = "form-control" })
-                @Html.ValidationMessageFor(x => x.Email.Sender.SendersPersonalData.Select(x => x.Name))
-            </div>*@
+                    @Html.LabelFor(x => x.Email.Sender.SendersPersonalData)
+                    @Html.DropDownListFor(x => x.Email.Sender.SendersPersonalData.Select(x => x.Name).ToList(),
+                   new SelectList(Model.Senders,
+                   "Id", "Name"), "-- Wybierz nadawcę --",
+                   new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Email.Sender.SendersPersonalData.Select(x => x.Name))
+                </div>*@
 
             <div class="form-group">
                 @Html.LabelFor(x => x.Email.MessageSubject)
@@ -71,6 +71,35 @@
 
         }
     </div>
-    
+
 </div>
 
+@section Scripts
+{
+    <script type="text/javascript">
+
+        function generatePdf() {
+
+        }
+
+        function printEmail() {
+
+        }
+
+
+
+        $(document).ready(function () {
+
+            $('#EmailSendDate').datepicker({
+                format: "dd-mm-yyyy",
+                language: "pl",
+                multidate: false,
+                autoclose: true,
+                todayHighlight: true,
+                forceParse: false
+            });
+        });
+
+    </script>
+
+}
