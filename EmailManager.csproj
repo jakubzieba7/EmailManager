@@ -181,6 +181,10 @@
     <Compile Include="Migrations\202307010936201_EditedAddressProperties.designer.cs">
       <DependentUpon>202307010936201_EditedAddressProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202307050853499_AddedSenderEmailParams.cs" />
+    <Compile Include="Migrations\202307050853499_AddedSenderEmailParams.designer.cs">
+      <DependentUpon>202307050853499_AddedSenderEmailParams.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Domains\Address.cs" />
     <Compile Include="Models\Domains\CompanyData.cs" />
@@ -189,6 +193,7 @@
     <Compile Include="Models\Domains\Receiver.cs" />
     <Compile Include="Models\Domains\Sender.cs" />
     <Compile Include="Models\Domains\SenderCompanyData.cs" />
+    <Compile Include="Models\Domains\SenderEmailParams.cs" />
     <Compile Include="Models\Domains\SenderPersonalData.cs" />
     <Compile Include="Models\ViewModels\AddPhoneNumberViewModel.cs" />
     <Compile Include="Models\Domains\ApplicationUser.cs" />
@@ -418,6 +423,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202307010936201_EditedAddressProperties.resx">
       <DependentUpon>202307010936201_EditedAddressProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202307050853499_AddedSenderEmailParams.resx">
+      <DependentUpon>202307050853499_AddedSenderEmailParams.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

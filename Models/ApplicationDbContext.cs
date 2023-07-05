@@ -21,6 +21,7 @@ namespace EmailManager.Models
         public DbSet<Sender> Senders { get; set; }
         public DbSet<SenderCompanyData> SendersCompanyData { get; set; }
         public DbSet<SenderPersonalData> SendersPersonalData { get; set; }
+        public DbSet<SenderEmailParams> SenderEmailParams { get; set; }
         //public DbSet<Attachment> Attachements { get; set; }
 
         public static ApplicationDbContext Create()

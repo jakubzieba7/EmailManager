@@ -15,12 +15,14 @@ namespace EmailManager.Models.Domains
             SentEmails = new Collection<Email>();
             Receivers = new Collection<Receiver>();
             Footers = new Collection<Footer>();
+            SenderEmailsParams = new Collection<SenderEmailParams>();
             //Attachments = new Collection<Attachment>();
         }
 
         public int Id { get; set; }
         public int SenderPersonalDataId { get; set; }
         public int SenderCompanyDataId { get; set; }
+        public int SenderEmailParamsId { get; set; }
         public int EmailId { get; set; }
         public int ReceiverId { get; set; }
         public int FooterId { get; set; }
@@ -32,6 +34,7 @@ namespace EmailManager.Models.Domains
         public ApplicationUser User { get; set; }
         public ICollection<SenderPersonalData> SendersPersonalData { get; set; }
         public ICollection<SenderCompanyData> SendersCompanyData { get; set; }
+        public ICollection<SenderEmailParams> SenderEmailsParams { get; set; }
         public ICollection<Email> SentEmails { get; set; }
         public ICollection<Receiver> Receivers { get; set; }
         public ICollection<Footer> Footers { get; set; }
