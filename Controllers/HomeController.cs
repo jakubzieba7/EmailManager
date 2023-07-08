@@ -105,17 +105,25 @@ namespace EmailManager.Controllers
                         Id=1,
                         SendersPersonalData=new List<SenderPersonalData>
                         {
-                        new SenderPersonalData { Id=1,Name="Jakub",Surname="Zięba",CompanyPositionPl="Konsultant techniczny"}
+                            new SenderPersonalData { Id=1,Name="Jakub",Surname="Zięba",CompanyPositionPl="Konsultant techniczny"}
+                        },
+                        SenderEmailsParams=new List<SenderEmailParams>
+                        {
+                            new SenderEmailParams{Id=1,HostSmtp="smtp.gmail.com",Port=587,EnableSsl=true,SenderEmail="services.report.new@gmail.com",SenderEmailPassword="",SenderName="Jakub Zięba" }
                         }
                     }
                 },
-                Footers = new List<Footer> { 
+                Footers = new List<Footer> {
                     new Footer { Id = 1, ComplimentaryClose = "Pozdrawiam", SenderId = 1 },
                     new Footer { Id = 2, ComplimentaryClose = "Best regards", SenderId = 1 }
                 },
-                Receivers = new List<Receiver> { new Receiver {Id=1,Name="Jacek",Surname="Stokłosa",EmailAddress="jacek.stoklosa@email.com" } },
-                Heading="Edycja maila",
-                Email=new Email()
+                Receivers = new List<Receiver> 
+                { 
+                    new Receiver { Id = 1, Name = "Jacek", Surname = "Stokłosa", EmailAddress = "jacek.stoklosa@email.com" }, 
+                    new Receiver { Id = 2, Name = "Jakub", Surname = "Zięba", EmailAddress = "jakubzieba7@gmail.com" } 
+                },
+                Heading = "Edycja maila",
+                Email = new Email()
             };
 
             return View(vm);

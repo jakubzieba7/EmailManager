@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EmailSendingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -195,6 +196,7 @@
     <Compile Include="Models\Domains\SenderCompanyData.cs" />
     <Compile Include="Models\Domains\SenderEmailParams.cs" />
     <Compile Include="Models\Domains\SenderPersonalData.cs" />
+    <Compile Include="Models\SendingEmails.cs" />
     <Compile Include="Models\ViewModels\AddPhoneNumberViewModel.cs" />
     <Compile Include="Models\Domains\ApplicationUser.cs" />
     <Compile Include="Models\ViewModels\ChangePasswordViewModel.cs" />
@@ -386,6 +388,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Email.cshtml" />
+    <Content Include="Views\EmailSending\EmailTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
