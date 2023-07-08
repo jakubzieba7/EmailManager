@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using EmailManager.Models.ViewModels;
+using EmailManager.Models;
 
 namespace EmailManager.Controllers
 {
@@ -42,6 +43,23 @@ namespace EmailManager.Controllers
                 SenderName = "Jakub Zięba"
             };
 
+            var vm = new EditEmailViewModel
+            {
+
+                Receivers = new List<Receiver>
+                {
+                    //new Receiver { Id = 1, Name = "Jacek", Surname = "Stokłosa", EmailAddress = "jacek.stoklosa@email.com" },
+                    new Receiver { Id = 2, Name = "Jakub", Surname = "Zięba", EmailAddress = "jakubzieba7@gmail.com" }
+                },
+                Heading = "Edycja maila",
+                Email = new Email()
+                {
+                    Id = 1,
+                    MessageBody = "Tekst tej wiadomości jest następujący: bla bla bla",
+                    MessageSubject = "Temat wiadomoci Email"
+                }
+            };
+
             _hostSmtp = emailParams.HostSmtp;
             _enableSsl = emailParams.EnableSsl;
             _port = emailParams.Port;
@@ -59,7 +77,9 @@ namespace EmailManager.Controllers
 
             _mail.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Plain));
 
-            _mail.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(@"EmailTemplate", null, MediaTypeNames.Text.Html));
+            string HtmlContent = RazorViewToStringFormat.RenderRazorViewToString(this, "EmailTemplate", vm);
+
+            _mail.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(HtmlContent, null, MediaTypeNames.Text.Html));
 
             _smtp = new SmtpClient
             {
@@ -81,9 +101,6 @@ namespace EmailManager.Controllers
             _smtp.Dispose();
             _mail.Dispose();
         }
-
-
-
 
 
         // GET: EmailSending

@@ -196,6 +196,7 @@
     <Compile Include="Models\Domains\SenderCompanyData.cs" />
     <Compile Include="Models\Domains\SenderEmailParams.cs" />
     <Compile Include="Models\Domains\SenderPersonalData.cs" />
+    <Compile Include="Models\RazorViewToStringFormat.cs" />
     <Compile Include="Models\SendingEmails.cs" />
     <Compile Include="Models\ViewModels\AddPhoneNumberViewModel.cs" />
     <Compile Include="Models\Domains\ApplicationUser.cs" />
