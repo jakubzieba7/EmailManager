@@ -113,7 +113,6 @@ namespace EmailManager.Controllers
         {
             var vm = new EditEmailViewModel
             {
-                
                 Receivers = new List<Receiver>
                 {
                     //new Receiver { Id = 1, Name = "Jacek", Surname = "Stokłosa", EmailAddress = "jacek.stoklosa@email.com" },
@@ -124,7 +123,8 @@ namespace EmailManager.Controllers
                 {
                     Id = 1,
                     MessageBody = "Tekst tej wiadomości jest następujący: bla bla bla",
-                    MessageSubject = "Temat wiadomoci Email"
+                    MessageSubject = "Temat wiadomoci Email",
+                    Footer = new Footer { Id = 1, ComplimentaryClose = "Pozdrawiam" }
                 }
             };
 
@@ -136,6 +136,9 @@ namespace EmailManager.Controllers
             {
                 throw new Exception(ex.Message);
             }
+
+            ViewBag.SuccessfulSentMailMessage = "Mail został wysłany";
+            ViewBag.ComplimentaryClose = "Pozdrawiam";
 
             return View("EmailTemplate", vm);
         }
@@ -161,7 +164,8 @@ namespace EmailManager.Controllers
                 {
                     Id = 1,
                     MessageBody = "Tekst tej wiadomości jest następujący: bla bla bla",
-                    MessageSubject = "Temat wiadomoci Email"
+                    MessageSubject = "Temat wiadomoci Email",
+                    Footer = new Footer { Id = 1, ComplimentaryClose = "Pozdrawiam" }
                 }
             };
 

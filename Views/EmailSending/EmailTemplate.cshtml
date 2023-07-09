@@ -4,11 +4,18 @@
     ViewBag.Title = "Email";
 }
 
-<h2>Email</h2>
+<h2>@ViewBag.Title</h2>
+
+<p>@ViewBag.SuccessfulSentMailMessage</p>
 
 
-    <div font-size: 16px padding: 10px; font-family: Arial; line-height: 1.4;>
-        @Model.Email.MessageBody
-    </div>
-
+<div font-size: 16px padding: 10px; font-family: Arial; line-height: 1.4;>
+    @Model.Email.MessageSubject
+</div>
+<br />
+<br />
+<div>@Model.Email.MessageBody</div>
+<br />
+<br />
+<div>@ViewBag.ComplimentaryClose</div>
 
