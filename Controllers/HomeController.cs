@@ -123,7 +123,23 @@ namespace EmailManager.Controllers
                     new Receiver { Id = 2, Name = "Jakub", Surname = "Zięba", EmailAddress = "jakubzieba7@gmail.com" } 
                 },
                 Heading = "Edycja maila",
-                Email = new Email()
+                Email = new Email() {
+                    Senders = new List<Sender>
+                {
+                new Sender
+                    {
+                        Id=1,
+                        SendersPersonalData=new List<SenderPersonalData>
+                        {
+                            new SenderPersonalData { Id=1,Name="Jakub",Surname="Zięba",CompanyPositionPl="Konsultant techniczny"}
+                        },
+                        SenderEmailsParams=new List<SenderEmailParams>
+                        {
+                            new SenderEmailParams{Id=1,HostSmtp="smtp.gmail.com",Port=587,EnableSsl=true,SenderEmail="services.report.new@gmail.com",SenderEmailPassword="",SenderName="Jakub Zięba" }
+                        }
+                    }
+                }
+                }
             };
 
             return View(vm);

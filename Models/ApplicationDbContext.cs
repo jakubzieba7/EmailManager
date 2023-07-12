@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using System.Net.Mail;
 using EmailManager.Models.Domains;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -22,7 +21,7 @@ namespace EmailManager.Models
         public DbSet<SenderCompanyData> SendersCompanyData { get; set; }
         public DbSet<SenderPersonalData> SendersPersonalData { get; set; }
         public DbSet<SenderEmailParams> SenderEmailParams { get; set; }
-        //public DbSet<Attachment> Attachements { get; set; }
+        //public DbSet<Attachment> Attachments { get; set; }
 
         public static ApplicationDbContext Create()
         {

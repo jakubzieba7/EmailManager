@@ -27,14 +27,14 @@
             @Html.HiddenFor(x => x.Email.Id)
             @Html.HiddenFor(x => x.Email.UserId)
 
-            @*<div class="form-group">
-                    @Html.LabelFor(x => x.Email.Sender.SendersPersonalData)
-                    @Html.DropDownListFor(x => x.Email.Sender.SendersPersonalData.Select(x => x.Name).ToList(),
-                   new SelectList(Model.Senders,
-                   "Id", "Name"), "-- Wybierz nadawcę --",
-                   new { @class = "form-control" })
-                    @Html.ValidationMessageFor(x => x.Email.Sender.SendersPersonalData.Select(x => x.Name))
-                </div>*@
+    <div class="form-group">
+        @Html.LabelFor(x => x.Email.Sender.SenderPersonalDataId)
+        @Html.DropDownListFor(x =>x.Email.Sender.SenderPersonalDataId,
+       new SelectList(Model.Senders,
+       "Id", "UserId"), "-- Wybierz nadawcę --",
+       new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Email.Sender.SenderPersonalDataId)
+    </div>
 
             <div class="form-group">
                 @Html.LabelFor(x => x.Email.MessageSubject)

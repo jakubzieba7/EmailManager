@@ -13,6 +13,7 @@ namespace EmailManager.Models.Domains
         {
             //Attachments = new Collection<Attachment>();
             Receivers = new Collection<Receiver>();
+            Senders = new Collection<Sender>();
         }
 
         public int Id { get; set; }
@@ -41,6 +42,7 @@ namespace EmailManager.Models.Domains
         //public ICollection<Attachment> Attachments { get; set; }
         [Display(Name = "Odbiorcy wiadomości")]
         public ICollection<Receiver> Receivers { get; set; }
+        public ICollection<Sender> Senders { get; set; }
 
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Web;
 
 namespace EmailManager.Models.ViewModels
@@ -12,6 +13,7 @@ namespace EmailManager.Models.ViewModels
         public List<Receiver> Receivers { get; set; }
         public List<Footer> Footers { get; set; }
         public List<Sender> Senders { get; set; }
+        //public List<Attachment> Attachements { get; set; }
         public string Heading { get; set; }
     }
 }
