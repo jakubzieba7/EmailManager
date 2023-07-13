@@ -29,20 +29,8 @@ namespace EmailManager.Controllers
         private string _senderEmailPassword;
         private string _senderName;
 
-        
-        public async Task Send(string subject, string body, string to)
+        private EditEmailViewModel EmailVM()
         {
-            var emailParams = new SenderEmailParams
-            {
-                Id = 1,
-                HostSmtp = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                SenderEmail = "services.report.new@gmail.com",
-                SenderEmailPassword = "",
-                SenderName = "Jakub Zięba"
-            };
-
             var vm = new EditEmailViewModel
             {
 
@@ -56,9 +44,29 @@ namespace EmailManager.Controllers
                 {
                     Id = 1,
                     MessageBody = "Tekst tej wiadomości jest następujący: bla bla bla",
-                    MessageSubject = "Temat wiadomoci Email"
+                    MessageSubject = "Temat wiadomoci Email",
+                    Footer = new Footer { Id = 1, ComplimentaryClose = "Pozdrawiam" }
                 }
             };
+
+            return vm;
+        }
+
+
+        public async Task Send(string subject, string body, string to)
+        {
+            var emailParams = new SenderEmailParams
+            {
+                Id = 1,
+                HostSmtp = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                SenderEmail = "services.report.new@gmail.com",
+                SenderEmailPassword = "",
+                SenderName = "Jakub Zięba"
+            };
+
+            
 
             _hostSmtp = emailParams.HostSmtp;
             _enableSsl = emailParams.EnableSsl;
@@ -77,7 +85,7 @@ namespace EmailManager.Controllers
 
             _mail.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Plain));
 
-            string HtmlContent = RazorViewToStringFormat.RenderRazorViewToString(this, "EmailTemplate", vm);
+            string HtmlContent = RazorViewToStringFormat.RenderRazorViewToString(this, "EmailTemplate", EmailVM());
 
             _mail.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(HtmlContent, null, MediaTypeNames.Text.Html));
 
@@ -111,23 +119,6 @@ namespace EmailManager.Controllers
 
         public async Task<ActionResult> SendEmail()
         {
-            var vm = new EditEmailViewModel
-            {
-                Receivers = new List<Receiver>
-                {
-                    //new Receiver { Id = 1, Name = "Jacek", Surname = "Stokłosa", EmailAddress = "jacek.stoklosa@email.com" },
-                    new Receiver { Id = 2, Name = "Jakub", Surname = "Zięba", EmailAddress = "jakubzieba7@gmail.com" }
-                },
-                Heading = "Edycja maila",
-                Email = new Email()
-                {
-                    Id = 1,
-                    MessageBody = "Tekst tej wiadomości jest następujący: bla bla bla",
-                    MessageSubject = "Temat wiadomoci Email",
-                    Footer = new Footer { Id = 1, ComplimentaryClose = "Pozdrawiam" }
-                }
-            };
-
             try
             {
                 await SendEmailMet();
@@ -138,9 +129,8 @@ namespace EmailManager.Controllers
             }
 
             ViewBag.SuccessfulSentMailMessage = "Mail został wysłany";
-            ViewBag.ComplimentaryClose = "Pozdrawiam";
 
-            return View("EmailTemplate", vm);
+            return View("EmailTemplate", EmailVM());
         }
 
         private async Task SendEmailMet()
@@ -149,27 +139,8 @@ namespace EmailManager.Controllers
             //if (email == null)
             //    return;
 
-            //await Send(vm.Email.MessageSubject, vm.Email.MessageBody, string.Join(",", vm.Receivers.Select(x => x.EmailAddress)));
-
-            var vm = new EditEmailViewModel
-            {
-               
-                Receivers = new List<Receiver>
-                {
-                    //new Receiver { Id = 1, Name = "Jacek", Surname = "Stokłosa", EmailAddress = "jacek.stoklosa@email.com" },
-                    new Receiver { Id = 2, Name = "Jakub", Surname = "Zięba", EmailAddress = "jakubzieba7@gmail.com" }
-                },
-                Heading = "Edycja maila",
-                Email = new Email()
-                {
-                    Id = 1,
-                    MessageBody = "Tekst tej wiadomości jest następujący: bla bla bla",
-                    MessageSubject = "Temat wiadomoci Email",
-                    Footer = new Footer { Id = 1, ComplimentaryClose = "Pozdrawiam" }
-                }
-            };
-
-            await Send(vm.Email.MessageSubject, vm.Email.MessageBody, "jakubzieba7@gmail.com");
+            //await Send(EmailVM().Email.MessageSubject, EmailVM().Email.MessageBody, EmailVM().Email.Receivers.Select(x=>x.EmailAddress).ToString());
+            await Send(EmailVM().Email.MessageSubject, EmailVM().Email.MessageBody, "jakubzieba7@gmail.com");
             //await Send(vm.Email.MessageSubject, vm.Email.MessageBody, string.Join(",", vm.Receivers.Select(x => x.EmailAddress)));
 
         }
