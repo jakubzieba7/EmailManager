@@ -138,7 +138,7 @@ namespace EmailManager.Controllers
             //var email = _emailRepository.GetEmail(emailID);
             //if (email == null)
             //    return;
-
+            
             //await Send(EmailVM().Email.MessageSubject, EmailVM().Email.MessageBody, EmailVM().Email.Receivers.Select(x=>x.EmailAddress).ToString());
             await Send(EmailVM().Email.MessageSubject, EmailVM().Email.MessageBody, "jakubzieba7@gmail.com");
             //await Send(vm.Email.MessageSubject, vm.Email.MessageBody, string.Join(",", vm.Receivers.Select(x => x.EmailAddress)));

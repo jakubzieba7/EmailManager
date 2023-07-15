@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Net.Mail;
 
 namespace EmailManager.Models.Domains
 {
@@ -11,7 +10,7 @@ namespace EmailManager.Models.Domains
     {
         public Email()
         {
-            //Attachments = new Collection<Attachment>();
+            Attachments = new Collection<Attachment>();
             Receivers = new Collection<Receiver>();
             Senders = new Collection<Sender>();
         }
@@ -39,7 +38,7 @@ namespace EmailManager.Models.Domains
         public Sender Sender { get; set; }
         [Display(Name = "Stopka")]
         public Footer Footer { get; set; }
-        //public ICollection<Attachment> Attachments { get; set; }
+        public ICollection<Attachment> Attachments { get; set; }
         [Display(Name = "Odbiorcy wiadomości")]
         public ICollection<Receiver> Receivers { get; set; }
         public ICollection<Sender> Senders { get; set; }

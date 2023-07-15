@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using EmailManager.Models.Domains;
@@ -9,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.BuilderProperties;
 using Address = EmailManager.Models.Domains.Address;
+using Attachment = EmailManager.Models.Domains.Attachment;
 
 namespace EmailManager.Models
 {
@@ -21,7 +21,7 @@ namespace EmailManager.Models
             Footers = new Collection<Footer>();
             Receivers = new Collection<Receiver>();
             Senders = new Collection<Sender>();
-            //Attachments = new Collection<Attachment>();
+            Attachments = new Collection<Attachment>();
         }
 
         [Required]
@@ -33,7 +33,7 @@ namespace EmailManager.Models
         public ICollection<Footer> Footers { get; set; }
         public ICollection<Receiver> Receivers { get; set; }
         public ICollection<Sender> Senders { get; set; }
-        //public ICollection<Attachment> Attachments { get; set; }
+        public ICollection<Attachment> Attachments { get; set; }
 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
