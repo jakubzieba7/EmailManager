@@ -1,9 +1,7 @@
 ﻿using EmailManager.Models.Domains;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Web;
+using Attachment = EmailManager.Models.Domains.Attachment;
 
 namespace EmailManager.Models.ViewModels
 {
@@ -13,7 +11,7 @@ namespace EmailManager.Models.ViewModels
         public List<Receiver> Receivers { get; set; }
         public List<Footer> Footers { get; set; }
         public List<Sender> Senders { get; set; }
-        //public List<Attachment> Attachements { get; set; }
+        public List<Attachment> Attachements { get; set; }
         public string Heading { get; set; }
     }
 }

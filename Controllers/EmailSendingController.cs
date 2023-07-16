@@ -12,6 +12,10 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using EmailManager.Models.ViewModels;
 using EmailManager.Models;
+using Attachment = EmailManager.Models.Domains.Attachment;
+using System.IO;
+using System.Web.Services.Description;
+using System.Security.Cryptography;
 
 namespace EmailManager.Controllers
 {
@@ -29,6 +33,8 @@ namespace EmailManager.Controllers
         private string _senderEmailPassword;
         private string _senderName;
 
+        byte[] filebyte = null;
+
         private EditEmailViewModel EmailVM()
         {
             var vm = new EditEmailViewModel
@@ -45,13 +51,46 @@ namespace EmailManager.Controllers
                     Id = 1,
                     MessageBody = "Tekst tej wiadomości jest następujący: bla bla bla",
                     MessageSubject = "Temat wiadomoci Email",
-                    Footer = new Footer { Id = 1, ComplimentaryClose = "Pozdrawiam" }
+                    Footer = new Footer { Id = 1, ComplimentaryClose = "Pozdrawiam" },
+                    Attachments=new List<Attachment> 
+                    {
+                    new Attachment { Id = 1,FileName="ccc_mta_malekontury",FilePath=@"C:\Users\jakub\OneDrive\Pulpit\ccc_mta_malekontury.dxf"}
+                    }
                 }
             };
 
             return vm;
         }
 
+        public byte[] EmailAttachment() 
+        {
+            //working ver.1
+            using (var stream = new FileStream(@"C:\Users\jakub\OneDrive\Pulpit\2023-05-19_10h29_56.png", FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = new BinaryReader(stream))
+                {
+                    filebyte = reader.ReadBytes((int)stream.Length);
+                }
+            }
+
+            //working ver.2
+            FileStream fs = new FileStream(@"C:\Users\jakub\OneDrive\Pulpit\ccc_mta_malekontury.dxf", FileMode.Open);
+            MemoryStream ms = new MemoryStream();
+            fs.CopyTo(ms);
+            filebyte = ms.ToArray();
+
+
+            //MemoryStream ms = new MemoryStream();
+
+            //model.File.InputStream.Position = 0;
+            //model.File.InputStream.CopyTo(ms);
+            //byte[] data = ms.ToArray();
+
+
+
+
+            return filebyte;
+        }
 
         public async Task Send(string subject, string body, string to)
         {
@@ -65,8 +104,6 @@ namespace EmailManager.Controllers
                 SenderEmailPassword = "",
                 SenderName = "Jakub Zięba"
             };
-
-            
 
             _hostSmtp = emailParams.HostSmtp;
             _enableSsl = emailParams.EnableSsl;
@@ -83,25 +120,39 @@ namespace EmailManager.Controllers
             _mail.BodyEncoding = Encoding.UTF8;
             _mail.SubjectEncoding = Encoding.UTF8;
 
-            _mail.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Plain));
-
-            string HtmlContent = RazorViewToStringFormat.RenderRazorViewToString(this, "EmailTemplate", EmailVM());
-
-            _mail.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(HtmlContent, null, MediaTypeNames.Text.Html));
-
-            _smtp = new SmtpClient
+            using (var stream = new MemoryStream(EmailAttachment()))
             {
-                Host = _hostSmtp,
-                EnableSsl = _enableSsl,
-                Port = _port,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(_senderEmail, _senderEmailPassword)
-            };
+                stream.Position = 0;
+                System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(stream, "Attachment");
+                string contentID = "File";
+                attachment.ContentId = contentID;
+                attachment.ContentDisposition.Inline = true;
+                attachment.ContentDisposition.DispositionType = DispositionTypeNames.Inline;
 
-            _smtp.SendCompleted += OnSendCompleted;
+                _mail.Attachments.Add(attachment);
 
-            await _smtp.SendMailAsync(_mail);
+                _mail.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Plain));
+
+                string HtmlContent = RazorViewToStringFormat.RenderRazorViewToString(this, "EmailTemplate", EmailVM());
+
+                _mail.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(HtmlContent, null, MediaTypeNames.Text.Html));
+
+                _smtp = new SmtpClient
+                {
+                    Host = _hostSmtp,
+                    EnableSsl = _enableSsl,
+                    Port = _port,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(_senderEmail, _senderEmailPassword)
+                };
+
+                _smtp.SendCompleted += OnSendCompleted;
+
+                await _smtp.SendMailAsync(_mail);
+            }
+
+            //SaveMessage(_mail, EmailAttachment());
         }
 
         private void OnSendCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
