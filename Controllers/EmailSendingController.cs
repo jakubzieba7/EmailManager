@@ -1,21 +1,17 @@
 ﻿using EmailManager.Models.Domains;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Helpers;
 using System.Web.Mvc;
 using EmailManager.Models.ViewModels;
 using EmailManager.Models;
 using Attachment = EmailManager.Models.Domains.Attachment;
 using System.IO;
-using System.Web.Services.Description;
-using System.Security.Cryptography;
+using System.Linq;
 
 namespace EmailManager.Controllers
 {
@@ -52,7 +48,7 @@ namespace EmailManager.Controllers
                     MessageBody = "Tekst tej wiadomości jest następujący: bla bla bla",
                     MessageSubject = "Temat wiadomoci Email",
                     Footer = new Footer { Id = 1, ComplimentaryClose = "Pozdrawiam" },
-                    Attachments=new List<Attachment> 
+                    Attachments = new List<Attachment>
                     {
                     new Attachment { Id = 1,FileName="ccc_mta_malekontury",FilePath=@"C:\Users\jakub\OneDrive\Pulpit\ccc_mta_malekontury.dxf"}
                     }
@@ -62,32 +58,51 @@ namespace EmailManager.Controllers
             return vm;
         }
 
-        public byte[] EmailAttachment() 
+        List<string> filePaths = new List<string>() { };
+
+        public byte[] EmailAttachment()
         {
+            filePaths.Add(@"C:\Users\jakub\OneDrive\Pulpit\ccc_mta_malekontury.dxf");
+            filePaths.Add(@"C:\Users\jakub\OneDrive\Pulpit\2023-05-19_10h29_56.png");
+
+            //File from disk
+
             //working ver.1
-            using (var stream = new FileStream(@"C:\Users\jakub\OneDrive\Pulpit\2023-05-19_10h29_56.png", FileMode.Open, FileAccess.Read))
+
+            foreach (string filePath in filePaths)
             {
-                using (var reader = new BinaryReader(stream))
+
+                using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
-                    filebyte = reader.ReadBytes((int)stream.Length);
+                    using (var reader = new BinaryReader(stream))
+                    {
+                        //limitation to only one file send as byte array
+                        //first from the list will be send
+                        filebyte = reader.ReadBytes((int)stream.Length);
+                    }
                 }
+
             }
 
-            //working ver.2
-            FileStream fs = new FileStream(@"C:\Users\jakub\OneDrive\Pulpit\ccc_mta_malekontury.dxf", FileMode.Open);
-            MemoryStream ms = new MemoryStream();
-            fs.CopyTo(ms);
-            filebyte = ms.ToArray();
-
-
+            ////working ver.2
+            //FileStream fs = new FileStream(@"C:\Users\jakub\OneDrive\Pulpit\ccc_mta_malekontury.dxf", FileMode.Open);
             //MemoryStream ms = new MemoryStream();
+            //fs.CopyTo(ms);
+            //filebyte = ms.ToArray();
 
-            //model.File.InputStream.Position = 0;
-            //model.File.InputStream.CopyTo(ms);
-            //byte[] data = ms.ToArray();
+            ////File from model
 
-
-
+            //using (Stream inputStream = model.File.InputStream)
+            //{
+            //    MemoryStream memoryStream = inputStream as MemoryStream;
+            //    if (memoryStream == null)
+            //    {
+            //        model.File.InputStream.Position = 0;
+            //        memoryStream = new MemoryStream();
+            //        inputStream.CopyTo(memoryStream);
+            //    }
+            //    filebyte = memoryStream.ToArray();
+            //}
 
             return filebyte;
         }
@@ -122,14 +137,20 @@ namespace EmailManager.Controllers
 
             using (var stream = new MemoryStream(EmailAttachment()))
             {
-                stream.Position = 0;
-                System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(stream, "Attachment");
-                string contentID = "File";
-                attachment.ContentId = contentID;
-                attachment.ContentDisposition.Inline = true;
-                attachment.ContentDisposition.DispositionType = DispositionTypeNames.Inline;
 
-                _mail.Attachments.Add(attachment);
+                foreach (string filePath in filePaths)
+                {
+                    stream.Position = 0;
+                    System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(stream, GetFileName.FileName(filePath));
+                    string contentID = "File";
+                    attachment.ContentId = contentID;
+                    attachment.ContentDisposition.Inline = true;
+                    attachment.ContentDisposition.DispositionType = DispositionTypeNames.Inline;
+
+                    _mail.Attachments.Add(attachment);
+
+                }
+
 
                 _mail.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Plain));
 
@@ -189,13 +210,13 @@ namespace EmailManager.Controllers
             //var email = _emailRepository.GetEmail(emailID);
             //if (email == null)
             //    return;
-            
-            //await Send(EmailVM().Email.MessageSubject, EmailVM().Email.MessageBody, EmailVM().Email.Receivers.Select(x=>x.EmailAddress).ToString());
+
+            //await Send(EmailVM().Email.MessageSubject, EmailVM().Email.MessageBody, EmailVM().Email.Receivers.Where(x=>x.Id==2).Select(x=>x.EmailAddress).ToString());
             await Send(EmailVM().Email.MessageSubject, EmailVM().Email.MessageBody, "jakubzieba7@gmail.com");
             //await Send(vm.Email.MessageSubject, vm.Email.MessageBody, string.Join(",", vm.Receivers.Select(x => x.EmailAddress)));
 
         }
 
-        
+
     }
 }
