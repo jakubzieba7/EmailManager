@@ -15,7 +15,7 @@
 }
 
 <div class="row">
-    <div class="col-lg-10">
+    <div class="col-lg-6">
         @using (Html.BeginForm("Email", "Home"))
         {
 
@@ -27,14 +27,14 @@
             @Html.HiddenFor(x => x.Email.Id)
             @Html.HiddenFor(x => x.Email.UserId)
 
-    <div class="form-group">
-        @Html.LabelFor(x => x.Email.Sender.SenderPersonalDataId)
-        @Html.DropDownListFor(x =>x.Email.Sender.SenderPersonalDataId,
-       new SelectList(Model.Senders,
-       "Id", "UserId"), "-- Wybierz nadawcę --",
-       new { @class = "form-control" })
-        @Html.ValidationMessageFor(x => x.Email.Sender.SenderPersonalDataId)
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Email.Sender.SenderPersonalDataId)
+                @Html.DropDownListFor(x => x.Email.Sender.SenderPersonalDataId,
+               new SelectList(Model.Senders,
+               "Id", "UserId"), "-- Wybierz nadawcę --",
+               new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Email.Sender.SenderPersonalDataId)
+            </div>
 
             <div class="form-group">
                 @Html.LabelFor(x => x.Email.MessageSubject)
@@ -66,12 +66,41 @@
                 @Html.ValidationMessageFor(x => x.Email.Footer)
             </div>
 
+
+
+
             <button class="btn btn-primary btn-lg mb-5" type="submit">Zapisz</button>
             <button class="btn btn-secondary btn-lg mb-5" type="submit">Wyślij</button>
             <button class="btn btn-secondary btn-lg mb-5" onclick='window.location.href="@Url.Action("SendEmail","EmailSending")"'>Wyślij1</button>
             //<button class="btn btn-secondary btn-lg mb-5" onclick=@{((EmailManager.Controllers.EmailSendingController)ViewContext.Controller).SendEmailMethode().RunSynchronously();}>Wyślij2</button>
 
         }
+
+        <div class="col-5 offset-lg-1">
+            @*@if (Model.Email.Id != 0)
+            {
+            }*@
+                @Html.Partial("_EmailAttachment", Model.Email.Attachments)
+        </div>
+
+        @*@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div>
+                @Html.LabelFor(x => x.Email.AttachmentId)
+                @Html.TextBoxFor(x => x.Attachments, new { type = "attachment", @class = "form-control", @Value = "Wybierz załącznik" })
+                @Html.ValidationMessageFor(x => x.Email.AttachmentId)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.Email.AttachmentId)
+                @Html.TextBoxFor(x => x.Attachments, new { type = "attachment", @class = "form-control", @Value = "Wybierz załącznik" })
+            </div>
+            <div>
+                @Html.LabelFor(x => x.Email.AttachmentId)
+                @Html.TextBoxFor(x => x.Attachments, new { type = "attachment", @class = "form-control", @Value = "Wybierz załącznik" })
+            </div>
+            
+            <button class="btn btn-primary btn-lg mb-5" type="submit">Upload</button>
+        }*@
     </div>
 
 </div>

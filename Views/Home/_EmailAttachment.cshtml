@@ -1,0 +1,26 @@
+﻿@model IEnumerable<EmailManager.Models.Domains.Attachment>
+
+<div class="row">
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">L.p.</th>
+                <th scope="col">Nazwa załącznika</th>
+                <th scope="col">Typ pliku</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var attachment in Model)
+            {
+                <tr>
+                    <td><a class="font-weight-bold" href="@Url.Action("Email","Home",new {attachmentId=attachment.EmailId})"> @attachment.Lp</a></td>
+                    <td>@attachment.FileName</td>
+                    <td>@attachment.ContentType</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="deleteAttachment('@attachment.Id', '@attachment.EmailId', this)">Usuń</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
