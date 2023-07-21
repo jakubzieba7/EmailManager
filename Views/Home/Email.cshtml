@@ -67,23 +67,27 @@
             </div>
 
 
-
-
-            <button class="btn btn-primary btn-lg mb-5" type="submit">Zapisz</button>
-            <button class="btn btn-secondary btn-lg mb-5" type="submit">Wyślij</button>
-            <button class="btn btn-secondary btn-lg mb-5" onclick='window.location.href="@Url.Action("SendEmail","EmailSending")"'>Wyślij1</button>
-            //<button class="btn btn-secondary btn-lg mb-5" onclick=@{((EmailManager.Controllers.EmailSendingController)ViewContext.Controller).SendEmailMethode().RunSynchronously();}>Wyślij2</button>
-
         }
 
-        <div class="col-5 offset-lg-1">
-            @*@if (Model.Email.Id != 0)
-            {
-            }*@
-                @Html.Partial("_EmailAttachment", Model.Email.Attachments)
+        <div class="btn-lg mt-5 mb-5">
+            <button class="btn btn-primary" type="submit">Zapisz</button>
+            <button class="btn btn-secondary" type="submit">Wyślij</button>
+            <button class="btn btn-secondary" onclick='window.location.href="@Url.Action("SendEmail","EmailSending")"'>Wyślij1</button>
+            @*<button class="btn btn-secondary" onclick=@{((EmailManager.Controllers.EmailSendingController)ViewContext.Controller).SendEmailMethode().RunSynchronously();}>Wyślij2</button>*@
+
+
         </div>
 
-        @*@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    </div>
+
+    <div class="col-5 offset-lg-1">
+
+        @*@if (Model.Email.Id != 0)
+        {
+        }*@
+        @Html.Partial("_EmailAttachment", Model.Email.Attachments)
+
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             <div>
                 @Html.LabelFor(x => x.Email.AttachmentId)
@@ -98,11 +102,10 @@
                 @Html.LabelFor(x => x.Email.AttachmentId)
                 @Html.TextBoxFor(x => x.Attachments, new { type = "attachment", @class = "form-control", @Value = "Wybierz załącznik" })
             </div>
-            
-            <button class="btn btn-primary btn-lg mb-5" type="submit">Upload</button>
-        }*@
-    </div>
 
+            <button class="btn btn-primary btn-lg mt-5 mb-5" type="submit">Załącz do maila</button>
+        }
+    </div>
 </div>
 
 @section Scripts
@@ -123,10 +126,13 @@
 
             $('#EmailSendDate').datepicker({
                 format: "dd-mm-yyyy",
-                language: "pl",
+                language: "pl-PL",
                 multidate: false,
                 autoclose: true,
                 todayHighlight: true,
+                startDate: '-3d',
+                weekStart: 1,
+                todayBtn: true,
                 forceParse: false
             });
         });
