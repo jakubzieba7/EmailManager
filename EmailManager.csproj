@@ -405,6 +405,7 @@
     <Content Include="Views\Home\Email.cshtml" />
     <Content Include="Views\EmailSending\EmailTemplate.cshtml" />
     <Content Include="Views\Home\_EmailAttachment.cshtml" />
+    <Content Include="Views\Home\EmailAttachment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

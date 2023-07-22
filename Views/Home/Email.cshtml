@@ -87,24 +87,7 @@
         }*@
         @Html.Partial("_EmailAttachment", Model.Email.Attachments)
 
-        @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div>
-                @Html.LabelFor(x => x.Email.AttachmentId)
-                @Html.TextBoxFor(x => x.Attachments, new { type = "attachment", @class = "form-control", @Value = "Wybierz załącznik" })
-                @Html.ValidationMessageFor(x => x.Email.AttachmentId)
-            </div>
-            <div>
-                @Html.LabelFor(x => x.Email.AttachmentId)
-                @Html.TextBoxFor(x => x.Attachments, new { type = "attachment", @class = "form-control", @Value = "Wybierz załącznik" })
-            </div>
-            <div>
-                @Html.LabelFor(x => x.Email.AttachmentId)
-                @Html.TextBoxFor(x => x.Attachments, new { type = "attachment", @class = "form-control", @Value = "Wybierz załącznik" })
-            </div>
-
-            <button class="btn btn-primary btn-lg mt-5 mb-5" type="submit">Załącz do maila</button>
-        }
+        
     </div>
 </div>
 
