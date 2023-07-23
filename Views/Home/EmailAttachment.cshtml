@@ -6,29 +6,31 @@
 
 <h1>@Model.Heading</h1>
 
-@using (Html.BeginForm("Attachment", "Home"))
+@using (Html.BeginForm("EmailAttachment", "Home"))
 {
     @Html.AntiForgeryToken()
 
     if (Model.Email.AttachmentId == 0)
     {
 
-       
-        @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+        @(Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
+            @Html.HiddenFor(x=>x.Email.Id)
+
             <div>
                 @Html.LabelFor(x => x.Email.AttachmentId)
                 @Html.TextBoxFor(x => x.Attachments, new { type = "attachment", @class = "form-control", @Value = "Wybierz załącznik" })
                 @Html.ValidationMessageFor(x => x.Email.AttachmentId)
             </div>
-            <div>
+            @*<div>
                 @Html.LabelFor(x => x.Email.AttachmentId)
                 @Html.TextBoxFor(x => x.Attachments, new { type = "attachment", @class = "form-control", @Value = "Wybierz załącznik" })
             </div>
             <div>
                 @Html.LabelFor(x => x.Email.AttachmentId)
                 @Html.TextBoxFor(x => x.Attachments, new { type = "attachment", @class = "form-control", @Value = "Wybierz załącznik" })
-            </div>
+            </div>*@
 
             <button class="btn btn-primary btn-lg mt-5 mb-5" type="submit">Załącz do maila</button>
         }

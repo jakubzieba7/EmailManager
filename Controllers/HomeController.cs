@@ -3,6 +3,7 @@ using EmailManager.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -94,22 +95,22 @@ namespace EmailManager.Controllers
             return View(emails);
         }
 
-        public ActionResult Email(int id = 0)
+        private EditEmailViewModel ViewModel()
         {
             var vm = new EditEmailViewModel
             {
                 Senders = new List<Sender>
                 {
-                new Sender
+                    new Sender
                     {
-                        Id=1,
-                        SendersPersonalData=new List<SenderPersonalData>
+                        Id = 1,
+                        SendersPersonalData = new List<SenderPersonalData>
                         {
-                            new SenderPersonalData { Id=1,Name="Jakub",Surname="Zięba",CompanyPositionPl="Konsultant techniczny"}
+                            new SenderPersonalData { Id = 1, Name = "Jakub", Surname = "Zięba", CompanyPositionPl = "Konsultant techniczny" }
                         },
-                        SenderEmailsParams=new List<SenderEmailParams>
+                        SenderEmailsParams = new List<SenderEmailParams>
                         {
-                            new SenderEmailParams{Id=1,HostSmtp="smtp.gmail.com",Port=587,EnableSsl=true,SenderEmail="services.report.new@gmail.com",SenderEmailPassword="",SenderName="Jakub Zięba" }
+                            new SenderEmailParams { Id = 1, HostSmtp = "smtp.gmail.com", Port = 587, EnableSsl = true, SenderEmail = "services.report.new@gmail.com", SenderEmailPassword = "", SenderName = "Jakub Zięba" }
                         }
                     }
                 },
@@ -117,32 +118,68 @@ namespace EmailManager.Controllers
                     new Footer { Id = 1, ComplimentaryClose = "Pozdrawiam", SenderId = 1 },
                     new Footer { Id = 2, ComplimentaryClose = "Best regards", SenderId = 1 }
                 },
-                Receivers = new List<Receiver> 
-                { 
-                    new Receiver { Id = 1, Name = "Jacek", Surname = "Stokłosa", EmailAddress = "jacek.stoklosa@email.com" }, 
-                    new Receiver { Id = 2, Name = "Jakub", Surname = "Zięba", EmailAddress = "jakubzieba7@gmail.com" } 
+                Receivers = new List<Receiver>
+                {
+                    new Receiver { Id = 1, Name = "Jacek", Surname = "Stokłosa", EmailAddress = "jacek.stoklosa@email.com" },
+                    new Receiver { Id = 2, Name = "Jakub", Surname = "Zięba", EmailAddress = "jakubzieba7@gmail.com" }
                 },
                 Heading = "Edycja maila",
-                Email = new Email() {
+                Email = new Email()
+                {
                     Senders = new List<Sender>
-                        {
+                    {
                         new Sender
+                        {
+                            Id = 1,
+                            SendersPersonalData = new List<SenderPersonalData>
                             {
-                                Id=1,
-                                SendersPersonalData=new List<SenderPersonalData>
-                                {
-                                    new SenderPersonalData { Id=1,Name="Jakub",Surname="Zięba",CompanyPositionPl="Konsultant techniczny"}
-                                },
-                                SenderEmailsParams=new List<SenderEmailParams>
-                                {
-                                    new SenderEmailParams{Id=1,HostSmtp="smtp.gmail.com",Port=587,EnableSsl=true,SenderEmail="services.report.new@gmail.com",SenderEmailPassword="",SenderName="Jakub Zięba" }
-                                }
+                                new SenderPersonalData { Id = 1, Name = "Jakub", Surname = "Zięba", CompanyPositionPl = "Konsultant techniczny" }
+                            },
+                            SenderEmailsParams = new List<SenderEmailParams>
+                            {
+                                new SenderEmailParams { Id = 1, HostSmtp = "smtp.gmail.com", Port = 587, EnableSsl = true, SenderEmail = "services.report.new@gmail.com", SenderEmailPassword = "", SenderName = "Jakub Zięba" }
                             }
                         }
+                    },
+                    Attachments = new List<Attachment>
+                    {
+                        new Attachment
+                        {
+                            Id = 1,
+                            Lp=1,
+                            EmailId=1,
+                            FileName="Załącznik 1",
+                            ContentType="PDF",
+                            FileData=Encoding.ASCII.GetBytes("asasa"),
+                            Email=new Email() {Id=1,AttachmentId=1},
+                            FilePath=""
+                        },
+                        new Attachment
+                        {
+                            Id = 2,
+                            Lp=2,
+                            EmailId=1,
+                            FileName="Załącznik 2",
+                            ContentType="DXF",
+                            FileData=Encoding.ASCII.GetBytes("asasa"),
+                            Email=new Email() {Id=1,AttachmentId=2},
+                            FilePath=""
+                        }
+                    }
                 }
             };
 
-            return View(vm);
+            return vm;
+        }
+
+        public ActionResult Email(int id = 0)
+        {
+            return View(ViewModel());
+        }
+
+        public ActionResult EmailAttachment(int EmailId = 0, int AttachmentId = 0)
+        {
+            return View(ViewModel());
         }
 
         [AllowAnonymous]
