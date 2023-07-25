@@ -126,6 +126,10 @@ namespace EmailManager.Controllers
                 Heading = "Edycja maila",
                 Email = new Email()
                 {
+                    FooterId=1,
+                    SenderId=1,
+                    Id=1,
+                    AttachmentId = 1,
                     Senders = new List<Sender>
                     {
                         new Sender
@@ -172,15 +176,32 @@ namespace EmailManager.Controllers
             return vm;
         }
 
-        public ActionResult Email(int id = 0)
+        public ActionResult EmailAttachment()
         {
-            return View(ViewModel());
+            var vm = new EditEmailViewModel
+            {
+                Heading = "Dodaj załącznik"
+            };
+            return View(vm);
         }
 
-        public ActionResult EmailAttachment(int EmailId = 0, int AttachmentId = 0)
+        public ActionResult Email(int id = 0)
         {
-            return View(ViewModel());
+            if (id == 0)
+            {
+                return View(ViewModel());
+
+            }
+            else
+            {
+                return View(ViewModel());
+            }
         }
+
+        //public ActionResult EmailAttachment(int EmailId = 0, int AttachmentId = 0)
+        //{
+        //    return View(ViewModel());
+        //}
 
         [AllowAnonymous]
         public ActionResult About()

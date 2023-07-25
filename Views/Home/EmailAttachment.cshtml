@@ -10,31 +10,31 @@
 {
     @Html.AntiForgeryToken()
 
-    if (Model.Email.AttachmentId == 0)
+    //if (Model.Email.AttachmentId == 0)
+    //{
+
+
+    @(Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+        @Html.HiddenFor(x => x.Email.Id)
 
+        <div>
+            @Html.LabelFor(x => x.Email.AttachmentId)
+            @Html.TextBoxFor(x => x.Attachments, new { type = "file", name = "attachment", @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Email.AttachmentId)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.Email.AttachmentId)
+            @Html.TextBoxFor(x => x.Attachments, new { type = "file", name = "attachment", @class = "form-control", @Value = "Wybierz załącznik" })
+        </div>
+        <div>
+            @Html.LabelFor(x => x.Email.AttachmentId)
+            @Html.TextBoxFor(x => x.Attachments, new { type = "file", name = "attachment", @class = "form-control", @Value = "Wybierz załącznik" })
+        </div>
 
-        @(Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            @Html.HiddenFor(x=>x.Email.Id)
-
-            <div>
-                @Html.LabelFor(x => x.Email.AttachmentId)
-                @Html.TextBoxFor(x => x.Attachments, new { type = "attachment", @class = "form-control", @Value = "Wybierz załącznik" })
-                @Html.ValidationMessageFor(x => x.Email.AttachmentId)
-            </div>
-            @*<div>
-                @Html.LabelFor(x => x.Email.AttachmentId)
-                @Html.TextBoxFor(x => x.Attachments, new { type = "attachment", @class = "form-control", @Value = "Wybierz załącznik" })
-            </div>
-            <div>
-                @Html.LabelFor(x => x.Email.AttachmentId)
-                @Html.TextBoxFor(x => x.Attachments, new { type = "attachment", @class = "form-control", @Value = "Wybierz załącznik" })
-            </div>*@
-
-            <button class="btn btn-primary btn-lg mt-5 mb-5" type="submit">Załącz do maila</button>
-        }
+        <button class="btn btn-primary btn-lg mt-5 mb-5" type="submit">Załącz do maila</button>
     }
+    @*}*@
 }
 
 @section Scripts

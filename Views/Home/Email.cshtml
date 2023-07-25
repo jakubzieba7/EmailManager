@@ -8,7 +8,7 @@
 
 @if (Model.Email.Id != 0)
 {
-    <button class="btn btn-primary mb-3" onclick='window.location.href="@Url.Action("Attachment","Home", new {emailId=Model.Email.Id})"'>Dodaj załącznik</button>
+    <button class="btn btn-primary mb-3" onclick='window.location.href="@Url.Action("EmailAttachment","Home", new {emailId=Model.Email.Id})"'>Dodaj załącznik</button>
     <button class="btn btn-secondary mb-3" onclick="generatePdf()">Generuj PDF</button>
     <button class="btn btn-secondary mb-3" onclick='window.location.href="@Url.Action("EmailTemplate","Print", new {emailId=Model.Email.Id})"'>Podgląd Email</button>
     <button class="btn btn-secondary mb-3" onclick="printEmail()">Drukuj Email</button>
@@ -71,8 +71,7 @@
 
         <div class="btn-lg mt-5 mb-5">
             <button class="btn btn-primary" type="submit">Zapisz</button>
-            <button class="btn btn-secondary" type="submit">Wyślij</button>
-            <button class="btn btn-secondary" onclick='window.location.href="@Url.Action("SendEmail","EmailSending")"'>Wyślij1</button>
+            <button class="btn btn-secondary" onclick='window.location.href="@Url.Action("SendEmail","EmailSending")"'>Wyślij</button>
             @*<button class="btn btn-secondary" onclick=@{((EmailManager.Controllers.EmailSendingController)ViewContext.Controller).SendEmailMethode().RunSynchronously();}>Wyślij2</button>*@
 
 
