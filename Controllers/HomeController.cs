@@ -1,5 +1,7 @@
 ﻿using EmailManager.Models.Domains;
+using EmailManager.Models.Repositories;
 using EmailManager.Models.ViewModels;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,85 +14,93 @@ namespace EmailManager.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        private EmailRepository _emailRepository=new EmailRepository();
+        private SenderRepository _senderRepository=new SenderRepository();
+        private FooterRepository _footerRepository=new FooterRepository();
+
         public ActionResult Index()
         {
-            var emails = new List<Email>
-            {
-                new Email
-                {
-                    Id = 1,
-                    MessageSubject="Nowa wiadomość",
-                    MessageBody="Przykładowy tekst tej wiadomości.",
-                    EmailSendDate= DateTime.Now,
-                    Receivers=new List<Receiver>
-                    {
-                        new Receiver
-                        {
-                            Id = 1,
-                            Name="Jarek",
-                            Surname="Kot",
-                            EmailAddress="jarek.kot@mail.com",
-                        },
-                        new Receiver
-                        {
-                            Id = 2,
-                            Name="Dariusz",
-                            Surname="Sowa",
-                            EmailAddress="darek.sowa@mail.com",
-                        }
-                    },
-                    Sender=new Sender
-                    {
-                        Id = 2,
-                        SendersPersonalData=new List<SenderPersonalData>
-                        {
-                            new SenderPersonalData
-                            {
-                                Id=1,
-                                Name="Władek",
-                                Surname="Kłoda"
-                            }
-                        }
-                    }
-                },
-                new Email
-                {
-                    Id = 2,
-                    MessageSubject="Stara wiadomość",
-                    MessageBody="Przykładowy tekst kolejnej wiadomości.",
-                    EmailSendDate= DateTime.Now,
-                    Receivers=new List<Receiver>
-                    {
-                        new Receiver
-                        {
-                            Id=3,
-                            Name="Bogdan",
-                            Surname="Jastrząb",
-                            EmailAddress="bogdan.jastrzab@mail.com",
-                        },
-                        new Receiver
-                        {
-                            Id = 4,
-                            Name="Mariusz",
-                            Surname="Klocek",
-                            EmailAddress="mariusz.klocek@mail.com",
-                        }
-                    },
-                    Sender=new Sender
-                    {
-                        Id=1,
-                        SendersPersonalData=new List<SenderPersonalData>
-                        {
-                            new SenderPersonalData
-                                {
-                                    Id=1,
-                                    Name="Bolesław",
-                                    Surname="Dąb"
-                                }
-                        }
-                    }
-                }
-            };
+            var userId = User.Identity.GetUserId();
+            var emails = _emailRepository.GetEmails(userId);
+
+
+            //var emails = new List<Email>
+            //{
+            //    new Email
+            //    {
+            //        Id = 1,
+            //        MessageSubject="Nowa wiadomość",
+            //        MessageBody="Przykładowy tekst tej wiadomości.",
+            //        EmailSendDate= DateTime.Now,
+            //        Receivers=new List<Receiver>
+            //        {
+            //            new Receiver
+            //            {
+            //                Id = 1,
+            //                Name="Jarek",
+            //                Surname="Kot",
+            //                EmailAddress="jarek.kot@mail.com",
+            //            },
+            //            new Receiver
+            //            {
+            //                Id = 2,
+            //                Name="Dariusz",
+            //                Surname="Sowa",
+            //                EmailAddress="darek.sowa@mail.com",
+            //            }
+            //        },
+            //        Sender=new Sender
+            //        {
+            //            Id = 2,
+            //            SendersPersonalData=new List<SenderPersonalData>
+            //            {
+            //                new SenderPersonalData
+            //                {
+            //                    Id=1,
+            //                    Name="Władek",
+            //                    Surname="Kłoda"
+            //                }
+            //            }
+            //        }
+            //    },
+            //    new Email
+            //    {
+            //        Id = 2,
+            //        MessageSubject="Stara wiadomość",
+            //        MessageBody="Przykładowy tekst kolejnej wiadomości.",
+            //        EmailSendDate= DateTime.Now,
+            //        Receivers=new List<Receiver>
+            //        {
+            //            new Receiver
+            //            {
+            //                Id=3,
+            //                Name="Bogdan",
+            //                Surname="Jastrząb",
+            //                EmailAddress="bogdan.jastrzab@mail.com",
+            //            },
+            //            new Receiver
+            //            {
+            //                Id = 4,
+            //                Name="Mariusz",
+            //                Surname="Klocek",
+            //                EmailAddress="mariusz.klocek@mail.com",
+            //            }
+            //        },
+            //        Sender=new Sender
+            //        {
+            //            Id=1,
+            //            SendersPersonalData=new List<SenderPersonalData>
+            //            {
+            //                new SenderPersonalData
+            //                    {
+            //                        Id=1,
+            //                        Name="Bolesław",
+            //                        Surname="Dąb"
+            //                    }
+            //            }
+            //        }
+            //    }
+            //};
 
             return View(emails);
         }
@@ -187,15 +197,43 @@ namespace EmailManager.Controllers
 
         public ActionResult Email(int id = 0)
         {
-            if (id == 0)
-            {
-                return View(ViewModel());
+            var userId = User.Identity.GetUserId();
+            var email = id == 0 ? GetNewEmail(userId) : _emailRepository.GetEmail(id, userId);
 
-            }
-            else
+            var vm = PrepareEmailVm(email, userId);
+
+            return View(vm);
+
+
+            //if (id == 0)
+            //{
+            //    return View(ViewModel());
+
+            //}
+            //else
+            //{
+            //    return View(ViewModel());
+            //}
+        }
+
+        private object PrepareEmailVm(Email email, string userId)
+        {
+            return new EditEmailViewModel
             {
-                return View(ViewModel());
-            }
+                Email = email,
+                Heading = email.Id == 0 ? "Nowy email" : "Email",
+                Senders = _senderRepository.GetSenders(userId),
+                Footers = _footerRepository.GetFooters()
+            };
+        }
+
+        private Email GetNewEmail(string userId)
+        {
+            return new Email
+            {
+                UserId = userId,
+                EmailSendDate = DateTime.Now
+            };
         }
 
         //public ActionResult EmailAttachment(int EmailId = 0, int AttachmentId = 0)
