@@ -10,7 +10,7 @@
 {
     <button class="btn btn-primary mb-3" onclick='window.location.href="@Url.Action("EmailAttachment","Home", new {emailId=Model.Email.Id})"'>Dodaj załącznik</button>
     <button class="btn btn-secondary mb-3" onclick="generatePdf()">Generuj PDF</button>
-    <button class="btn btn-secondary mb-3" onclick='window.location.href="@Url.Action("EmailTemplate","Print", new {emailId=Model.Email.Id})"'>Podgląd Email</button>
+    <button class="btn btn-secondary mb-3" onclick='window.location.href="@Url.Action("EmailTemplate","EmailSending", new {emailId=Model.Email.Id})"'>Podgląd Email</button>
     <button class="btn btn-secondary mb-3" onclick="printEmail()">Drukuj Email</button>
 }
 
@@ -102,7 +102,38 @@
 
         }
 
+        function deleteAttachment(attach_id,email_id, btn) {
 
+            if (!confirm("Czy na pewno chcesz usunąć załącznik?"))
+                return;
+
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("DeleteAttachment","Home")",
+                data: {
+                    emailId: email_id,
+                    id: attach_id
+                },
+                success: function (data)
+                {
+                    if (data.Success) {
+                        var row = btn.parentNode.parentNode;
+                        row.parentNode.removeChild(row);
+                    }
+                    else
+                    {
+                        alert(data.Message);
+                    }
+                },
+                error: function (data)
+                {
+                    alert(data.Message);
+                },
+                dataType:'json'
+
+                });
+
+        }
 
         $(document).ready(function () {
 

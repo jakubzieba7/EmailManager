@@ -20,16 +20,18 @@
 
         <div>
             @Html.LabelFor(x => x.Email.AttachmentId)
-            @Html.TextBoxFor(x => x.Attachments, new { type = "file", name = "attachment", @class = "form-control" })
+            @Html.TextBoxFor(x => x.Attachments, new { type = "file", id = "attachment1", name = "attachment", @class = "form-control" })
             @Html.ValidationMessageFor(x => x.Email.AttachmentId)
         </div>
         <div>
             @Html.LabelFor(x => x.Email.AttachmentId)
-            @Html.TextBoxFor(x => x.Attachments, new { type = "file", name = "attachment", @class = "form-control", @Value = "Wybierz załącznik" })
+            @Html.TextBoxFor(x => x.Attachments, new { type = "file", id = "attachment2", name = "attachment", @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Email.AttachmentId)
         </div>
         <div>
             @Html.LabelFor(x => x.Email.AttachmentId)
-            @Html.TextBoxFor(x => x.Attachments, new { type = "file", name = "attachment", @class = "form-control", @Value = "Wybierz załącznik" })
+            @Html.TextBoxFor(x => x.Attachments, new { type = "file", id = "attachment3", name = "attachment", @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Email.AttachmentId)
         </div>
 
         <button class="btn btn-primary btn-lg mt-5 mb-5" type="submit">Załącz do maila</button>

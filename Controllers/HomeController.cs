@@ -126,9 +126,9 @@ namespace EmailManager.Controllers
                 Heading = "Edycja maila",
                 Email = new Email()
                 {
-                    FooterId=1,
-                    SenderId=1,
-                    Id=1,
+                    FooterId = 1,
+                    SenderId = 1,
+                    Id = 1,
                     AttachmentId = 1,
                     Senders = new List<Sender>
                     {

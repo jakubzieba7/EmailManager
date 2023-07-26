@@ -217,6 +217,11 @@ namespace EmailManager.Controllers
 
         }
 
+        public ActionResult EmailTemplate()
+        {
+            return View(EmailVM());
+        }
+
 
     }
 }
