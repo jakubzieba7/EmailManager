@@ -17,6 +17,7 @@ namespace EmailManager.Controllers
         private EmailRepository _emailRepository = new EmailRepository();
         private SenderRepository _senderRepository = new SenderRepository();
         private FooterRepository _footerRepository = new FooterRepository();
+        private AttachmentRepository _attachmentRepository = new AttachmentRepository();
 
         public ActionResult Index()
         {
@@ -250,6 +251,7 @@ namespace EmailManager.Controllers
             return new EditEmailAttachmentViewModel
             {
                 Attachment = emailAttachment,
+                Attachments=_attachmentRepository.GetAttachments(),
                 Heading = emailAttachment.Id == 0 ? "Nowy załącznik" : "Załącznik"
             };
         }
@@ -262,6 +264,7 @@ namespace EmailManager.Controllers
                 EmailId = emailId
             };
         }
+      
 
         [AllowAnonymous]
         public ActionResult About()

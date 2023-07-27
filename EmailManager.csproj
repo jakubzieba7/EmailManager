@@ -211,6 +211,7 @@
     <Compile Include="Models\Domains\SenderPersonalData.cs" />
     <Compile Include="Models\GetFileName.cs" />
     <Compile Include="Models\RazorViewToStringFormat.cs" />
+    <Compile Include="Models\Repositories\AttachmentRepository.cs" />
     <Compile Include="Models\Repositories\EmailRepository.cs" />
     <Compile Include="Models\Repositories\FooterRepository.cs" />
     <Compile Include="Models\Repositories\SenderRepository.cs" />

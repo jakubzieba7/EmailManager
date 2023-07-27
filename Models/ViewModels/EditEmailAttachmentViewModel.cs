@@ -9,6 +9,7 @@ namespace EmailManager.Models.ViewModels
     public class EditEmailAttachmentViewModel
     {
         public Attachment Attachment { get; set; }
+        public List<Attachment> Attachments { get; set; }
         public string Heading { get; set; }
 
     }
