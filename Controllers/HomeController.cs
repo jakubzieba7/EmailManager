@@ -251,7 +251,7 @@ namespace EmailManager.Controllers
             return new EditEmailAttachmentViewModel
             {
                 Attachment = emailAttachment,
-                Attachments=_attachmentRepository.GetAttachments(),
+                Attachments = _attachmentRepository.GetAttachments(),
                 Heading = emailAttachment.Id == 0 ? "Nowy załącznik" : "Załącznik"
             };
         }
@@ -268,7 +268,7 @@ namespace EmailManager.Controllers
         [HttpPost]
         public ActionResult Email(Email email)
         {
-            var userId= User.Identity.GetUserId();
+            var userId = User.Identity.GetUserId();
             email.UserId = userId;
 
             if (email.Id == 0)
@@ -278,6 +278,23 @@ namespace EmailManager.Controllers
 
             return RedirectToAction("Index");
 
+        }
+
+        [HttpPost]
+        public ActionResult EmailAttachment(Attachment attachment)
+        {
+            var userId= User.Identity.GetUserId();
+            var attachmentContent = _attachmentRepository.GetAttachmentContent(attachment.Id);
+            attachment.FileData = attachmentContent;
+
+            if (attachment.Id == 0)
+                _attachmentRepository.AddAttachment(attachment, userId);
+            else
+                _attachmentRepository.UpdateAttachment(attachment,userId);
+
+            _emailRepository.UpdateEmailAttachment(attachment);
+
+            return RedirectToAction("Email", new { id = attachment.EmailId });
         }
 
         [AllowAnonymous]

@@ -12,5 +12,20 @@ namespace EmailManager.Models.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public byte[] GetAttachmentContent(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void UpdateAttachment(Attachment attachment, string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void AddAttachment(Attachment attachment, string userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

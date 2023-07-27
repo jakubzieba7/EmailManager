@@ -32,5 +32,10 @@ namespace EmailManager.Models.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public void UpdateEmailAttachment(Attachment attachment)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
