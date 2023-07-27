@@ -1,4 +1,4 @@
-﻿@model EmailManager.Models.ViewModels.EditEmailViewModel
+﻿@model EmailManager.Models.ViewModels.EditEmailAttachmentViewModel
 
 @{
     ViewBag.Title = Model.Heading;
@@ -10,20 +10,22 @@
 {
     @Html.AntiForgeryToken()
 
-    //if (Model.Email.AttachmentId == 0)
+    //if (Model.Attachment.Id == 0)
     //{
 
 
     @(Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        @Html.HiddenFor(x => x.Email.Id)
+        @Html.HiddenFor(x => x.Attachment.Lp)
+        @Html.HiddenFor(x => x.Attachment.EmailId)
+        @Html.HiddenFor(x => x.Attachment.FileData)
 
         <div>
-            @Html.LabelFor(x => x.Email.AttachmentId)
-            @Html.TextBoxFor(x => x.Attachments, new { type = "file", id = "attachment1", name = "attachment", @class = "form-control" })
-            @Html.ValidationMessageFor(x => x.Email.AttachmentId)
+            @Html.LabelFor(x => x.Attachment.Id)
+            @Html.TextBoxFor(x => x.Attachment.Id, new { type = "file", id = "attachment1", name = "attachment", @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Attachment.Id)
         </div>
-        <div>
+        @*<div>
             @Html.LabelFor(x => x.Email.AttachmentId)
             @Html.TextBoxFor(x => x.Attachments, new { type = "file", id = "attachment2", name = "attachment", @class = "form-control" })
             @Html.ValidationMessageFor(x => x.Email.AttachmentId)
@@ -32,7 +34,7 @@
             @Html.LabelFor(x => x.Email.AttachmentId)
             @Html.TextBoxFor(x => x.Attachments, new { type = "file", id = "attachment3", name = "attachment", @class = "form-control" })
             @Html.ValidationMessageFor(x => x.Email.AttachmentId)
-        </div>
+        </div>*@
 
         <button class="btn btn-primary btn-lg mt-5 mb-5" type="submit">Załącz do maila</button>
     }

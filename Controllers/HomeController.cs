@@ -14,9 +14,9 @@ namespace EmailManager.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private EmailRepository _emailRepository=new EmailRepository();
-        private SenderRepository _senderRepository=new SenderRepository();
-        private FooterRepository _footerRepository=new FooterRepository();
+        private EmailRepository _emailRepository = new EmailRepository();
+        private SenderRepository _senderRepository = new SenderRepository();
+        private FooterRepository _footerRepository = new FooterRepository();
 
         public ActionResult Index()
         {
@@ -186,14 +186,14 @@ namespace EmailManager.Controllers
             return vm;
         }
 
-        public ActionResult EmailAttachment()
-        {
-            var vm = new EditEmailViewModel
-            {
-                Heading = "Dodaj załącznik"
-            };
-            return View(vm);
-        }
+        //public ActionResult EmailAttachment()
+        //{
+        //    var vm = new EditEmailViewModel
+        //    {
+        //        Heading = "Dodaj załącznik"
+        //    };
+        //    return View(vm);
+        //}
 
         public ActionResult Email(int id = 0)
         {
@@ -236,10 +236,32 @@ namespace EmailManager.Controllers
             };
         }
 
-        //public ActionResult EmailAttachment(int EmailId = 0, int AttachmentId = 0)
-        //{
-        //    return View(ViewModel());
-        //}
+        public ActionResult EmailAttachment(int emailId, int attachmentId = 0)
+        {
+            var userId = User.Identity.GetUserId();
+            var emailAttachment = attachmentId == 0 ? GetNewAttachment(emailId, attachmentId) : _emailRepository.GetAttachment(userId);
+            var vm = PrepareAttachmentVM(emailAttachment);
+
+            return View(ViewModel());
+        }
+
+        private EditEmailAttachmentViewModel PrepareAttachmentVM(Attachment emailAttachment)
+        {
+            return new EditEmailAttachmentViewModel
+            {
+                Attachment = emailAttachment,
+                Heading = emailAttachment.Id == 0 ? "Nowy załącznik" : "Załącznik"
+            };
+        }
+
+        private Attachment GetNewAttachment(int emailId, int attachmentId)
+        {
+            return new Attachment
+            {
+                Id = attachmentId,
+                EmailId = emailId
+            };
+        }
 
         [AllowAnonymous]
         public ActionResult About()
