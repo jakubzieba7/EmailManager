@@ -264,7 +264,21 @@ namespace EmailManager.Controllers
                 EmailId = emailId
             };
         }
-      
+
+        [HttpPost]
+        public ActionResult Email(Email email)
+        {
+            var userId= User.Identity.GetUserId();
+            email.UserId = userId;
+
+            if (email.Id == 0)
+                _emailRepository.Add(email);
+            else
+                _emailRepository.Update(email);
+
+            return RedirectToAction("Index");
+
+        }
 
         [AllowAnonymous]
         public ActionResult About()

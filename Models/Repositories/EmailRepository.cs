@@ -22,5 +22,15 @@ namespace EmailManager.Models.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public void Add(Email email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Email email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
