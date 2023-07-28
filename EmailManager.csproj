@@ -198,6 +198,10 @@
     <Compile Include="Migrations\202307211104594_AttachmentDomainEdited.designer.cs">
       <DependentUpon>202307211104594_AttachmentDomainEdited.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202307281157122_AddedNameToSenderDomain.cs" />
+    <Compile Include="Migrations\202307281157122_AddedNameToSenderDomain.designer.cs">
+      <DependentUpon>202307281157122_AddedNameToSenderDomain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Domains\Address.cs" />
     <Compile Include="Models\Domains\Attachment.cs" />
@@ -459,6 +463,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202307211104594_AttachmentDomainEdited.resx">
       <DependentUpon>202307211104594_AttachmentDomainEdited.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202307281157122_AddedNameToSenderDomain.resx">
+      <DependentUpon>202307281157122_AddedNameToSenderDomain.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

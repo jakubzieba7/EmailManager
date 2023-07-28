@@ -28,6 +28,7 @@ namespace EmailManager.Models.Domains
         [Required]
         [ForeignKey("User")]
         public string UserId { get; set; }
+        public string Name { get; set; }
         public int AttachmentId { get; set; }
 
         public ApplicationUser User { get; set; }
