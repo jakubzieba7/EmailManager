@@ -33,7 +33,17 @@ namespace EmailManager.Models.Repositories
             throw new NotImplementedException();
         }
 
-        public void UpdateEmailAttachment(Attachment attachment)
+        public Attachment UpdateEmailAttachment(int emailId, string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteAttachment(int emailId, string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteEmail(int emailId, string userId)
         {
             throw new NotImplementedException();
         }

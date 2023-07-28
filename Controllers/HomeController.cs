@@ -283,18 +283,55 @@ namespace EmailManager.Controllers
         [HttpPost]
         public ActionResult EmailAttachment(Attachment attachment)
         {
-            var userId= User.Identity.GetUserId();
+            var userId = User.Identity.GetUserId();
             var attachmentContent = _attachmentRepository.GetAttachmentContent(attachment.Id);
             attachment.FileData = attachmentContent;
 
             if (attachment.Id == 0)
                 _attachmentRepository.AddAttachment(attachment, userId);
             else
-                _attachmentRepository.UpdateAttachment(attachment,userId);
+                _attachmentRepository.UpdateAttachment(attachment, userId);
 
-            _emailRepository.UpdateEmailAttachment(attachment);
+            _emailRepository.UpdateEmailAttachment(attachment.EmailId, userId);
 
             return RedirectToAction("Email", new { id = attachment.EmailId });
+        }
+
+        [HttpPost]
+        public ActionResult DeleteEmail(int emailId)
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                _emailRepository.DeleteEmail(emailId, userId);
+            }
+            catch (Exception exception)
+            {
+                //logowanie do pliku
+                return Json(new { Success = false, Message = exception.Message });
+            }
+
+            return Json(new { Success = true });
+        }
+
+        [HttpPost]
+        public ActionResult DeleteAttachment(int emailId, int attachmentID)
+        {
+            var attachment = new Attachment();
+
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                _emailRepository.DeleteAttachment(emailId, userId);
+                attachment = _emailRepository.UpdateEmailAttachment(emailId, userId);
+            }
+            catch (Exception exception)
+            {
+                //logowanie do pliku
+                return Json(new { Success = false, Message = exception.Message });
+            }
+
+            return Json(new { Success = true, Attachment = attachment });
         }
 
         [AllowAnonymous]
