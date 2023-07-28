@@ -1,8 +1,6 @@
 ﻿using EmailManager.Models.Domains;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace EmailManager.Models.Repositories
 {
@@ -10,7 +8,10 @@ namespace EmailManager.Models.Repositories
     {
         public List<Sender> GetSenders(string userId)
         {
-            throw new NotImplementedException();
+            using (var context = new ApplicationDbContext())
+            {
+                return context.Senders.Where(x => x.UserId == userId).ToList();
+            }
         }
     }
 }
