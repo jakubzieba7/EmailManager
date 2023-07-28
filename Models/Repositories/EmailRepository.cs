@@ -64,15 +64,15 @@ namespace EmailManager.Models.Repositories
 
         public void Update(Email email)
         {
-            using (var context=new ApplicationDbContext())
+            using (var context = new ApplicationDbContext())
             {
-                var emailToUpdate = context.Emails.Single(x => x.Id == email.Id);
+                var emailToUpdate = context.Emails.Single(x => x.Id == email.Id && x.UserId == email.UserId);
 
-                emailToUpdate.MessageSubject=email.MessageSubject;
-                emailToUpdate.MessageBody=email.MessageBody;
+                emailToUpdate.MessageSubject = email.MessageSubject;
+                emailToUpdate.MessageBody = email.MessageBody;
                 emailToUpdate.Footer = email.Footer;
                 emailToUpdate.Receiver = email.Receiver;
-                emailToUpdate.EmailSendDate=DateTime.Now;
+                emailToUpdate.EmailSendDate = DateTime.Now;
 
                 context.SaveChanges();
             }
@@ -85,12 +85,24 @@ namespace EmailManager.Models.Repositories
 
         public void DeleteAttachment(int emailId, string userId)
         {
-            throw new NotImplementedException();
+            using (var context=new ApplicationDbContext())
+            {
+                var attachmentToDelete = context.Attachments.Single(x => x.EmailId == emailId && x.Email.UserId == userId);
+
+                context.Attachments.Remove(attachmentToDelete);
+                context.SaveChanges();
+            }
         }
 
         public void DeleteEmail(int emailId, string userId)
         {
-            throw new NotImplementedException();
+            using (var context=new ApplicationDbContext())
+            {
+                var emailToDelete = context.Emails.Single(x => x.Id == emailId && x.UserId == userId);
+
+                context.Emails.Remove(emailToDelete);
+                context.SaveChanges();
+            }
         }
     }
 }
