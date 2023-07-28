@@ -224,7 +224,7 @@ namespace EmailManager.Controllers
                 Email = email,
                 Heading = email.Id == 0 ? "Nowy email" : "Email",
                 Senders = _senderRepository.GetSenders(userId),
-                Footers = _footerRepository.GetFooters()
+                Footers = _footerRepository.GetFooters(userId)
             };
         }
 
