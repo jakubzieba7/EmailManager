@@ -64,7 +64,18 @@ namespace EmailManager.Models.Repositories
 
         public void Update(Email email)
         {
-            throw new NotImplementedException();
+            using (var context=new ApplicationDbContext())
+            {
+                var emailToUpdate = context.Emails.Single(x => x.Id == email.Id);
+
+                emailToUpdate.MessageSubject=email.MessageSubject;
+                emailToUpdate.MessageBody=email.MessageBody;
+                emailToUpdate.Footer = email.Footer;
+                emailToUpdate.Receiver = email.Receiver;
+                emailToUpdate.EmailSendDate=DateTime.Now;
+
+                context.SaveChanges();
+            }
         }
 
         public Attachment UpdateEmailAttachment(int emailId, string userId)
