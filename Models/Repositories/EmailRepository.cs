@@ -54,7 +54,12 @@ namespace EmailManager.Models.Repositories
 
         public void Add(Email email)
         {
-            throw new NotImplementedException();
+            using (var context = new ApplicationDbContext())
+            {
+                email.EmailSendDate = DateTime.Now;
+                context.Emails.Add(email);
+                context.SaveChanges();
+            }
         }
 
         public void Update(Email email)
