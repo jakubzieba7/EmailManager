@@ -17,9 +17,29 @@ namespace EmailManager.Models.Repositories
             }
         }
 
-        public Email GetEmail(int id, string userId)
+        public Email GetEmail(int emailId, string userId)
         {
-            throw new NotImplementedException();
+            using (var context=new ApplicationDbContext())
+            {
+                return context.Emails
+                    .Include(x => x.Attachments)
+                    .Include(x => x.Attachments.Select(y => y.FileName))
+                    .Include(x => x.Attachments.Select(y => y.ContentType))
+                    .Include(x => x.Senders)
+                    .Include(x => x.Senders.Select(y => y.SendersPersonalData))
+                    .Include(x => x.Senders.Select(y => y.SenderEmailsParams))
+                    .Include(x => x.Senders.Select(y => y.SendersCompanyData))
+                    .Include(x => x.User)
+                    .Include(x => x.User.Address)
+                    .Include(x => x.Receivers)
+                    .Include(x => x.Receivers.Select(y => y.EmailAddress))
+                    .Include(x => x.Receivers.Select(y => y.Name))
+                    .Include(x => x.Receivers.Select(y => y.Surname))
+                    .Include(x => x.Footer)
+                    .Include(x => x.MessageBody)
+                    .Include(x => x.MessageSubject)
+                    .Single(x => x.UserId == userId && x.Id == emailId);
+            }
         }
 
         public Attachment GetAttachment(string userId)
