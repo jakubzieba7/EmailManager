@@ -11,15 +11,15 @@ namespace EmailManager.Models.Repositories
     {
         public List<Email> GetEmails(string userId)
         {
-            using (var context=new ApplicationDbContext())
+            using (var context = new ApplicationDbContext())
             {
-                return context.Emails.Include(x=>x.Sender).Where(x=>x.UserId==userId).ToList();
+                return context.Emails.Include(x => x.Sender).Where(x => x.UserId == userId).ToList();
             }
         }
 
         public Email GetEmail(int emailId, string userId)
         {
-            using (var context=new ApplicationDbContext())
+            using (var context = new ApplicationDbContext())
             {
                 return context.Emails
                     .Include(x => x.Attachments)
@@ -42,9 +42,14 @@ namespace EmailManager.Models.Repositories
             }
         }
 
-        public Attachment GetAttachment(string userId)
+        public Attachment GetAttachment(string userId, int attachmentId)
         {
-            throw new NotImplementedException();
+            using (var context = new ApplicationDbContext())
+            {
+                return context.Attachments
+                    .Include(x => x.Email)
+                    .Single(x => x.Email.UserId == userId && x.Email.AttachmentId == attachmentId);
+            }
         }
 
         public void Add(Email email)

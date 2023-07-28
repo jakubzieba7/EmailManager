@@ -240,7 +240,7 @@ namespace EmailManager.Controllers
         public ActionResult EmailAttachment(int emailId, int attachmentId = 0)
         {
             var userId = User.Identity.GetUserId();
-            var emailAttachment = attachmentId == 0 ? GetNewAttachment(emailId, attachmentId) : _emailRepository.GetAttachment(userId);
+            var emailAttachment = attachmentId == 0 ? GetNewAttachment(emailId, attachmentId) : _emailRepository.GetAttachment(userId, attachmentId);
             var vm = PrepareAttachmentVM(emailAttachment);
 
             return View(ViewModel());
