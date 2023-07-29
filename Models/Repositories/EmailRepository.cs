@@ -78,16 +78,24 @@ namespace EmailManager.Models.Repositories
             }
         }
 
-        public Attachment UpdateEmailAttachment(int emailId, string userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAttachment(int emailId, string userId)
+        public void UpdateEmailAttachment(Attachment attachment, string userId)
         {
             using (var context=new ApplicationDbContext())
             {
-                var attachmentToDelete = context.Attachments.Single(x => x.EmailId == emailId && x.Email.UserId == userId);
+                var attachmentToUpdate = context.Attachments.Single(x => x.Id == attachment.Id && x.EmailId == attachment.EmailId && x.Email.UserId == userId);
+
+                attachmentToUpdate.Lp=attachment.Lp;
+                attachmentToUpdate.ContentType = attachment.ContentType;
+                attachmentToUpdate.FileName = attachment.FileName;
+                attachmentToUpdate.FileData= attachment.FileData;
+            }
+        }
+
+        public void DeleteAttachment(int emailId, int attachmentId, string userId)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var attachmentToDelete = context.Attachments.Single(x => x.EmailId == emailId && x.Email.AttachmentId == attachmentId && x.Email.UserId == userId);
 
                 context.Attachments.Remove(attachmentToDelete);
                 context.SaveChanges();
@@ -96,7 +104,7 @@ namespace EmailManager.Models.Repositories
 
         public void DeleteEmail(int emailId, string userId)
         {
-            using (var context=new ApplicationDbContext())
+            using (var context = new ApplicationDbContext())
             {
                 var emailToDelete = context.Emails.Single(x => x.Id == emailId && x.UserId == userId);
 

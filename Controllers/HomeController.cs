@@ -243,7 +243,7 @@ namespace EmailManager.Controllers
             var emailAttachment = attachmentId == 0 ? GetNewAttachment(emailId, attachmentId) : _emailRepository.GetAttachment(userId, attachmentId);
             var vm = PrepareAttachmentVM(emailAttachment);
 
-            return View(ViewModel());
+            return View(vm);
         }
 
         private EditEmailAttachmentViewModel PrepareAttachmentVM(Attachment emailAttachment)
@@ -292,7 +292,7 @@ namespace EmailManager.Controllers
             else
                 _attachmentRepository.UpdateAttachment(attachment, userId);
 
-            _emailRepository.UpdateEmailAttachment(attachment.EmailId, userId);
+            _emailRepository.UpdateEmailAttachment(attachment, userId);
 
             return RedirectToAction("Email", new { id = attachment.EmailId });
         }
@@ -315,15 +315,13 @@ namespace EmailManager.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteAttachment(int emailId, int attachmentID)
+        public ActionResult DeleteAttachment(Email email, int attachmentID)
         {
-            var attachment = new Attachment();
-
             try
             {
                 var userId = User.Identity.GetUserId();
-                _emailRepository.DeleteAttachment(emailId, userId);
-                attachment = _emailRepository.UpdateEmailAttachment(emailId, userId);
+                _emailRepository.DeleteAttachment(email.Id, attachmentID, userId);
+                _emailRepository.Update(email);
             }
             catch (Exception exception)
             {
@@ -331,7 +329,7 @@ namespace EmailManager.Controllers
                 return Json(new { Success = false, Message = exception.Message });
             }
 
-            return Json(new { Success = true, Attachment = attachment });
+            return Json(new { Success = true, Email = email });
         }
 
         [AllowAnonymous]
