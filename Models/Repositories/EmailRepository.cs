@@ -78,6 +78,18 @@ namespace EmailManager.Models.Repositories
             }
         }
 
+        public void AddEmailAttachment(Attachment attachment, string userId)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                //weryfikacja czy dany rekord istnieje w bazie danych
+                var email = context.Emails.Single(x => x.Id == attachment.EmailId && x.UserId == userId);
+
+                context.Attachments.Add(attachment);
+                context.SaveChanges();
+            }
+        }
+
         public void UpdateEmailAttachment(Attachment attachment, string userId)
         {
             using (var context=new ApplicationDbContext())

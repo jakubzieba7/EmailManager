@@ -10,7 +10,10 @@ namespace EmailManager.Models.Repositories
     {
         public List<Attachment> GetAttachments()
         {
-            throw new NotImplementedException();
+            using (var context=new ApplicationDbContext())
+            {
+                return context.Attachments.ToList();
+            }
         }
 
         public byte[] GetAttachmentContent(int id)
@@ -18,14 +21,6 @@ namespace EmailManager.Models.Repositories
             throw new NotImplementedException();
         }
 
-        internal void UpdateAttachment(Attachment attachment, string userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void AddAttachment(Attachment attachment, string userId)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

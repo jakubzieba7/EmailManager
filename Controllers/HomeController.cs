@@ -288,9 +288,9 @@ namespace EmailManager.Controllers
             attachment.FileData = attachmentContent;
 
             if (attachment.Id == 0)
-                _attachmentRepository.AddAttachment(attachment, userId);
+                _emailRepository.AddEmailAttachment(attachment, userId);
             else
-                _attachmentRepository.UpdateAttachment(attachment, userId);
+                _emailRepository.UpdateEmailAttachment(attachment, userId);
 
             _emailRepository.UpdateEmailAttachment(attachment, userId);
 
