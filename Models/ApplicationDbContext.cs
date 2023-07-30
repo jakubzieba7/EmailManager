@@ -17,7 +17,8 @@ namespace EmailManager.Models
         public DbSet<Email> Emails { get; set; }
         public DbSet<FooterData> Footers { get; set; }
         public DbSet<Footer> FooterConns { get; set; }
-        public DbSet<Receiver> Receivers { get; set; }
+        public DbSet<ReceiverData> Receivers { get; set; }
+        public DbSet<Receiver> ReceiverConns { get; set; }
         public DbSet<Sender> Senders { get; set; }
         public DbSet<SenderCompanyData> SendersCompanyData { get; set; }
         public DbSet<SenderPersonalData> SendersPersonalData { get; set; }

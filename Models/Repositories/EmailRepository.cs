@@ -34,7 +34,6 @@ namespace EmailManager.Models.Repositories
                     .Include(x => x.Receivers)
                     .Include(x => x.Receivers.Select(y => y.EmailAddress))
                     .Include(x => x.Receivers.Select(y => y.Name))
-                    .Include(x => x.Receivers.Select(y => y.Surname))
                     .Include(x => x.FooterData)
                     .Include(x => x.MessageBody)
                     .Include(x => x.MessageSubject)

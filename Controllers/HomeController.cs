@@ -130,10 +130,10 @@ namespace EmailManager.Controllers
                     new FooterData { Id = 1, ComplimentaryClose = "Pozdrawiam" },
                     new FooterData { Id = 2, ComplimentaryClose = "Best regards" }
                 },
-                Receivers = new List<Receiver>
+                Receivers = new List<ReceiverData>
                 {
-                    new Receiver { Id = 1, Name = "Jacek", Surname = "Stokłosa", EmailAddress = "jacek.stoklosa@email.com" },
-                    new Receiver { Id = 2, Name = "Jakub", Surname = "Zięba", EmailAddress = "jakubzieba7@gmail.com" }
+                    new ReceiverData { Id = 1, Name = "Jacek Stokłosa", EmailAddress = "jacek.stoklosa@email.com" },
+                    new ReceiverData { Id = 2, Name = "Jakub Zięba", EmailAddress = "jakubzieba7@gmail.com" }
                 },
                 Heading = "Edycja maila",
                 Email = new Email()

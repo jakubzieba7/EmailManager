@@ -175,7 +175,16 @@
     <Compile Include="Migrations\202307301340129_FooterDivision.designer.cs">
       <DependentUpon>202307301340129_FooterDivision.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202307301434116_ReceiverDivisionEdit.cs" />
+    <Compile Include="Migrations\202307301434116_ReceiverDivisionEdit.designer.cs">
+      <DependentUpon>202307301434116_ReceiverDivisionEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202307301442382_ReceiverDivisionEdit2.cs" />
+    <Compile Include="Migrations\202307301442382_ReceiverDivisionEdit2.designer.cs">
+      <DependentUpon>202307301442382_ReceiverDivisionEdit2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Domains\FooterData.cs" />
+    <Compile Include="Models\Domains\ReceiverData.cs" />
     <Compile Include="Models\Repositories\ReceiverRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -482,6 +491,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202307301340129_FooterDivision.resx">
       <DependentUpon>202307301340129_FooterDivision.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202307301434116_ReceiverDivisionEdit.resx">
+      <DependentUpon>202307301434116_ReceiverDivisionEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202307301442382_ReceiverDivisionEdit2.resx">
+      <DependentUpon>202307301442382_ReceiverDivisionEdit2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

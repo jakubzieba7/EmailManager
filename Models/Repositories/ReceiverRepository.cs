@@ -9,7 +9,7 @@ namespace EmailManager.Controllers
     public class ReceiverRepository
     {
 
-        public List<Receiver> GetReceivers(string userId)
+        public List<ReceiverData> GetReceivers(string userId)
         {
             using (var context=new ApplicationDbContext())
             {

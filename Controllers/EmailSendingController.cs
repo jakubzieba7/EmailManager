@@ -36,10 +36,10 @@ namespace EmailManager.Controllers
             var vm = new EditEmailViewModel
             {
 
-                Receivers = new List<Receiver>
+                Receivers = new List<ReceiverData>
                 {
                     //new Receiver { Id = 1, Name = "Jacek", Surname = "Stokłosa", EmailAddress = "jacek.stoklosa@email.com" },
-                    new Receiver { Id = 2, Name = "Jakub", Surname = "Zięba", EmailAddress = "jakubzieba7@gmail.com" }
+                    new ReceiverData { Id = 2, Name = "Jakub Zięba", EmailAddress = "jakubzieba7@gmail.com" }
                 },
                 Heading = "Edycja maila",
                 Email = new Email()
