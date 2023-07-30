@@ -10,7 +10,7 @@ namespace EmailManager.Models.ViewModels
     {
         public Email Email { get; set; }
         public List<Receiver> Receivers { get; set; }
-        public List<Footer> Footers { get; set; }
+        public List<FooterData> Footers { get; set; }
         public List<Sender> Senders { get; set; }
         public List<Attachment> Attachments { get; set; }
         //public List<HttpPostedFileBase> Attachments { get; set; }

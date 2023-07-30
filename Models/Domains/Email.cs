@@ -37,7 +37,7 @@ namespace EmailManager.Models.Domains
         public ApplicationUser User { get; set; }
         public Sender Sender { get; set; }
         [Display(Name = "Stopka")]
-        public Footer Footer { get; set; }
+        public FooterData FooterData { get; set; }
         public ICollection<Attachment> Attachments { get; set; }
         [Display(Name = "Odbiorcy wiadomości")]
         public ICollection<Receiver> Receivers { get; set; }

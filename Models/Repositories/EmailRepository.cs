@@ -35,7 +35,7 @@ namespace EmailManager.Models.Repositories
                     .Include(x => x.Receivers.Select(y => y.EmailAddress))
                     .Include(x => x.Receivers.Select(y => y.Name))
                     .Include(x => x.Receivers.Select(y => y.Surname))
-                    .Include(x => x.Footer)
+                    .Include(x => x.FooterData)
                     .Include(x => x.MessageBody)
                     .Include(x => x.MessageSubject)
                     .Single(x => x.UserId == userId && x.Id == emailId);
@@ -70,7 +70,7 @@ namespace EmailManager.Models.Repositories
 
                 emailToUpdate.MessageSubject = email.MessageSubject;
                 emailToUpdate.MessageBody = email.MessageBody;
-                emailToUpdate.Footer = email.Footer;
+                emailToUpdate.FooterData = email.FooterData;
                 emailToUpdate.Receiver = email.Receiver;
                 emailToUpdate.EmailSendDate = DateTime.Now;
 

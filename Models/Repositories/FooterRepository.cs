@@ -6,7 +6,7 @@ namespace EmailManager.Models.Repositories
 {
     public class FooterRepository
     {
-        public List<Footer> GetFooters(string userId)
+        public List<FooterData> GetFooters(string userId)
         {
             using (var context = new ApplicationDbContext())
             {

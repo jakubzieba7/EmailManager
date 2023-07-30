@@ -126,9 +126,9 @@ namespace EmailManager.Controllers
                         }
                     }
                 },
-                Footers = new List<Footer> {
-                    new Footer { Id = 1, ComplimentaryClose = "Pozdrawiam", SenderId = 1 },
-                    new Footer { Id = 2, ComplimentaryClose = "Best regards", SenderId = 1 }
+                Footers = new List<FooterData> {
+                    new FooterData { Id = 1, ComplimentaryClose = "Pozdrawiam" },
+                    new FooterData { Id = 2, ComplimentaryClose = "Best regards" }
                 },
                 Receivers = new List<Receiver>
                 {

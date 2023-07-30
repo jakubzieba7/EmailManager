@@ -171,6 +171,11 @@
     <Compile Include="Controllers\EmailSendingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Migrations\202307301340129_FooterDivision.cs" />
+    <Compile Include="Migrations\202307301340129_FooterDivision.designer.cs">
+      <DependentUpon>202307301340129_FooterDivision.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Domains\FooterData.cs" />
     <Compile Include="Models\Repositories\ReceiverRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -474,6 +479,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202307291253309_EditedReceiverDomain.resx">
       <DependentUpon>202307291253309_EditedReceiverDomain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202307301340129_FooterDivision.resx">
+      <DependentUpon>202307301340129_FooterDivision.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
