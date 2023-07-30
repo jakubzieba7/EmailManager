@@ -171,6 +171,7 @@
     <Compile Include="Controllers\EmailSendingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Models\Repositories\ReceiverRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -201,6 +202,10 @@
     <Compile Include="Migrations\202307281157122_AddedNameToSenderDomain.cs" />
     <Compile Include="Migrations\202307281157122_AddedNameToSenderDomain.designer.cs">
       <DependentUpon>202307281157122_AddedNameToSenderDomain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202307291253309_EditedReceiverDomain.cs" />
+    <Compile Include="Migrations\202307291253309_EditedReceiverDomain.designer.cs">
+      <DependentUpon>202307291253309_EditedReceiverDomain.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Domains\Address.cs" />
@@ -466,6 +471,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202307281157122_AddedNameToSenderDomain.resx">
       <DependentUpon>202307281157122_AddedNameToSenderDomain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202307291253309_EditedReceiverDomain.resx">
+      <DependentUpon>202307291253309_EditedReceiverDomain.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

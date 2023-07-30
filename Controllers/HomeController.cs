@@ -16,6 +16,7 @@ namespace EmailManager.Controllers
     {
         private EmailRepository _emailRepository = new EmailRepository();
         private SenderRepository _senderRepository = new SenderRepository();
+        private ReceiverRepository _receiverRepository = new ReceiverRepository();
         private FooterRepository _footerRepository = new FooterRepository();
         private AttachmentRepository _attachmentRepository = new AttachmentRepository();
 
@@ -224,7 +225,9 @@ namespace EmailManager.Controllers
                 Email = email,
                 Heading = email.Id == 0 ? "Nowy email" : "Email",
                 Senders = _senderRepository.GetSenders(userId),
-                Footers = _footerRepository.GetFooters(userId)
+                Footers = _footerRepository.GetFooters(userId),
+                Receivers = _receiverRepository.GetReceivers(userId),
+                Attachments = _attachmentRepository.GetAttachments(userId)
             };
         }
 
@@ -251,8 +254,8 @@ namespace EmailManager.Controllers
             return new EditEmailAttachmentViewModel
             {
                 Attachment = emailAttachment,
-                Attachments = _attachmentRepository.GetAttachments(),
-                Heading = emailAttachment.Id == 0 ? "Nowy załącznik" : "Załącznik"
+                Attachments = _attachmentRepository.GetAttachments(emailAttachment.Email.UserId),
+                Heading = emailAttachment.Id == 0 ? "Nowy załącznik" : "Załącznik",
             };
         }
 
@@ -281,20 +284,36 @@ namespace EmailManager.Controllers
         }
 
         [HttpPost]
-        public ActionResult EmailAttachment(Attachment attachment)
+        //public ActionResult EmailAttachment(Attachment attachment)
+        //{
+        //    var userId = User.Identity.GetUserId();
+        //    var attachmentContent = _attachmentRepository.GetAttachmentContent(attachment.Id);
+        //    attachment.FileData = attachmentContent;
+
+        //    if (attachment.Id == 0)
+        //        _emailRepository.AddEmailAttachment(attachment, userId);
+        //    else
+        //        _emailRepository.UpdateEmailAttachment(attachment, userId);
+
+        //    _emailRepository.UpdateEmailAttachment(attachment, userId);
+
+        //    return RedirectToAction("Email", new { id = attachment.EmailId });
+        //}
+
+        public ActionResult EmailAttachment(EditEmailAttachmentViewModel attachment)
         {
             var userId = User.Identity.GetUserId();
-            var attachmentContent = _attachmentRepository.GetAttachmentContent(attachment.Id);
-            attachment.FileData = attachmentContent;
+            var attachmentContent = _attachmentRepository.GetAttachmentContent(attachment);
+            attachment.Attachment.FileData = attachmentContent;
 
-            if (attachment.Id == 0)
-                _emailRepository.AddEmailAttachment(attachment, userId);
+            if (attachment.Attachment.Id == 0)
+                _emailRepository.AddEmailAttachment(attachment.Attachment, userId);
             else
-                _emailRepository.UpdateEmailAttachment(attachment, userId);
+                _emailRepository.UpdateEmailAttachment(attachment.Attachment, userId);
 
-            _emailRepository.UpdateEmailAttachment(attachment, userId);
+            _emailRepository.UpdateEmailAttachment(attachment.Attachment, userId);
 
-            return RedirectToAction("Email", new { id = attachment.EmailId });
+            return RedirectToAction("Email", new { id = attachment.Attachment.EmailId });
         }
 
         [HttpPost]

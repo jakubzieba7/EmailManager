@@ -17,7 +17,6 @@ namespace EmailManager.Models.Domains
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        [Required]
         public string EmailAddress { get; set; }
         public int EmailReceivedId { get; set; }
         public int SenderId { get; set; }
