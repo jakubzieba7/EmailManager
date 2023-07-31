@@ -44,9 +44,9 @@
 
 
             <div class="form-group">
-                @Html.LabelFor(x => x.Email.Receivers)
-                @Html.DropDownListFor(x => x.Email.Receivers, new SelectList(Model.Receivers, "Id", "Name"), "-- Wybierz odbiorcę --", new { @class = "form-control" })
-                @Html.ValidationMessageFor(x => x.Email.Receivers)
+                @Html.LabelFor(x => x.Email.ReceiverId)
+                @Html.DropDownListFor(x => x.Email.ReceiverId, new SelectList(Model.Receivers, "Id", "Name"), "-- Wybierz odbiorcę --", new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Email.ReceiverId)
             </div>
 
             <div class="form-group">

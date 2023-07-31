@@ -23,8 +23,8 @@ namespace EmailManager.Models.Domains
         public string MessageBody { get; set; }
         [Required]
         [Display(Name = "Odbiorca wiadomości")]
-        public string Receiver { get; set; }
-        public string ReceiverDW { get; set; }
+        public int ReceiverId { get; set; }
+        public int ReceiverCCId { get; set; }
         public int SenderId { get; set; }
         public int FooterId { get; set; }
         public int AttachmentId { get; set; }

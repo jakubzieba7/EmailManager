@@ -183,6 +183,10 @@
     <Compile Include="Migrations\202307301442382_ReceiverDivisionEdit2.designer.cs">
       <DependentUpon>202307301442382_ReceiverDivisionEdit2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202307311521286_EditEmailProperties.cs" />
+    <Compile Include="Migrations\202307311521286_EditEmailProperties.designer.cs">
+      <DependentUpon>202307311521286_EditEmailProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Domains\FooterData.cs" />
     <Compile Include="Models\Domains\ReceiverData.cs" />
     <Compile Include="Models\Repositories\ReceiverRepository.cs" />
@@ -497,6 +501,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202307301442382_ReceiverDivisionEdit2.resx">
       <DependentUpon>202307301442382_ReceiverDivisionEdit2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202307311521286_EditEmailProperties.resx">
+      <DependentUpon>202307311521286_EditEmailProperties.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

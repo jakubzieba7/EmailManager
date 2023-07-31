@@ -69,8 +69,8 @@ namespace EmailManager.Models.Repositories
 
                 emailToUpdate.MessageSubject = email.MessageSubject;
                 emailToUpdate.MessageBody = email.MessageBody;
-                emailToUpdate.FooterData = email.FooterData;
-                emailToUpdate.Receiver = email.Receiver;
+                emailToUpdate.FooterId = email.FooterId;
+                emailToUpdate.ReceiverId = email.ReceiverId;
                 emailToUpdate.EmailSendDate = DateTime.Now;
 
                 context.SaveChanges();
