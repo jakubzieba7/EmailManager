@@ -11,7 +11,7 @@ namespace EmailManager.Models.Domains
         public Email()
         {
             Attachments = new Collection<Attachment>();
-            Receivers = new Collection<ReceiverData>();
+            Receivers = new Collection<Receiver>();
             Senders = new Collection<Sender>();
         }
 
@@ -24,7 +24,7 @@ namespace EmailManager.Models.Domains
         [Required]
         [Display(Name = "Odbiorca wiadomości")]
         public int ReceiverId { get; set; }
-        public int ReceiverCCId { get; set; }
+        //public int ReceiverCCId { get; set; }
         public int SenderId { get; set; }
         public int FooterId { get; set; }
         public int AttachmentId { get; set; }
@@ -37,10 +37,10 @@ namespace EmailManager.Models.Domains
         public ApplicationUser User { get; set; }
         public Sender Sender { get; set; }
         [Display(Name = "Stopka")]
-        public FooterData FooterData { get; set; }
+        public Footer Footer { get; set; }
         public ICollection<Attachment> Attachments { get; set; }
         [Display(Name = "Odbiorcy wiadomości")]
-        public ICollection<ReceiverData> Receivers { get; set; }
+        public ICollection<Receiver> Receivers { get; set; }
         public ICollection<Sender> Senders { get; set; }
 
     }

@@ -7,13 +7,13 @@ namespace EmailManager.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class EditEmailProperties : IMigrationMetadata
+    public sealed partial class ReceiverDivision : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(EditEmailProperties));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ReceiverDivision));
         
         string IMigrationMetadata.Id
         {
-            get { return "202307311521286_EditEmailProperties"; }
+            get { return "202308031609012_ReceiverDivision"; }
         }
         
         string IMigrationMetadata.Source

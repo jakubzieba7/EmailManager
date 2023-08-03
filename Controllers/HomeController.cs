@@ -111,21 +111,21 @@ namespace EmailManager.Controllers
         {
             var vm = new EditEmailViewModel
             {
-                Senders = new List<Sender>
-                {
-                    new Sender
-                    {
-                        Id = 1,
-                        SendersPersonalData = new List<SenderPersonalData>
-                        {
-                            new SenderPersonalData { Id = 1, Name = "Jakub", Surname = "Zięba", CompanyPositionPl = "Konsultant techniczny" }
-                        },
-                        SenderEmailsParams = new List<SenderEmailParams>
-                        {
-                            new SenderEmailParams { Id = 1, HostSmtp = "smtp.gmail.com", Port = 587, EnableSsl = true, SenderEmail = "services.report.new@gmail.com", SenderEmailPassword = "", SenderName = "Jakub Zięba" }
-                        }
-                    }
-                },
+                //Senders = new List<SenderPersonalData>
+                //{
+                //    new SenderPersonalData
+                //    {
+                //        Id = 1,
+                //        //SendersPersonalData = new List<SenderPersonalData>
+                //        //{
+                //        //    new SenderPersonalData { Id = 1, Name = "Jakub Zięba", CompanyPositionPl = "Konsultant techniczny" }
+                //        //},
+                //        //SenderEmailsParams = new List<SenderEmailParams>
+                //        //{
+                //        //    new SenderEmailParams { Id = 1, HostSmtp = "smtp.gmail.com", Port = 587, EnableSsl = true, SenderEmail = "services.report.new@gmail.com", SenderEmailPassword = "", SenderName = "Jakub Zięba" }
+                //        //}
+                //    }
+                //},
                 Footers = new List<FooterData> {
                     new FooterData { Id = 1, ComplimentaryClose = "Pozdrawiam" },
                     new FooterData { Id = 2, ComplimentaryClose = "Best regards" }
@@ -142,21 +142,21 @@ namespace EmailManager.Controllers
                     SenderId = 1,
                     Id = 1,
                     AttachmentId = 1,
-                    Senders = new List<Sender>
-                    {
-                        new Sender
-                        {
-                            Id = 1,
-                            SendersPersonalData = new List<SenderPersonalData>
-                            {
-                                new SenderPersonalData { Id = 1, Name = "Jakub", Surname = "Zięba", CompanyPositionPl = "Konsultant techniczny" }
-                            },
-                            SenderEmailsParams = new List<SenderEmailParams>
-                            {
-                                new SenderEmailParams { Id = 1, HostSmtp = "smtp.gmail.com", Port = 587, EnableSsl = true, SenderEmail = "services.report.new@gmail.com", SenderEmailPassword = "", SenderName = "Jakub Zięba" }
-                            }
-                        }
-                    },
+                    //Senders = new List<Sender>
+                    //{
+                    //    new Sender
+                    //    {
+                    //        Id = 1,
+                    //        SendersPersonalData = new List<SenderPersonalData>
+                    //        {
+                    //            new SenderPersonalData { Id = 1, Name = "Jakub Zięba", CompanyPositionPl = "Konsultant techniczny" }
+                    //        },
+                    //        SenderEmailsParams = new List<SenderEmailParams>
+                    //        {
+                    //            new SenderEmailParams { Id = 1, HostSmtp = "smtp.gmail.com", Port = 587, EnableSsl = true, SenderEmail = "services.report.new@gmail.com", SenderEmailPassword = "", SenderName = "Jakub Zięba" }
+                    //        }
+                    //    }
+                    //},
                     Attachments = new List<Attachment>
                     {
                         new Attachment

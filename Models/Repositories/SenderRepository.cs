@@ -6,11 +6,11 @@ namespace EmailManager.Models.Repositories
 {
     public class SenderRepository
     {
-        public List<Sender> GetSenders(string userId)
+        public List<SenderPersonalData> GetSenders(string userId)
         {
             using (var context = new ApplicationDbContext())
             {
-                return context.Senders.Where(x => x.UserId == userId).ToList();
+                return context.SendersPersonalData.Where(x => x.UserId == userId).ToList();
             }
         }
     }

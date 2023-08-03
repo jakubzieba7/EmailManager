@@ -37,6 +37,11 @@ namespace EmailManager.Models
                 .WithMany()
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Receiver>()
+                .HasRequired(x => x.ReceiverData)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(x => x.Emails)
                 .WithRequired(x => x.User)

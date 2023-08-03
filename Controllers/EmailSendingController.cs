@@ -47,7 +47,7 @@ namespace EmailManager.Controllers
                     Id = 1,
                     MessageBody = "Tekst tej wiadomości jest następujący: bla bla bla",
                     MessageSubject = "Temat wiadomoci Email",
-                    FooterData = new FooterData { Id = 1, ComplimentaryClose = "Pozdrawiam" },
+                    Footer = new Footer { Id = 1 },
                     Attachments = new List<Attachment>
                     {
                     new Attachment { Id = 1,FileName="ccc_mta_malekontury",FilePath=@"C:\Users\jakub\OneDrive\Pulpit\ccc_mta_malekontury.dxf"}

@@ -32,9 +32,9 @@ namespace EmailManager.Models.Repositories
                     .Include(x => x.User)
                     .Include(x => x.User.Address)
                     .Include(x => x.Receivers)
-                    .Include(x => x.Receivers.Select(y => y.EmailAddress))
-                    .Include(x => x.Receivers.Select(y => y.Name))
-                    .Include(x => x.FooterData)
+                    .Include(x => x.Footer)
+                    .Include(x => x.Footer.FooterData)
+                    .Include(x => x.Footer.FooterData.ComplimentaryClose)
                     .Include(x => x.MessageBody)
                     .Include(x => x.MessageSubject)
                     .Single(x => x.UserId == userId && x.Id == emailId);

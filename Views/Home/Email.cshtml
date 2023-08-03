@@ -26,6 +26,8 @@
 
             @Html.HiddenFor(x => x.Email.Id)
             @Html.HiddenFor(x => x.Email.UserId)
+            @Html.HiddenFor(x => x.Email.AttachmentId)
+            @Html.HiddenFor(x => x.Email.FooterId)
 
             <div class="form-group">
                 @Html.LabelFor(x => x.Email.Sender.SenderPersonalDataId)
@@ -49,6 +51,12 @@
                 @Html.ValidationMessageFor(x => x.Email.ReceiverId)
             </div>
 
+            @*<div class="form-group">
+                @Html.LabelFor(x => x.Email.ReceiverCCId)
+                @Html.DropDownListFor(x => x.Email.ReceiverCCId, new SelectList(Model.Receivers, "Id", "Name"), "-- Wybierz odbiorcę DW --", new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Email.ReceiverCCId)
+            </div>*@
+
             <div class="form-group">
                 @Html.LabelFor(x => x.Email.EmailSendDate)
                 @Html.TextBoxFor(x => x.Email.EmailSendDate, "{0:dd-MM-yyy}", new { @class = "form-control", @id = "EmailSendDate", autocomplete = "off" })
@@ -61,9 +69,9 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(x => x.Email.FooterId)
-                @Html.DropDownListFor(x => x.Email.FooterId, new SelectList(Model.Footers, "Id", "ComplimentaryClose"), "-- Wybierz stopkę --", new { @class = "form-control" })
-                @Html.ValidationMessageFor(x => x.Email.FooterId)
+                @Html.LabelFor(x => x.Email.Footer.FooterDataId)
+                @Html.DropDownListFor(x => x.Email.Footer.FooterDataId, new SelectList(Model.Footers, "Id", "ComplimentaryClose"), "-- Wybierz stopkę --", new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Email.Footer.FooterDataId)
             </div>
 
 

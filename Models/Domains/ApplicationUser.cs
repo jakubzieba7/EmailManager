@@ -20,7 +20,7 @@ namespace EmailManager.Models
             Emails = new Collection<Email>();
             Footers = new Collection<FooterData>();
             Receivers = new Collection<ReceiverData>();
-            Senders = new Collection<Sender>();
+            Senders = new Collection<SenderPersonalData>();
             Attachments = new Collection<Attachment>();
         }
 
@@ -32,7 +32,7 @@ namespace EmailManager.Models
         public ICollection<Email> Emails { get; set; }
         public ICollection<FooterData> Footers { get; set; }
         public ICollection<ReceiverData> Receivers { get; set; }
-        public ICollection<Sender> Senders { get; set; }
+        public ICollection<SenderPersonalData> Senders { get; set; }
         public ICollection<Attachment> Attachments { get; set; }
 
 

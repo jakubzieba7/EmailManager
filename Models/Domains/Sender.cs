@@ -25,13 +25,8 @@ namespace EmailManager.Models.Domains
         public int EmailId { get; set; }
         public int ReceiverId { get; set; }
         public int FooterId { get; set; }
-        [Required]
-        [ForeignKey("User")]
-        public string UserId { get; set; }
         public string Name { get; set; }
         public int AttachmentId { get; set; }
-
-        public ApplicationUser User { get; set; }
         public ICollection<SenderPersonalData> SendersPersonalData { get; set; }
         public ICollection<SenderCompanyData> SendersCompanyData { get; set; }
         public ICollection<SenderEmailParams> SenderEmailsParams { get; set; }
