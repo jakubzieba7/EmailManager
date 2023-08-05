@@ -14,7 +14,6 @@ namespace EmailManager.Models.Repositories
             using (var context = new ApplicationDbContext())
             {
                 return context.Emails.Include(x => x.Senders).Where(x => x.UserId == userId).ToList();
-                //return context.Emails.Where(x => x.UserId == userId).ToList();
             }
         }
 
@@ -59,6 +58,7 @@ namespace EmailManager.Models.Repositories
             {
                 var emailToUpdate = context.Emails.Single(x => x.Id == email.Id && x.UserId == email.UserId);
 
+                emailToUpdate.SenderId = email.SenderId;
                 emailToUpdate.MessageSubject = email.MessageSubject;
                 emailToUpdate.MessageBody = email.MessageBody;
                 emailToUpdate.FooterId = email.FooterId;
