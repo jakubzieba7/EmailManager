@@ -15,14 +15,14 @@ namespace EmailManager.Models
         public DbSet<Address> Addresses { get; set; }
         public DbSet<CompanyData> CompaniesData { get; set; }
         public DbSet<Email> Emails { get; set; }
-        public DbSet<FooterData> Footers { get; set; }
-        public DbSet<Footer> FooterConns { get; set; }
-        public DbSet<ReceiverData> Receivers { get; set; }
-        public DbSet<Receiver> ReceiverConns { get; set; }
+        public DbSet<FooterData> FooterDatas { get; set; }
+        public DbSet<Footer> Footers { get; set; }
+        public DbSet<ReceiverData> ReceiverDatas { get; set; }
+        public DbSet<Receiver> Receivers { get; set; }
         public DbSet<Sender> Senders { get; set; }
         public DbSet<SenderCompanyData> SendersCompanyData { get; set; }
         public DbSet<SenderPersonalData> SendersPersonalData { get; set; }
-        public DbSet<SenderEmailParams> SenderEmailParams { get; set; }
+        public DbSet<SenderEmailParams> SendersEmailParams { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
 
         public static ApplicationDbContext Create()
@@ -33,7 +33,7 @@ namespace EmailManager.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Footer>()
-                .HasRequired(x => x.Sender)
+                .HasRequired(x => x.Senders)
                 .WithMany()
                 .WillCascadeOnDelete(false);
 

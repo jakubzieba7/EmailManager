@@ -13,7 +13,8 @@ namespace EmailManager.Models.Repositories
         {
             using (var context = new ApplicationDbContext())
             {
-                return context.Emails.Include(x => x.Sender).Where(x => x.UserId == userId).ToList();
+                return context.Emails.Include(x => x.Senders).Where(x => x.UserId == userId).ToList();
+                //return context.Emails.Where(x => x.UserId == userId).ToList();
             }
         }
 
@@ -23,20 +24,11 @@ namespace EmailManager.Models.Repositories
             {
                 return context.Emails
                     .Include(x => x.Attachments)
-                    .Include(x => x.Attachments.Select(y => y.FileName))
-                    .Include(x => x.Attachments.Select(y => y.ContentType))
                     .Include(x => x.Senders)
-                    .Include(x => x.Senders.Select(y => y.SendersPersonalData))
-                    .Include(x => x.Senders.Select(y => y.SenderEmailsParams))
-                    .Include(x => x.Senders.Select(y => y.SendersCompanyData))
                     .Include(x => x.User)
                     .Include(x => x.User.Address)
                     .Include(x => x.Receivers)
-                    .Include(x => x.Footer)
-                    .Include(x => x.Footer.FooterData)
-                    .Include(x => x.Footer.FooterData.ComplimentaryClose)
-                    .Include(x => x.MessageBody)
-                    .Include(x => x.MessageSubject)
+                    .Include(x => x.Footers)
                     .Single(x => x.UserId == userId && x.Id == emailId);
             }
         }

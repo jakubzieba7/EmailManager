@@ -10,7 +10,7 @@ namespace EmailManager.Models.Repositories
         {
             using (var context = new ApplicationDbContext())
             {
-                return context.Footers.Where(x => x.UserId == userId).ToList();
+                return context.FooterDatas.Where(x => x.UserId == userId).ToList();
             }
         }
     }

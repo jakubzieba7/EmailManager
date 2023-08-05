@@ -13,7 +13,7 @@ namespace EmailManager.Controllers
         {
             using (var context=new ApplicationDbContext())
             {
-                return context.Receivers.Where(x=>x.UserId==userId).ToList();
+                return context.ReceiverDatas.Where(x=>x.UserId==userId).ToList();
             }
         }
     }

@@ -13,11 +13,12 @@ namespace EmailManager.Models.Domains
             Attachments = new Collection<Attachment>();
             Receivers = new Collection<Receiver>();
             Senders = new Collection<Sender>();
+            Footers = new Collection<Footer>();
         }
 
         public int Id { get; set; }
         [Required]
-        [Display(Name ="Tytuł wiadomości")]
+        [Display(Name = "Tytuł wiadomości")]
         public string MessageSubject { get; set; }
         [Display(Name = "Treść wiadomości")]
         public string MessageBody { get; set; }
@@ -38,6 +39,7 @@ namespace EmailManager.Models.Domains
         public Sender Sender { get; set; }
         [Display(Name = "Stopka")]
         public Footer Footer { get; set; }
+        public ICollection<Footer> Footers { get; set; }
         public ICollection<Attachment> Attachments { get; set; }
         [Display(Name = "Odbiorcy wiadomości")]
         public ICollection<Receiver> Receivers { get; set; }

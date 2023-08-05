@@ -187,6 +187,26 @@
     <Compile Include="Migrations\202308032019516_UserIdTransferedFromSenderToSenderPersonalData.designer.cs">
       <DependentUpon>202308032019516_UserIdTransferedFromSenderToSenderPersonalData.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202308050824520_LotOfDomainChanges.cs" />
+    <Compile Include="Migrations\202308050824520_LotOfDomainChanges.designer.cs">
+      <DependentUpon>202308050824520_LotOfDomainChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202308050911011_AddToFooterSenderAndEmailSingleObjectProp.cs" />
+    <Compile Include="Migrations\202308050911011_AddToFooterSenderAndEmailSingleObjectProp.designer.cs">
+      <DependentUpon>202308050911011_AddToFooterSenderAndEmailSingleObjectProp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202308050938584_NewTry.cs" />
+    <Compile Include="Migrations\202308050938584_NewTry.designer.cs">
+      <DependentUpon>202308050938584_NewTry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202308050940149_NewTry1.cs" />
+    <Compile Include="Migrations\202308050940149_NewTry1.designer.cs">
+      <DependentUpon>202308050940149_NewTry1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202308051110501_SenderPropertiesNamesEdited.cs" />
+    <Compile Include="Migrations\202308051110501_SenderPropertiesNamesEdited.designer.cs">
+      <DependentUpon>202308051110501_SenderPropertiesNamesEdited.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Domains\FooterData.cs" />
     <Compile Include="Models\Domains\ReceiverData.cs" />
     <Compile Include="Models\Repositories\ReceiverRepository.cs" />
@@ -504,6 +524,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202308032019516_UserIdTransferedFromSenderToSenderPersonalData.resx">
       <DependentUpon>202308032019516_UserIdTransferedFromSenderToSenderPersonalData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308050824520_LotOfDomainChanges.resx">
+      <DependentUpon>202308050824520_LotOfDomainChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308050911011_AddToFooterSenderAndEmailSingleObjectProp.resx">
+      <DependentUpon>202308050911011_AddToFooterSenderAndEmailSingleObjectProp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308050938584_NewTry.resx">
+      <DependentUpon>202308050938584_NewTry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308050940149_NewTry1.resx">
+      <DependentUpon>202308050940149_NewTry1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308051110501_SenderPropertiesNamesEdited.resx">
+      <DependentUpon>202308051110501_SenderPropertiesNamesEdited.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

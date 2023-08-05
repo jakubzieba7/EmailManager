@@ -9,12 +9,12 @@ namespace EmailManager.Models.Domains
     {
         public Sender()
         {
-            SendersPersonalData = new Collection<SenderPersonalData>();
-            SendersCompanyData = new Collection<SenderCompanyData>();
-            SentEmails = new Collection<Email>();
+            SenderPersonalDatas = new Collection<SenderPersonalData>();
+            SenderCompanyDatas = new Collection<SenderCompanyData>();
+            Emails = new Collection<Email>();
             Receivers = new Collection<Receiver>();
             Footers = new Collection<Footer>();
-            SenderEmailsParams = new Collection<SenderEmailParams>();
+            SenderEmailParamss = new Collection<SenderEmailParams>();
             Attachments = new Collection<Attachment>();
         }
 
@@ -25,14 +25,14 @@ namespace EmailManager.Models.Domains
         public int EmailId { get; set; }
         public int ReceiverId { get; set; }
         public int FooterId { get; set; }
-        public string Name { get; set; }
         public int AttachmentId { get; set; }
-        public ICollection<SenderPersonalData> SendersPersonalData { get; set; }
-        public ICollection<SenderCompanyData> SendersCompanyData { get; set; }
-        public ICollection<SenderEmailParams> SenderEmailsParams { get; set; }
-        public ICollection<Email> SentEmails { get; set; }
+        public ICollection<SenderPersonalData> SenderPersonalDatas { get; set; }
+        public ICollection<SenderCompanyData> SenderCompanyDatas { get; set; }
+        public ICollection<SenderEmailParams> SenderEmailParamss { get; set; }
+        public ICollection<Email> Emails { get; set; }
         public ICollection<Receiver> Receivers { get; set; }
         public ICollection<Footer> Footers { get; set; }
         public ICollection<Attachment> Attachments { get; set; }
+        public SenderPersonalData SenderPersonalData { get; set; }
     }
 }
