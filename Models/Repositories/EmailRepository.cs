@@ -85,7 +85,7 @@ namespace EmailManager.Models.Repositories
         {
             using (var context=new ApplicationDbContext())
             {
-                var attachmentToUpdate = context.Attachments.Single(x => x.Id == attachment.Id && x.EmailId == attachment.EmailId && x.Email.UserId == userId);
+                var attachmentToUpdate = context.Attachments.Include(x=>x.Email).Include(x=>x.FileData).Single(x => x.Id == attachment.Id && x.EmailId == attachment.EmailId && x.Email.UserId == userId);
 
                 attachmentToUpdate.Lp=attachment.Lp;
                 attachmentToUpdate.ContentType = attachment.ContentType;

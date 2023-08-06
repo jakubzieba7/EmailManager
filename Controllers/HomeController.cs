@@ -254,7 +254,7 @@ namespace EmailManager.Controllers
             return new EditEmailAttachmentViewModel
             {
                 Attachment = emailAttachment,
-                Attachments = _attachmentRepository.GetAttachments(emailAttachment.Email.UserId),
+                //Attachments = _attachmentRepository.GetAttachments(emailAttachment.Email.UserId),
                 Heading = emailAttachment.Id == 0 ? "Nowy załącznik" : "Załącznik",
             };
         }
@@ -283,37 +283,19 @@ namespace EmailManager.Controllers
 
         }
 
+
         [HttpPost]
-        //public ActionResult EmailAttachment(Attachment attachment)
-        //{
-        //    var userId = User.Identity.GetUserId();
-        //    var attachmentContent = _attachmentRepository.GetAttachmentContent(attachment.Id);
-        //    attachment.FileData = attachmentContent;
-
-        //    if (attachment.Id == 0)
-        //        _emailRepository.AddEmailAttachment(attachment, userId);
-        //    else
-        //        _emailRepository.UpdateEmailAttachment(attachment, userId);
-
-        //    _emailRepository.UpdateEmailAttachment(attachment, userId);
-
-        //    return RedirectToAction("Email", new { id = attachment.EmailId });
-        //}
-
-        public ActionResult EmailAttachment(EditEmailAttachmentViewModel attachment)
+        public ActionResult EmailAttachment(EditEmailAttachmentViewModel attachmentVM)
         {
             var userId = User.Identity.GetUserId();
-            var attachmentContent = _attachmentRepository.GetAttachmentContent(attachment);
-            attachment.Attachment.FileData = attachmentContent;
+            attachmentVM.Attachment.FileData = _attachmentRepository.GetAttachmentContent(attachmentVM);
 
-            if (attachment.Attachment.Id == 0)
-                _emailRepository.AddEmailAttachment(attachment.Attachment, userId);
+            if (attachmentVM.Attachment.Id == 0)
+                _emailRepository.AddEmailAttachment(attachmentVM.Attachment, userId);
             else
-                _emailRepository.UpdateEmailAttachment(attachment.Attachment, userId);
+                _emailRepository.UpdateEmailAttachment(attachmentVM.Attachment, userId);
 
-            _emailRepository.UpdateEmailAttachment(attachment.Attachment, userId);
-
-            return RedirectToAction("Email", new { id = attachment.Attachment.EmailId });
+            return RedirectToAction("Email", new { id = attachmentVM.Attachment.EmailId });
         }
 
         [HttpPost]

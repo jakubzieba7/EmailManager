@@ -6,26 +6,27 @@
 
 <h1>@Model.Heading</h1>
 
-@using (Html.BeginForm("EmailAttachment", "Home"))
-{
-    @Html.AntiForgeryToken()
-
-    //if (Model.Attachment.Id == 0)
-    //{
-
-
-    @(Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@*@using (Html.BeginForm("EmailAttachment", "Home"))
     {
-        @Html.HiddenFor(x => x.Attachment.Lp)
-        @Html.HiddenFor(x => x.Attachment.EmailId)
-        @Html.HiddenFor(x => x.Attachment.FileData)
+        @Html.AntiForgeryToken()*@
 
-        <div>
-            @Html.LabelFor(x => x.Attachment.Id)
-            @Html.TextBoxFor(x => x.Attachment.Id, new { type = "file", id = "attachment1", name = "attachments", @class = "form-control" })
-            @Html.ValidationMessageFor(x => x.Attachment.Id)
-        </div>
-        @*<div>
+    @*//if (Model.Attachment.Id == 0)
+    //{*@
+
+
+@using (Html.BeginForm("EmailAttachment", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(x => x.Attachment.Lp)
+    @Html.HiddenFor(x => x.Attachment.EmailId)
+    @Html.HiddenFor(x => x.Attachment.FileData)
+    @Html.HiddenFor(x => x.Attachment.FilePath)
+
+    <div>
+        @Html.LabelFor(x => x.InputAttachmentData)
+        @Html.TextBoxFor(x => x.InputAttachmentData, new { type = "file", id = "attachment1", name = "attachments", @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.InputAttachmentData)
+    </div>
+    @*<div>
             @Html.LabelFor(x => x.Email.AttachmentId)
             @Html.TextBoxFor(x => x.Attachments, new { type = "file", id = "attachment2", name = "attachments", @class = "form-control" })
             @Html.ValidationMessageFor(x => x.Email.AttachmentId)
@@ -36,10 +37,10 @@
             @Html.ValidationMessageFor(x => x.Email.AttachmentId)
         </div>*@
 
-        <button class="btn btn-primary btn-lg mt-5 mb-5" type="submit">Załącz do maila</button>
-    }
-    @*}*@
+    <button class="btn btn-primary btn-lg mt-5 mb-5" type="submit">Załącz do maila</button>
 }
+@*}*@
+@*}*@
 
 @section Scripts
 {
