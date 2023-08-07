@@ -100,6 +100,8 @@ namespace EmailManager.Models.Repositories
                 attachmentToUpdate.ContentType = attachment.ContentType;
                 attachmentToUpdate.FileName = attachment.FileName;
                 attachmentToUpdate.FileData = attachment.FileData;
+
+                context.SaveChanges();
             }
         }
 

@@ -15,17 +15,7 @@
             @foreach (var attachment in Model)
             {
                 <tr>
-                    <td>
-                        <a class="font-weight-bold"
-                           href="@Url.Action("EmailAttachment","Home",
-                                  new
-                                  {
-                                      emailId=attachment.EmailId,
-                                      attachmentId=attachment.Id
-                                  })">
-                            @attachment.Lp
-                        </a>
-                    </td>
+                    <td>@attachment.Lp</td>
                     <td>@attachment.FileName</td>
                     <td>@attachment.ContentType</td>
                     <td><button class="btn btn-danger btn-sm" onclick="deleteAttachment('@attachment.Id', '@attachment.EmailId', this)">Usuń</button></td>

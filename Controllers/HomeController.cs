@@ -246,7 +246,7 @@ namespace EmailManager.Controllers
         public ActionResult EmailAttachment(int emailId, int attachmentId = 0)
         {
             var userId = User.Identity.GetUserId();
-            var emailAttachment = attachmentId == 0 ? GetNewAttachment(emailId, attachmentId) : _emailRepository.GetAttachment(userId, attachmentId);
+            var emailAttachment = GetNewAttachment(emailId, attachmentId);
             var vm = PrepareAttachmentVM(emailAttachment);
 
             return View(vm);
@@ -257,8 +257,7 @@ namespace EmailManager.Controllers
             return new EditEmailAttachmentViewModel
             {
                 Attachment = emailAttachment,
-                //Attachments = _attachmentRepository.GetAttachments(emailAttachment.Email.UserId),
-                Heading = emailAttachment.Id == 0 ? "Nowy załącznik" : "Załącznik",
+                Heading =  "Nowy załącznik",
             };
         }
 
@@ -292,12 +291,9 @@ namespace EmailManager.Controllers
         {
             var userId = User.Identity.GetUserId();
 
-            if (attachmentVM.Attachment.Id == 0)
-                _emailRepository.AddEmailAttachment(attachmentVM, userId);
-            else
-                _emailRepository.UpdateEmailAttachment(attachmentVM.Attachment, userId);
+            _emailRepository.AddEmailAttachment(attachmentVM, userId);
 
-            return RedirectToAction("Email", new { id = attachmentVM.Attachment.EmailId });
+            return RedirectToAction("EmailAttachment", new { emailId = attachmentVM.Attachment.EmailId, attachmentId=attachmentVM.Attachment.Id });
         }
 
         [HttpPost]
