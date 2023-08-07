@@ -1,13 +1,16 @@
-﻿using EmailManager.Models.Domains;
+﻿using EmailManager.Models;
+using EmailManager.Models.Domains;
 using EmailManager.Models.Repositories;
 using EmailManager.Models.ViewModels;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Attachment = EmailManager.Models.Domains.Attachment;
 
 namespace EmailManager.Controllers
 {
@@ -288,10 +291,9 @@ namespace EmailManager.Controllers
         public ActionResult EmailAttachment(EditEmailAttachmentViewModel attachmentVM)
         {
             var userId = User.Identity.GetUserId();
-            attachmentVM.Attachment.FileData = _attachmentRepository.GetAttachmentContent(attachmentVM);
 
             if (attachmentVM.Attachment.Id == 0)
-                _emailRepository.AddEmailAttachment(attachmentVM.Attachment, userId);
+                _emailRepository.AddEmailAttachment(attachmentVM, userId);
             else
                 _emailRepository.UpdateEmailAttachment(attachmentVM.Attachment, userId);
 

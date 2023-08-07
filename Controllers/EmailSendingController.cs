@@ -141,7 +141,7 @@ namespace EmailManager.Controllers
                 foreach (string filePath in filePaths)
                 {
                     stream.Position = 0;
-                    System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(stream, GetFileName.FileName(filePath));
+                    System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(stream, GetFileData.FileNameFromPath(filePath));
                     string contentID = "File";
                     attachment.ContentId = contentID;
                     attachment.ContentDisposition.Inline = true;

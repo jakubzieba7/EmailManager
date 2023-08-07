@@ -1,14 +1,17 @@
 ﻿using EmailManager.Models.Domains;
+using EmailManager.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
+using Attachment = EmailManager.Models.Domains.Attachment;
 
 namespace EmailManager.Models.Repositories
 {
     public class EmailRepository
     {
+        private AttachmentRepository _attachmentRepository = new AttachmentRepository();
+
         public List<Email> GetEmails(string userId)
         {
             using (var context = new ApplicationDbContext())
@@ -69,28 +72,34 @@ namespace EmailManager.Models.Repositories
             }
         }
 
-        public void AddEmailAttachment(Attachment attachment, string userId)
+        public void AddEmailAttachment(EditEmailAttachmentViewModel attachmentVM, string userId)
         {
             using (var context = new ApplicationDbContext())
             {
                 //weryfikacja czy dany rekord istnieje w bazie danych
-                var email = context.Emails.Single(x => x.Id == attachment.EmailId && x.UserId == userId);
+                var email = context.Emails.Single(x => x.Id == attachmentVM.Attachment.EmailId && x.UserId == userId);
+                //var attachmentLp = email.Attachments.Select(x => x.Lp).Last();
 
-                context.Attachments.Add(attachment);
+                //attachmentVM.Attachment.Lp = attachmentLp + 1;
+                attachmentVM.Attachment.FileData = _attachmentRepository.GetAttachmentContent(attachmentVM);
+                attachmentVM.Attachment.FileName = GetFileData.FileNameFromStreamFileName(attachmentVM.InputAttachmentData.FileName);
+                attachmentVM.Attachment.ContentType = GetFileData.FileExtension(attachmentVM.InputAttachmentData.FileName);
+
+                context.Attachments.Add(attachmentVM.Attachment);
                 context.SaveChanges();
             }
         }
 
         public void UpdateEmailAttachment(Attachment attachment, string userId)
         {
-            using (var context=new ApplicationDbContext())
+            using (var context = new ApplicationDbContext())
             {
-                var attachmentToUpdate = context.Attachments.Include(x=>x.Email).Include(x=>x.FileData).Single(x => x.Id == attachment.Id && x.EmailId == attachment.EmailId && x.Email.UserId == userId);
+                var attachmentToUpdate = context.Attachments.Include(x => x.Email).Include(x => x.FileData).Single(x => x.Id == attachment.Id && x.EmailId == attachment.EmailId && x.Email.UserId == userId);
 
-                attachmentToUpdate.Lp=attachment.Lp;
+                attachmentToUpdate.Lp = attachment.Lp;
                 attachmentToUpdate.ContentType = attachment.ContentType;
                 attachmentToUpdate.FileName = attachment.FileName;
-                attachmentToUpdate.FileData= attachment.FileData;
+                attachmentToUpdate.FileData = attachment.FileData;
             }
         }
 
