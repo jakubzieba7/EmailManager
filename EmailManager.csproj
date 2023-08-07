@@ -209,6 +209,8 @@
     </Compile>
     <Compile Include="Models\Domains\FooterData.cs" />
     <Compile Include="Models\Domains\ReceiverData.cs" />
+    <Compile Include="Models\Repositories\KnownFolders.cs" />
+    <Compile Include="Models\Repositories\KnownFoldersFlags.cs" />
     <Compile Include="Models\Repositories\ReceiverRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

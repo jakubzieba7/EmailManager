@@ -21,6 +21,7 @@ namespace EmailManager.Models.Repositories
         public byte[] GetAttachmentContent(EditEmailAttachmentViewModel attachmentViewModel)
         {
             var attachment = attachmentViewModel.InputAttachmentData;
+            var downloadFolderPath = KnownFolders.GetPath(nameof(KnownFolders.Downloads), KnownFolderFlags.DontVerify, false);
 
             filebyte = new byte[attachmentViewModel.InputAttachmentData.InputStream.Length];
             attachmentViewModel.InputAttachmentData.InputStream.Read(filebyte, 0, filebyte.Length);
@@ -39,7 +40,7 @@ namespace EmailManager.Models.Repositories
             if (attachment.ContentLength > 0)
             {
                 var fileName = Path.GetFileName(attachment.FileName);
-                var path = Path.Combine(@"C:\Users\jakub\Downloads\", fileName);
+                var path = Path.Combine(downloadFolderPath, fileName);
                 attachment.SaveAs(path);
             }
 
