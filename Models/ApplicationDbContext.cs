@@ -32,11 +32,6 @@ namespace EmailManager.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Footer>()
-                .HasRequired(x => x.Senders)
-                .WithMany()
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<Receiver>()
                 .HasRequired(x => x.ReceiverData)
                 .WithMany()
