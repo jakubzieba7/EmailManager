@@ -215,6 +215,14 @@
     <Compile Include="Migrations\202308090416480_RemovedSendersFromFooterDomain1.designer.cs">
       <DependentUpon>202308090416480_RemovedSendersFromFooterDomain1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202308100911372_EditedSenders.cs" />
+    <Compile Include="Migrations\202308100911372_EditedSenders.designer.cs">
+      <DependentUpon>202308100911372_EditedSenders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202308100955595_EditedFooters.cs" />
+    <Compile Include="Migrations\202308100955595_EditedFooters.designer.cs">
+      <DependentUpon>202308100955595_EditedFooters.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Domains\FooterData.cs" />
     <Compile Include="Models\Domains\ReceiverData.cs" />
     <Compile Include="Models\Repositories\KnownFolders.cs" />
@@ -555,6 +563,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202308090416480_RemovedSendersFromFooterDomain1.resx">
       <DependentUpon>202308090416480_RemovedSendersFromFooterDomain1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308100911372_EditedSenders.resx">
+      <DependentUpon>202308100911372_EditedSenders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308100955595_EditedFooters.resx">
+      <DependentUpon>202308100955595_EditedFooters.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

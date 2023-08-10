@@ -14,12 +14,12 @@ namespace EmailManager.Models.Domains
         }
 
         public int Id { get; set; }
-        public int SenderId { get; set; }
+        //public int SenderId { get; set; }
         public int EmailId { get; set; }
         public int FooterDataId { get; set; }
         public ICollection<Email> Emails { get; set; }
         public ICollection<FooterData> FooterDatas { get; set; }
         public FooterData FooterData { get; set; }
-        public Sender Sender { get; set; }
+        //public Sender Sender { get; set; }
     }
 }

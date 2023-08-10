@@ -50,6 +50,8 @@ namespace EmailManager.Models.Repositories
             using (var context = new ApplicationDbContext())
             {
                 email.EmailSendDate = DateTime.Now;
+                email.SenderId = email.Sender.Id;
+                email.FooterId = email.Footer.Id;
                 context.Emails.Add(email);
                 context.SaveChanges();
             }
@@ -59,12 +61,17 @@ namespace EmailManager.Models.Repositories
         {
             using (var context = new ApplicationDbContext())
             {
-                var emailToUpdate = context.Emails.Single(x => x.Id == email.Id && x.UserId == email.UserId);
+                var emailToUpdate = context.Emails.
+                    Include(x=>x.Sender).
+                    Include(x=>x.Footer).
+                    Single(x => x.Id == email.Id && x.UserId == email.UserId);
 
-                emailToUpdate.SenderId = email.SenderId;
+                //emailToUpdate.SenderId= email.Sender.Id;
+                emailToUpdate.Sender.SenderPersonalDataId = email.Sender.SenderPersonalDataId;
                 emailToUpdate.MessageSubject = email.MessageSubject;
                 emailToUpdate.MessageBody = email.MessageBody;
-                emailToUpdate.FooterId = email.FooterId;
+                //emailToUpdate.FooterId = email.Footer.Id;
+                emailToUpdate.Footer.FooterDataId = email.Footer.FooterDataId;
                 emailToUpdate.ReceiverId = email.ReceiverId;
                 emailToUpdate.EmailSendDate = DateTime.Now;
 
