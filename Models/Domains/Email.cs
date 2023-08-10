@@ -36,6 +36,7 @@ namespace EmailManager.Models.Domains
         public string UserId { get; set; }
 
         public ApplicationUser User { get; set; }
+        public Receiver Receiver { get; set; }
         public Sender Sender { get; set; }
         [Display(Name = "Stopka")]
         public Footer Footer { get; set; }
