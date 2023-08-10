@@ -27,10 +27,12 @@ namespace EmailManager.Models.Repositories
                 return context.Emails
                     .Include(x => x.Attachments)
                     .Include(x => x.Senders)
+                    .Include(x => x.Sender.SenderPersonalData)
                     .Include(x => x.User)
                     .Include(x => x.User.Address)
                     .Include(x => x.Receivers)
                     .Include(x => x.Footers)
+                    .Include(x => x.Footer.FooterData)
                     .Single(x => x.UserId == userId && x.Id == emailId);
             }
         }
@@ -62,8 +64,10 @@ namespace EmailManager.Models.Repositories
             using (var context = new ApplicationDbContext())
             {
                 var emailToUpdate = context.Emails.
-                    Include(x=>x.Sender).
-                    Include(x=>x.Footer).
+                    Include(x => x.Sender).
+                    Include(x => x.Sender.SenderPersonalData).
+                    Include(x => x.Footer).
+                    Include(x => x.Footer.FooterData).
                     Single(x => x.Id == email.Id && x.UserId == email.UserId);
 
                 //emailToUpdate.SenderId= email.Sender.Id;
