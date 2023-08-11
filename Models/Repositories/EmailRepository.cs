@@ -32,6 +32,8 @@ namespace EmailManager.Models.Repositories
                     .Include(x => x.User.Address)
                     .Include(x => x.Receivers)
                     .Include(x => x.Receiver.ReceiverData)
+                    .Include(x => x.ReceiverCCs)
+                    .Include(x => x.ReceiverCC.ReceiverData)
                     .Include(x => x.Footers)
                     .Include(x => x.Footer.FooterData)
                     .Single(x => x.UserId == userId && x.Id == emailId);
@@ -55,6 +57,7 @@ namespace EmailManager.Models.Repositories
                 email.EmailSendDate = DateTime.Now;
                 email.SenderId = email.Sender.Id;
                 email.ReceiverId = email.Receiver.Id;
+                email.ReceiverCCId = email.ReceiverCC.Id;
                 email.FooterId = email.Footer.Id;
                 context.Emails.Add(email);
                 context.SaveChanges();
@@ -70,6 +73,8 @@ namespace EmailManager.Models.Repositories
                     Include(x => x.Sender.SenderPersonalData).
                     Include(x => x.Receiver).
                     Include(x => x.Receiver.ReceiverData).
+                    Include(x => x.ReceiverCC).
+                    Include(x => x.ReceiverCC.ReceiverData).
                     Include(x => x.Footer).
                     Include(x => x.Footer.FooterData).
                     Single(x => x.Id == email.Id && x.UserId == email.UserId);
@@ -81,6 +86,7 @@ namespace EmailManager.Models.Repositories
                 //emailToUpdate.FooterId = email.Footer.Id;
                 emailToUpdate.Footer.FooterDataId = email.Footer.FooterDataId;
                 emailToUpdate.Receiver.ReceiverDataId = email.Receiver.ReceiverDataId;
+                emailToUpdate.ReceiverCC.ReceiverDataId = email.ReceiverCC.ReceiverDataId;
                 emailToUpdate.EmailSendDate = DateTime.Now;
 
                 context.SaveChanges();

@@ -230,6 +230,7 @@ namespace EmailManager.Controllers
                 Senders = _senderRepository.GetSenders(userId),
                 Footers = _footerRepository.GetFooters(userId),
                 Receivers = _receiverRepository.GetReceivers(userId),
+                ReceiverCCs=_receiverRepository.GetReceivers(userId),
                 Attachments = _attachmentRepository.GetAttachments(userId)
             };
         }
