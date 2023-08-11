@@ -129,11 +129,11 @@ namespace EmailManager.Controllers
                 //        //}
                 //    }
                 //},
-                Footers = new List<FooterData> {
+                FooterDatas = new List<FooterData> {
                     new FooterData { Id = 1, ComplimentaryClose = "Pozdrawiam" },
                     new FooterData { Id = 2, ComplimentaryClose = "Best regards" }
                 },
-                Receivers = new List<ReceiverData>
+                ReceiverDatas = new List<ReceiverData>
                 {
                     new ReceiverData { Id = 1, Name = "Jacek Stokłosa", EmailAddress = "jacek.stoklosa@email.com" },
                     new ReceiverData { Id = 2, Name = "Jakub Zięba", EmailAddress = "jakubzieba7@gmail.com" }
@@ -227,10 +227,10 @@ namespace EmailManager.Controllers
             {
                 Email = email,
                 Heading = email.Id == 0 ? "Nowy email" : "Email",
-                Senders = _senderRepository.GetSenders(userId),
-                Footers = _footerRepository.GetFooters(userId),
-                Receivers = _receiverRepository.GetReceivers(userId),
-                ReceiverCCs=_receiverRepository.GetReceivers(userId),
+                SenderPersonalDatas = _senderRepository.GetSenders(userId),
+                FooterDatas = _footerRepository.GetFooters(userId),
+                ReceiverDatas = _receiverRepository.GetReceivers(userId),
+                ReceiverCCDatas=_receiverRepository.GetReceivers(userId),
                 Attachments = _attachmentRepository.GetAttachments(userId)
             };
         }

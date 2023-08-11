@@ -231,6 +231,10 @@
     <Compile Include="Migrations\202308101235034_AddedReceiverCC.designer.cs">
       <DependentUpon>202308101235034_AddedReceiverCC.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202308110848114_EditedEmailsReceiversAndReceiverCCS.cs" />
+    <Compile Include="Migrations\202308110848114_EditedEmailsReceiversAndReceiverCCS.designer.cs">
+      <DependentUpon>202308110848114_EditedEmailsReceiversAndReceiverCCS.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Domains\FooterData.cs" />
     <Compile Include="Models\Domains\ReceiverCC.cs" />
     <Compile Include="Models\Domains\ReceiverData.cs" />
@@ -584,6 +588,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202308101235034_AddedReceiverCC.resx">
       <DependentUpon>202308101235034_AddedReceiverCC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202308110848114_EditedEmailsReceiversAndReceiverCCS.resx">
+      <DependentUpon>202308110848114_EditedEmailsReceiversAndReceiverCCS.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

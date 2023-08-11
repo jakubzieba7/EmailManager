@@ -18,9 +18,9 @@ namespace EmailManager.Models
         public ApplicationUser()
         {
             Emails = new Collection<Email>();
-            Footers = new Collection<FooterData>();
-            Receivers = new Collection<ReceiverData>();
-            Senders = new Collection<SenderPersonalData>();
+            FooterDatas = new Collection<FooterData>();
+            ReceiverDatas = new Collection<ReceiverData>();
+            SenderPersonalDatas = new Collection<SenderPersonalData>();
             Attachments = new Collection<Attachment>();
         }
 
@@ -30,9 +30,9 @@ namespace EmailManager.Models
         public int AddressId { get; set; }
         public Address Address { get; set; }
         public ICollection<Email> Emails { get; set; }
-        public ICollection<FooterData> Footers { get; set; }
-        public ICollection<ReceiverData> Receivers { get; set; }
-        public ICollection<SenderPersonalData> Senders { get; set; }
+        public ICollection<FooterData> FooterDatas { get; set; }
+        public ICollection<ReceiverData> ReceiverDatas { get; set; }
+        public ICollection<SenderPersonalData> SenderPersonalDatas { get; set; }
         public ICollection<Attachment> Attachments { get; set; }
 
 

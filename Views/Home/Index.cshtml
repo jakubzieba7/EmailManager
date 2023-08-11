@@ -30,7 +30,7 @@
                 <tr>
                     <td><a class="font-weight-bold" href="@Url.Action("Email","Home",new {id=email.Id})">@email.Id</a></td>
                     <td>@email.MessageSubject</td>
-                    <td>@string.Join(",", email.Senders.Select(x=>x.SenderPersonalDatas.Where(y=>y.Id==x.SenderPersonalDataId)))</td>
+                    @*<td>@string.Join(",", email.Senders.Select(x=>x.SenderPersonalDatas.Where(y=>y.Id==x.SenderPersonalDataId)))</td>*@
                     <td>@string.Join(",", email.Receivers.Select(x=>x.ReceiverData.Name))</td>
                     <td>@string.Join(",", email.Receivers.Select(x=>x.ReceiverData.EmailAddress))</td>
                     <td>@email.EmailSendDate.ToString("dd-MM-yyyy")</td>

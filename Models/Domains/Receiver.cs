@@ -14,7 +14,7 @@ namespace EmailManager.Models.Domains
 
         public int Id { get; set; }
         //public int SenderId { get; set; }
-        public int EmailId { get; set; }
+        //public int EmailId { get; set; }
         //public int AttachmentId { get; set; }
         public int ReceiverDataId { get; set; }
         //public ICollection<Sender> Senders { get; set; }

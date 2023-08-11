@@ -37,6 +37,11 @@ namespace EmailManager.Models
                 .WithMany()
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<ReceiverCC>()
+               .HasRequired(x => x.ReceiverData)
+               .WithMany()
+               .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(x => x.Emails)
                 .WithRequired(x => x.User)
@@ -44,19 +49,19 @@ namespace EmailManager.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany(x => x.Footers)
+                .HasMany(x => x.FooterDatas)
                 .WithRequired(x => x.User)
                 .HasForeignKey(x => x.UserId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany(x => x.Receivers)
+                .HasMany(x => x.ReceiverDatas)
                 .WithRequired(x => x.User)
                 .HasForeignKey(x => x.UserId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ApplicationUser>()
-                .HasMany(x => x.Senders)
+                .HasMany(x => x.SenderPersonalDatas)
                 .WithRequired(x => x.User)
                 .HasForeignKey(x => x.UserId)
                 .WillCascadeOnDelete(false);

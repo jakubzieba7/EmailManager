@@ -17,7 +17,7 @@ namespace EmailManager.Models.Repositories
         {
             using (var context = new ApplicationDbContext())
             {
-                return context.Emails.Include(x => x.Senders).Where(x => x.UserId == userId).ToList();
+                return context.Emails.Where(x => x.UserId == userId).ToList();
             }
         }
 
@@ -27,7 +27,6 @@ namespace EmailManager.Models.Repositories
             {
                 return context.Emails
                     .Include(x => x.Attachments)
-                    .Include(x => x.Senders)
                     .Include(x => x.Sender.SenderPersonalData)
                     .Include(x => x.User)
                     .Include(x => x.User.Address)
@@ -35,7 +34,6 @@ namespace EmailManager.Models.Repositories
                     .Include(x => x.Receiver.ReceiverData)
                     .Include(x => x.ReceiverCCs)
                     .Include(x => x.ReceiverCC.ReceiverData)
-                    .Include(x => x.Footers)
                     .Include(x => x.Footer.FooterData)
                     .Single(x => x.UserId == userId && x.Id == emailId);
             }
