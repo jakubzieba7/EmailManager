@@ -109,7 +109,7 @@
 
         }
 
-        function deleteAttachment(attach_id,email_id, btn) {
+        function deleteAttachment(attachmentId, btn) {
 
             if (!confirm("Czy na pewno chcesz usunąć załącznik?"))
                 return;
@@ -118,8 +118,7 @@
                 type: 'POST',
                 url: "@Url.Action("DeleteAttachment","Home")",
                 data: {
-                    emailId: email_id,
-                    id: attach_id
+                    attachmentId: attachmentId
                 },
                 success: function (data)
                 {

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Web.Mvc;
 using Attachment = EmailManager.Models.Domains.Attachment;
 
 namespace EmailManager.Models.Repositories
@@ -126,11 +127,11 @@ namespace EmailManager.Models.Repositories
             }
         }
 
-        public void DeleteAttachment(int emailId, int attachmentId, string userId)
+        public void DeleteAttachment(int attachmentId, string userId)
         {
             using (var context = new ApplicationDbContext())
             {
-                var attachmentToDelete = context.Attachments.Single(x => x.EmailId == emailId && x.Email.AttachmentId == attachmentId && x.Email.UserId == userId);
+                var attachmentToDelete = context.Attachments.Single(x => x.Id == attachmentId && x.Email.UserId == userId);
 
                 context.Attachments.Remove(attachmentToDelete);
                 context.SaveChanges();

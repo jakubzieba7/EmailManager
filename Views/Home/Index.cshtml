@@ -55,16 +55,16 @@ else
 {
     <script type="text/javascript">
 
-        function deleteEmail(id, btn) {
+        function deleteEmail(emailId, btn) {
 
             if (!confirm("Czy na pewno chcesz usunąć Emaila?"))
                 return;
 
             $.ajax({
                 type: 'POST',
-                url: "@Url.Action("Delete","Home")",
+                url: "@Url.Action("DeleteEmail", "Home")",
                 data: {
-                    id: id
+                    emailId: emailId
                 },
                 success: function (data)
                 {

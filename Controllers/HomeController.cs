@@ -315,13 +315,13 @@ namespace EmailManager.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteAttachment(Email email, int attachmentID)
+        public ActionResult DeleteAttachment(int attachmentId)
         {
             try
             {
                 var userId = User.Identity.GetUserId();
-                _emailRepository.DeleteAttachment(email.Id, attachmentID, userId);
-                _emailRepository.Update(email);
+                _emailRepository.DeleteAttachment(attachmentId, userId);
+                //_emailRepository.Update(email);
             }
             catch (Exception exception)
             {
@@ -329,7 +329,7 @@ namespace EmailManager.Controllers
                 return Json(new { Success = false, Message = exception.Message });
             }
 
-            return Json(new { Success = true, Email = email });
+            return Json(new { Success = true, /*Email = email*/ });
         }
 
         [AllowAnonymous]
