@@ -17,7 +17,10 @@ namespace EmailManager.Models.Repositories
         {
             using (var context = new ApplicationDbContext())
             {
-                return context.Emails.Where(x => x.UserId == userId).ToList();
+                return context.Emails.
+                    Include(x=>x.Sender.SenderPersonalData).
+                    Include(x=>x.Receiver.ReceiverData).
+                    Where(x => x.UserId == userId).ToList();
             }
         }
 
