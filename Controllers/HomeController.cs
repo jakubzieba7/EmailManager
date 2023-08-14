@@ -291,11 +291,9 @@ namespace EmailManager.Controllers
             return RedirectToAction("Index");
         }
 
-
         [HttpPost]
         public ActionResult EmailAttachment(EditEmailAttachmentViewModel attachmentVM)
         {
-            var userId = User.Identity.GetUserId();
 
             if (!ModelState.IsValid)
             {
@@ -303,7 +301,17 @@ namespace EmailManager.Controllers
                 return View("EmailAttachment", vm);
             }
 
+            try
+            {
+            var userId = User.Identity.GetUserId();
             _emailRepository.AddEmailAttachment(attachmentVM, userId);
+
+            }
+            catch (Exception)
+            {
+
+                return View("_NullReferenceExError");
+            }
 
             return RedirectToAction("EmailAttachment", new { emailId = attachmentVM.Attachment.EmailId, attachmentId = attachmentVM.Attachment.Id });
         }
