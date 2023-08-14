@@ -21,7 +21,7 @@
 
             if (Model.Email.Id == 0)
             {
-                <p class="alert alert-info mt-4 mb-4">Pola tytuł, odbiorca i data wysłania wiadomości są <strong>wymagane</strong></p>
+                <p class="alert alert-info mt-4 mb-4">Pola nadawca, tytuł, adresat i data wysłania wiadomości są <strong>wymagane</strong></p>
             }
 
             @Html.HiddenFor(x => x.Email.Id)
@@ -46,14 +46,13 @@
 
             <div class="form-group">
                 @Html.LabelFor(x => x.Email.Receiver.ReceiverDataId)
-                @Html.DropDownListFor(x => x.Email.Receiver.ReceiverDataId, new SelectList(Model.ReceiverDatas, "Id", "Name"), "-- Wybierz odbiorcę --", new { @class = "form-control" })
+                @Html.DropDownListFor(x => x.Email.Receiver.ReceiverDataId, new SelectList(Model.ReceiverDatas, "Id", "Name"), "-- Wybierz adresata --", new { @class = "form-control" })
                 @Html.ValidationMessageFor(x => x.Email.Receiver.ReceiverDataId)
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(x => x.Email.ReceiverCC.ReceiverDataId)
-                @Html.DropDownListFor(x => x.Email.ReceiverCC.ReceiverDataId, new SelectList(Model.ReceiverCCDatas, "Id", "Name"), "-- Wybierz odbiorcę DW --", new { @class = "form-control" })
-                @Html.ValidationMessageFor(x => x.Email.ReceiverCC.ReceiverDataId)
+                @Html.DropDownListFor(x => x.Email.ReceiverCC.ReceiverDataId, new SelectList(Model.ReceiverCCDatas, "Id", "Name"), "-- Wybierz adresata DW --", new { @class = "form-control" })
             </div>
 
             <div class="form-group">
@@ -142,6 +141,17 @@
         }
 
         $(document).ready(function () {
+
+         $.validator.methods.date = function (value, element) {
+            var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+            if (isChrome) {
+            var d = new Date();
+            return this.optional(element) || !/Invalid|NaN/.test(new Date(d.toLocaleDateString(value)));
+            } else {
+            return this.optional(element) || !/Invalid|NaN/.test(new Date(value));
+            }
+         };
+
 
             $('#EmailSendDate').datepicker({
                 format: "dd-mm-yyyy",

@@ -19,6 +19,7 @@ namespace EmailManager.Models.Domains
         }
 
         public int Id { get; set; }
+        [Display(Name = "Nadawca wiadomości")]
         public int SenderPersonalDataId { get; set; }
         public int SenderCompanyDataId { get; set; }
         public int SenderEmailParamsId { get; set; }

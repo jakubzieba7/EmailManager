@@ -22,7 +22,7 @@
     @Html.HiddenFor(x => x.Attachment.FilePath)
 
     <div>
-        @Html.LabelFor(x => x.InputAttachmentData)
+        @*@Html.LabelFor(x => x.InputAttachmentData)*@
         @Html.TextBoxFor(x => x.InputAttachmentData, new { type = "file", id = "attachment1", name = "attachments", @class = "form-control" })
         @Html.ValidationMessageFor(x => x.InputAttachmentData)
     </div>

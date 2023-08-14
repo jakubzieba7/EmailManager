@@ -16,18 +16,20 @@ namespace EmailManager.Models.Domains
         }
 
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Pole Tytuł jest wymagane")]
         [Display(Name = "Tytuł wiadomości")]
         public string MessageSubject { get; set; }
         [Display(Name = "Treść wiadomości")]
         public string MessageBody { get; set; }
-        [Required]
-        [Display(Name = "Odbiorca wiadomości")]
+        [Required(ErrorMessage = "Pole Adresat jest wymagane")]
+        [Display(Name = "Adresat wiadomości")]
         public int ReceiverId { get; set; }
+        [Display(Name = "Adresat wiadomości DW")]
         public int ReceiverCCId { get; set; }
         public int SenderId { get; set; }
         public int FooterId { get; set; }
         public int AttachmentId { get; set; }
+        [Required(ErrorMessage = "Pole Data wysłania jest wymagane")]
         [Display(Name = "Data wysłania wiadomości")]
         public DateTime EmailSendDate { get; set; }
         [Required]
@@ -41,7 +43,6 @@ namespace EmailManager.Models.Domains
         [Display(Name = "Stopka")]
         public Footer Footer { get; set; }
         public ICollection<Attachment> Attachments { get; set; }
-        [Display(Name = "Odbiorcy wiadomości")]
         public ICollection<Receiver> Receivers { get; set; }
         public ICollection<ReceiverCC> ReceiverCCs { get; set; }
 

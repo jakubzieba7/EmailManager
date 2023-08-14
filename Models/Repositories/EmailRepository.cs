@@ -1,5 +1,6 @@
 ﻿using EmailManager.Models.Domains;
 using EmailManager.Models.ViewModels;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -18,8 +19,8 @@ namespace EmailManager.Models.Repositories
             using (var context = new ApplicationDbContext())
             {
                 return context.Emails.
-                    Include(x=>x.Sender.SenderPersonalData).
-                    Include(x=>x.Receiver.ReceiverData).
+                    Include(x => x.Sender.SenderPersonalData).
+                    Include(x => x.Receiver.ReceiverData).
                     Where(x => x.UserId == userId).ToList();
             }
         }
@@ -28,17 +29,35 @@ namespace EmailManager.Models.Repositories
         {
             using (var context = new ApplicationDbContext())
             {
-                return context.Emails
-                    .Include(x => x.Attachments)
-                    .Include(x => x.Sender.SenderPersonalData)
-                    .Include(x => x.User)
-                    .Include(x => x.User.Address)
-                    .Include(x => x.Receivers)
-                    .Include(x => x.Receiver.ReceiverData)
-                    .Include(x => x.ReceiverCCs)
-                    .Include(x => x.ReceiverCC.ReceiverData)
-                    .Include(x => x.Footer.FooterData)
-                    .Single(x => x.UserId == userId && x.Id == emailId);
+                var email = context.Emails.Single(x => x.UserId == userId && x.Id == emailId);
+                var receiverCC = context.ReceiverCCs.Single(x => x.Id == email.ReceiverCCId);
+
+                if (receiverCC.ReceiverDataId == null) 
+                {
+                    return context.Emails
+                        .Include(x => x.Attachments)
+                        .Include(x => x.Sender.SenderPersonalData)
+                        .Include(x => x.User)
+                        .Include(x => x.User.Address)
+                        .Include(x => x.Receivers)
+                        .Include(x => x.Receiver.ReceiverData)
+                        .Include(x => x.Footer.FooterData)
+                        .Single(x => x.UserId == userId && x.Id == emailId);
+                }
+                else
+                {
+                    return context.Emails
+                        .Include(x => x.Attachments)
+                        .Include(x => x.Sender.SenderPersonalData)
+                        .Include(x => x.User)
+                        .Include(x => x.User.Address)
+                        .Include(x => x.Receivers)
+                        .Include(x => x.Receiver.ReceiverData)
+                        .Include(x => x.ReceiverCCs)
+                        .Include(x => x.ReceiverCC.ReceiverData)
+                        .Include(x => x.Footer.FooterData)
+                        .Single(x => x.UserId == userId && x.Id == emailId);
+                }
             }
         }
 
@@ -70,22 +89,37 @@ namespace EmailManager.Models.Repositories
         {
             using (var context = new ApplicationDbContext())
             {
-                var emailToUpdate = context.Emails.
-                    Include(x => x.Sender).
-                    Include(x => x.Sender.SenderPersonalData).
-                    Include(x => x.Receiver).
-                    Include(x => x.Receiver.ReceiverData).
-                    Include(x => x.ReceiverCC).
-                    Include(x => x.ReceiverCC.ReceiverData).
-                    Include(x => x.Footer).
-                    Include(x => x.Footer.FooterData).
-                    Single(x => x.Id == email.Id && x.UserId == email.UserId);
+                var emailToUpdate = context.Emails.Single(x => x.Id == email.Id && x.UserId == email.UserId);
+                var receiverCC = context.ReceiverCCs.Single(x => x.Id == emailToUpdate.ReceiverCCId);
 
-                //emailToUpdate.SenderId= email.Sender.Id;
+                if (receiverCC.ReceiverDataId == null)
+                {
+                    emailToUpdate = context.Emails.
+                        Include(x => x.Sender).
+                        Include(x => x.Sender.SenderPersonalData).
+                        Include(x => x.Receiver).
+                        Include(x => x.Receiver.ReceiverData).
+                        Include(x => x.Footer).
+                        Include(x => x.Footer.FooterData).
+                        Single(x => x.Id == email.Id && x.UserId == email.UserId);
+                }
+                else
+                {
+                    emailToUpdate = context.Emails.
+                        Include(x => x.Sender).
+                        Include(x => x.Sender.SenderPersonalData).
+                        Include(x => x.Receiver).
+                        Include(x => x.Receiver.ReceiverData).
+                        Include(x => x.ReceiverCC).
+                        Include(x => x.ReceiverCC.ReceiverData).
+                        Include(x => x.Footer).
+                        Include(x => x.Footer.FooterData).
+                        Single(x => x.Id == email.Id && x.UserId == email.UserId);
+                }
+
                 emailToUpdate.Sender.SenderPersonalDataId = email.Sender.SenderPersonalDataId;
                 emailToUpdate.MessageSubject = email.MessageSubject;
                 emailToUpdate.MessageBody = email.MessageBody;
-                //emailToUpdate.FooterId = email.Footer.Id;
                 emailToUpdate.Footer.FooterDataId = email.Footer.FooterDataId;
                 emailToUpdate.Receiver.ReceiverDataId = email.Receiver.ReceiverDataId;
                 emailToUpdate.ReceiverCC.ReceiverDataId = email.ReceiverCC.ReceiverDataId;

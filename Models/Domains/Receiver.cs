@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace EmailManager.Models.Domains
 {
@@ -16,6 +17,7 @@ namespace EmailManager.Models.Domains
         //public int SenderId { get; set; }
         //public int EmailId { get; set; }
         //public int AttachmentId { get; set; }
+        [Display(Name = "Adresat wiadomości")]
         public int ReceiverDataId { get; set; }
         //public ICollection<Sender> Senders { get; set; }
         public ICollection<Email> Emails { get; set; }

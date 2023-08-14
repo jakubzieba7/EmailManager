@@ -230,7 +230,7 @@ namespace EmailManager.Controllers
                 SenderPersonalDatas = _senderRepository.GetSenders(userId),
                 FooterDatas = _footerRepository.GetFooters(userId),
                 ReceiverDatas = _receiverRepository.GetReceivers(userId),
-                ReceiverCCDatas=_receiverRepository.GetReceivers(userId),
+                ReceiverCCDatas = _receiverRepository.GetReceivers(userId),
                 Attachments = _attachmentRepository.GetAttachments(userId)
             };
         }
@@ -258,7 +258,7 @@ namespace EmailManager.Controllers
             return new EditEmailAttachmentViewModel
             {
                 Attachment = emailAttachment,
-                Heading =  "Nowy załącznik",
+                Heading = "Nowy załącznik",
             };
         }
 
@@ -277,13 +277,18 @@ namespace EmailManager.Controllers
             var userId = User.Identity.GetUserId();
             email.UserId = userId;
 
+            if (!ModelState.IsValid)
+            {
+                var vm = PrepareEmailVm(email, userId);
+                return View("Email", vm);
+            }
+
             if (email.Id == 0)
                 _emailRepository.Add(email);
             else
                 _emailRepository.Update(email);
 
             return RedirectToAction("Index");
-
         }
 
 
@@ -292,9 +297,15 @@ namespace EmailManager.Controllers
         {
             var userId = User.Identity.GetUserId();
 
+            if (!ModelState.IsValid)
+            {
+                var vm = PrepareAttachmentVM(attachmentVM.Attachment);
+                return View("EmailAttachment", vm);
+            }
+
             _emailRepository.AddEmailAttachment(attachmentVM, userId);
 
-            return RedirectToAction("EmailAttachment", new { emailId = attachmentVM.Attachment.EmailId, attachmentId=attachmentVM.Attachment.Id });
+            return RedirectToAction("EmailAttachment", new { emailId = attachmentVM.Attachment.EmailId, attachmentId = attachmentVM.Attachment.Id });
         }
 
         [HttpPost]

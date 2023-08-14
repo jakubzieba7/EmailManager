@@ -16,6 +16,7 @@ namespace EmailManager.Models.Domains
         public int Id { get; set; }
         //public int SenderId { get; set; }
         public int EmailId { get; set; }
+        [Display(Name ="Stopka wiadomości")]
         public int FooterDataId { get; set; }
         public ICollection<Email> Emails { get; set; }
         public ICollection<FooterData> FooterDatas { get; set; }
