@@ -35,5 +35,7 @@ namespace EmailManager.Models.Domains
         //public ICollection<Footer> Footers { get; set; }
         //public ICollection<Attachment> Attachments { get; set; }
         public SenderPersonalData SenderPersonalData { get; set; }
+        //public SenderCompanyData SenderCompanyData { get; set; }
+        //public SenderEmailParams SenderEmailParams { get; set; }
     }
 }

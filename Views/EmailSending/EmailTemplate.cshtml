@@ -1,20 +1,19 @@
-﻿@model EmailManager.Models.ViewModels.EditEmailViewModel
+﻿@model EmailManager.Models.Domains.Email
 
-@{
-    ViewBag.Title = "Email";
-}
-
-<h2>@ViewBag.Title</h2>
-
-<p>@ViewBag.SuccessfulSentMailMessage</p>
-
-
-<div font-size: 16px padding: 10px; font-family: Arial; line-height: 1.4;>
-    @Model.Email.MessageSubject
-</div>
-<br />
-<br />
-<div>@Model.Email.MessageBody</div>
-<br />
-<br />
-<div>@Model.Email.Footer.ComplimentaryClose</div>
+<html>
+        <head>
+        </head>
+    <body>
+    
+        <i>@ViewBag.SuccessfulSentMailMessage</i>
+    
+    
+        <div font-size: 16px padding: 10px; font-family: Arial; line-height: 1.4;>
+            @Model.MessageSubject
+        </div>
+        <br />
+        <div>@Model.MessageBody</div>
+        <br />
+        <div>@Model.Footer.FooterData.ComplimentaryClose</div>
+    </body>
+</html>

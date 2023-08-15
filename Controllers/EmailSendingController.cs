@@ -12,12 +12,14 @@ using EmailManager.Models;
 using Attachment = EmailManager.Models.Domains.Attachment;
 using System.IO;
 using System.Linq;
+using EmailManager.Models.Repositories;
+using Microsoft.AspNet.Identity;
 
 namespace EmailManager.Controllers
 {
     public class EmailSendingController : Controller
     {
-        //private EmailRepository _emailRepository = new EmailRepository();
+        private EmailRepository _emailRepository = new EmailRepository();
         //private Email _email;
         private SmtpClient _smtp;
         private MailMessage _mail;
@@ -107,7 +109,7 @@ namespace EmailManager.Controllers
             return filebyte;
         }
 
-        public async Task Send(string subject, string body, string to)
+        public async Task Send(Email email)
         {
             var emailParams = new SenderEmailParams
             {
@@ -129,32 +131,32 @@ namespace EmailManager.Controllers
 
             _mail = new MailMessage();
             _mail.From = new MailAddress(_senderEmail, _senderName);
-            _mail.To.Add(new MailAddress(to));
+            _mail.To.Add(new MailAddress(email.Receiver.ReceiverData.EmailAddress));
             _mail.IsBodyHtml = true;
-            _mail.Subject = subject;
+            _mail.Subject = email.MessageSubject;
             _mail.BodyEncoding = Encoding.UTF8;
             _mail.SubjectEncoding = Encoding.UTF8;
 
-            using (var stream = new MemoryStream(EmailAttachment()))
-            {
+            //using (var stream = new MemoryStream(email.Attachments.Select(x=>x.FileData).First()))
+            //{
 
-                foreach (string filePath in filePaths)
-                {
-                    stream.Position = 0;
-                    System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(stream, GetFileData.FileNameFromPath(filePath));
-                    string contentID = "File";
-                    attachment.ContentId = contentID;
-                    attachment.ContentDisposition.Inline = true;
-                    attachment.ContentDisposition.DispositionType = DispositionTypeNames.Inline;
+            //    foreach (string filePath in filePaths)
+            //    {
+            //        stream.Position = 0;
+            //        System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(stream, GetFileData.FileNameFromPath(filePath));
+            //        string contentID = "File";
+            //        attachment.ContentId = contentID;
+            //        attachment.ContentDisposition.Inline = true;
+            //        attachment.ContentDisposition.DispositionType = DispositionTypeNames.Inline;
 
-                    _mail.Attachments.Add(attachment);
+            //        _mail.Attachments.Add(attachment);
 
-                }
+            //    }
 
 
-                _mail.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Plain));
+                _mail.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(email.MessageBody, null, MediaTypeNames.Text.Plain));
 
-                string HtmlContent = RazorViewToStringFormat.RenderRazorViewToString(this, "EmailTemplate", EmailVM());
+                string HtmlContent = RazorViewToStringFormat.RenderRazorViewToString(this, "EmailTemplate", email);
 
                 _mail.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(HtmlContent, null, MediaTypeNames.Text.Html));
 
@@ -171,7 +173,7 @@ namespace EmailManager.Controllers
                 _smtp.SendCompleted += OnSendCompleted;
 
                 await _smtp.SendMailAsync(_mail);
-            }
+            //}
 
             //SaveMessage(_mail, EmailAttachment());
         }
@@ -182,18 +184,19 @@ namespace EmailManager.Controllers
             _mail.Dispose();
         }
 
-
-        // GET: EmailSending
         public ActionResult Index()
         {
             return View();
         }
 
-        public async Task<ActionResult> SendEmail()
+        public async Task<ActionResult> SendEmail(int emailId)
         {
+            var userId = User.Identity.GetUserId();
+            var email = _emailRepository.GetEmail(emailId, userId);
+
             try
             {
-                await SendEmailMet();
+                await Send(email);
             }
             catch (Exception ex)
             {
@@ -202,24 +205,26 @@ namespace EmailManager.Controllers
 
             ViewBag.SuccessfulSentMailMessage = "Mail został wysłany";
 
-            return View("EmailTemplate", EmailVM());
+            return View("EmailTemplate", email);
         }
 
-        private async Task SendEmailMet()
+        private async Task SendEmailMet(Email email)
         {
             //var email = _emailRepository.GetEmail(emailID);
             //if (email == null)
             //    return;
 
             //await Send(EmailVM().Email.MessageSubject, EmailVM().Email.MessageBody, EmailVM().Email.Receivers.Where(x=>x.Id==2).Select(x=>x.EmailAddress).ToString());
-            await Send(EmailVM().Email.MessageSubject, EmailVM().Email.MessageBody, "jakubzieba7@gmail.com");
+            await Send(email);
             //await Send(vm.Email.MessageSubject, vm.Email.MessageBody, string.Join(",", vm.Receivers.Select(x => x.EmailAddress)));
 
         }
 
-        public ActionResult EmailTemplate()
+        public ActionResult EmailTemplate(int emailId)
         {
-            return View(EmailVM());
+            var userId = User.Identity.GetUserId();
+
+            return View(_emailRepository.GetEmail(emailId, userId));
         }
 
 

@@ -303,8 +303,8 @@ namespace EmailManager.Controllers
 
             try
             {
-            var userId = User.Identity.GetUserId();
-            _emailRepository.AddEmailAttachment(attachmentVM, userId);
+                var userId = User.Identity.GetUserId();
+                _emailRepository.AddEmailAttachment(attachmentVM, userId);
 
             }
             catch (Exception)
