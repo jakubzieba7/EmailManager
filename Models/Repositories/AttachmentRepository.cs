@@ -8,11 +8,11 @@ namespace EmailManager.Models.Repositories
 {
     public class AttachmentRepository
     {
-        public List<Attachment> GetAttachments(string userId)
+        public List<Attachment> GetAttachments(Email email)
         {
             using (var context = new ApplicationDbContext())
             {
-                return context.Attachments.Where(x => x.Email.UserId == userId).ToList();
+                return context.Attachments.Where(x => x.Email.UserId == email.UserId && x.EmailId == email.Id).ToList();
             }
         }
 

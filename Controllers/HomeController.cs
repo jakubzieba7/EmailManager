@@ -231,7 +231,6 @@ namespace EmailManager.Controllers
                 FooterDatas = _footerRepository.GetFooters(userId),
                 ReceiverDatas = _receiverRepository.GetReceivers(userId),
                 ReceiverCCDatas = _receiverRepository.GetReceivers(userId),
-                Attachments = _attachmentRepository.GetAttachments(userId)
             };
         }
 
