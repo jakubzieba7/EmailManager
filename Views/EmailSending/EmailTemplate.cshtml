@@ -1,19 +1,38 @@
 ﻿@model EmailManager.Models.Domains.Email
 
 <html>
-        <head>
-        </head>
-    <body>
-    
-        <i>@ViewBag.SuccessfulSentMailMessage</i>
-    
-    
-        <div font-size: 16px padding: 10px; font-family: Arial; line-height: 1.4;>
-            @Model.MessageSubject
-        </div>
+<head>
+</head>
+<body>
+
+    <i>@ViewBag.SuccessfulSentMailMessage</i>
+    <br />
+    <br />
+
+    <div style="font-weight: normal; font-size: 16px; font-family: Arial; line-height: 1.4;padding-bottom:10px">
+        Dzień dobry,
         <br />
-        <div>@Model.MessageBody</div>
         <br />
-        <div>@Model.Footer.FooterData.ComplimentaryClose</div>
-    </body>
+        @Model.MessageBody
+        <br />
+        <br />
+        @Model.Footer.FooterData.ComplimentaryClose
+    </div>
+    <div style="font-weight: bold; font-size: 12px; font-family: Arial; line-height: 1.4; padding-bottom: 10px; text-transform: uppercase;">
+        @Model.Sender.SenderPersonalData.Name
+    </div>
+    <div style="font-weight: normal; font-size: 12px; font-family: Arial; line-height: 1.4; padding-bottom: 10px;">
+        @Model.Sender.SenderPersonalData.CompanyPositionPl
+        @Model.Sender.SenderPersonalData.CompanyPositionEn
+        @Model.Sender.SenderPersonalData.PhoneNumber
+    </div>
+    <br />
+    <div style="font-weight: normal; font-size: 12px; font-family: Arial; line-height: 1.4; padding-bottom: 10px;">
+        @Model.Sender.SenderCompanyData.CompanyData.Name
+        ul. @Model.Sender.SenderCompanyData.CompanyAddress.Street @Model.Sender.SenderCompanyData.CompanyAddress.Number, @Model.Sender.SenderCompanyData.CompanyAddress.PostalCode @Model.Sender.SenderCompanyData.CompanyAddress.City
+        tel.: @Model.Sender.SenderCompanyData.CompanyData.PhoneNumber
+        email: @Model.Sender.SenderCompanyData.CompanyData.Email
+        NIP: @Model.Sender.SenderCompanyData.CompanyData.NIP, REGON:@Model.Sender.SenderCompanyData.CompanyData.REGON
+    </div>
+</body>
 </html>
