@@ -1,11 +1,9 @@
 ﻿using EmailManager.Models.Domains;
 using EmailManager.Models.ViewModels;
-using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web.Mvc;
 using Attachment = EmailManager.Models.Domains.Attachment;
 
 namespace EmailManager.Models.Repositories
@@ -16,12 +14,29 @@ namespace EmailManager.Models.Repositories
 
         public List<Email> GetEmails(string userId)
         {
+
             using (var context = new ApplicationDbContext())
             {
-                return context.Emails.
-                    Include(x => x.Sender.SenderPersonalData).
-                    Include(x => x.Receiver.ReceiverData).
-                    Where(x => x.UserId == userId).ToList();
+                var emailsListIncludingReceiverCCs=context.Emails.
+                Include(x => x.Sender.SenderPersonalData).
+                Include(x => x.Receiver.ReceiverData).
+                Include(x => x.ReceiverCC.ReceiverData).
+                Where(x => x.UserId == userId).ToList();
+
+                var allEmails = context.Emails.
+                Include(x => x.Sender.SenderPersonalData).
+                Include(x => x.Receiver.ReceiverData).
+                Where(x => x.UserId == userId).ToList();
+
+                var allEmailsSubtractedThoseIncludingReceiverCCs = allEmails.Except(emailsListIncludingReceiverCCs).ToList();
+
+                var allEmailsIncludingReceiverCCData = new List<Email>(emailsListIncludingReceiverCCs.Count +
+                                    allEmailsSubtractedThoseIncludingReceiverCCs.Count);
+                allEmailsIncludingReceiverCCData.AddRange(emailsListIncludingReceiverCCs);
+                allEmailsIncludingReceiverCCData.AddRange(allEmailsSubtractedThoseIncludingReceiverCCs);
+
+                return allEmailsIncludingReceiverCCData.OrderBy(x=>x.Id).ToList();
+                
             }
         }
 
@@ -84,6 +99,21 @@ namespace EmailManager.Models.Repositories
                 context.SaveChanges();
             }
         }
+
+        //public static bool CheckReceiverCCExist(Email email)
+        //{
+        //    using (var context=new ApplicationDbContext())
+        //    {
+
+        //    var emailToUpdate = context.Emails.Single(x => x.Id == email.Id && x.UserId == email.UserId);
+        //    var receiverCC = context.ReceiverCCs.Single(x => x.Id == emailToUpdate.ReceiverCCId);
+
+        //        if (receiverCC.ReceiverDataId is null)
+        //            return false;
+        //        else
+        //            return true;
+        //    }
+        //}
 
         public void Update(Email email)
         {

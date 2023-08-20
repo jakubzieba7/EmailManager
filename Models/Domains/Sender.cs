@@ -24,7 +24,7 @@ namespace EmailManager.Models.Domains
         public ICollection<SenderEmailParams> SenderEmailParamss { get; set; }
         public ICollection<Email> Emails { get; set; }
         public SenderPersonalData SenderPersonalData { get; set; }
-        public SenderCompanyData SenderCompanyData { get; set; }
-        public SenderEmailParams SenderEmailParams { get; set; }
+        //public SenderCompanyData SenderCompanyData { get; set; }
+        //public SenderEmailParams SenderEmailParams { get; set; }
     }
 }

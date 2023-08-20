@@ -17,22 +17,25 @@
         <br />
         <br />
         @Model.Footer.FooterData.ComplimentaryClose
+        <br />
     </div>
     <div style="font-weight: bold; font-size: 12px; font-family: Arial; line-height: 1.4; padding-bottom: 10px; text-transform: uppercase;">
         @Model.Sender.SenderPersonalData.Name
     </div>
     <div style="font-weight: normal; font-size: 12px; font-family: Arial; line-height: 1.4; padding-bottom: 10px;">
         @Model.Sender.SenderPersonalData.CompanyPositionPl
+        <br />
         @Model.Sender.SenderPersonalData.CompanyPositionEn
+        <br />
         @Model.Sender.SenderPersonalData.PhoneNumber
     </div>
     <br />
-    <div style="font-weight: normal; font-size: 12px; font-family: Arial; line-height: 1.4; padding-bottom: 10px;">
+    @*<div style="font-weight: normal; font-size: 12px; font-family: Arial; line-height: 1.4; padding-bottom: 10px;">
         @Model.Sender.SenderCompanyData.CompanyData.Name
         ul. @Model.Sender.SenderCompanyData.CompanyAddress.Street @Model.Sender.SenderCompanyData.CompanyAddress.Number, @Model.Sender.SenderCompanyData.CompanyAddress.PostalCode @Model.Sender.SenderCompanyData.CompanyAddress.City
         tel.: @Model.Sender.SenderCompanyData.CompanyData.PhoneNumber
         email: @Model.Sender.SenderCompanyData.CompanyData.Email
         NIP: @Model.Sender.SenderCompanyData.CompanyData.NIP, REGON:@Model.Sender.SenderCompanyData.CompanyData.REGON
-    </div>
+    </div>*@
 </body>
 </html>
