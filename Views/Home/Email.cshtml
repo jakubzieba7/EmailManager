@@ -10,7 +10,7 @@
 {
     <button class="btn btn-primary mb-3" onclick='window.location.href="@Url.Action("EmailAttachment","Home", new {emailId=Model.Email.Id})"'>Dodaj załącznik</button>
     <button class="btn btn-secondary mb-3" onclick="generatePdf()">Generuj PDF</button>
-    <button class="btn btn-secondary mb-3" onclick='window.location.href="@Url.Action("EmailTemplate","EmailSending", new {emailId=Model.Email.Id})"'>Podgląd Email</button>
+    <button class="btn btn-secondary mb-3" onclick='window.location.href="@Url.Action("EmailTemplate","Print", new {emailId=Model.Email.Id})"'>Podgląd Email</button>
     <button class="btn btn-secondary mb-3" onclick="printEmail()">Drukuj Email</button>
 }
 
@@ -101,10 +101,43 @@
     <script type="text/javascript">
 
         function generatePdf() {
+             $.ajax({
+                type: 'POST',
+                url: "@Url.Action("EmailToPdf", "Print")",
+                data: {
+                    id: '@Model.Email.Id'
+                },
+                success: function (data)
+                {
+                    window.location = '@Url.Action("DownloadEmailPdf", "Print")' + '?fileGuid=' + data.FileGuid + '&fileName=' + data.FileName;
+                },
+                error: function (data)
+                {
+                    alert(data.Message);
+                },
+                 dataType: 'json',
+                 cache: false
 
+                });
         }
 
         function printEmail() {
+            $.ajax({
+
+                type: 'POST',
+                url: "@Url.Action("EmailTemplate", "Print", new { invoiceId = @Model.Email.Id })",
+                success: function (data)
+                {
+                    newWin = window.open("");
+                    newWin.document.write(data);
+                    newWin.print();
+                    newWin.close();
+                },
+                error: function (data)
+                {
+                    alert(data.Message);
+                },
+            });
 
         }
 
