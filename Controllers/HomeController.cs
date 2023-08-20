@@ -31,15 +31,6 @@ namespace EmailManager.Controllers
             return View(emails);
         }
 
-        //public ActionResult EmailAttachment()
-        //{
-        //    var vm = new EditEmailViewModel
-        //    {
-        //        Heading = "Dodaj załącznik"
-        //    };
-        //    return View(vm);
-        //}
-
         public ActionResult Email(int id = 0)
         {
             var userId = User.Identity.GetUserId();
@@ -48,17 +39,6 @@ namespace EmailManager.Controllers
             var vm = PrepareEmailVm(email, userId);
 
             return View(vm);
-
-
-            //if (id == 0)
-            //{
-            //    return View(ViewModel());
-
-            //}
-            //else
-            //{
-            //    return View(ViewModel());
-            //}
         }
 
         private object PrepareEmailVm(Email email, string userId)
@@ -111,6 +91,7 @@ namespace EmailManager.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Email(Email email)
         {
             var userId = User.Identity.GetUserId();
@@ -131,6 +112,7 @@ namespace EmailManager.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EmailAttachment(EditEmailAttachmentViewModel attachmentVM)
         {
 

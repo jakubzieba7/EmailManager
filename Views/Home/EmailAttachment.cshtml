@@ -6,23 +6,17 @@
 
 <h1>@Model.Heading</h1>
 
-@*@using (Html.BeginForm("EmailAttachment", "Home"))
-    {
-        @Html.AntiForgeryToken()*@
-
-@*//if (Model.Attachment.Id == 0)
-    //{*@
-
 
 @using (Html.BeginForm("EmailAttachment", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    @Html.AntiForgeryToken()
+
     @Html.HiddenFor(x => x.Attachment.Lp)
     @Html.HiddenFor(x => x.Attachment.EmailId)
     @Html.HiddenFor(x => x.Attachment.FileData)
     @Html.HiddenFor(x => x.Attachment.FilePath)
 
     <div>
-        @*@Html.LabelFor(x => x.InputAttachmentData)*@
         @Html.TextBoxFor(x => x.InputAttachmentData, new { type = "file", id = "attachment1", name = "attachments", @class = "form-control" })
         @Html.ValidationMessageFor(x => x.InputAttachmentData)
     </div>
@@ -39,8 +33,7 @@
 
     <button class="btn btn-primary btn-lg mt-5 mb-3" type="submit">Załącz do maila</button>
 }
-@*}*@
-@*}*@
+
 <button class="btn btn-secondary btn-lg mb-5" onclick='window.location.href="@Url.Action("Email","Home", new {id=Model.Attachment.EmailId})"'>Wróć</button>
 
 @section Scripts

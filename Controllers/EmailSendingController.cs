@@ -30,7 +30,7 @@ namespace EmailManager.Controllers
         private string _filePath;
         string attachmentDownloadFolderPath;
 
-        public async Task Send(Email email)
+        private async Task Send(Email email)
         {
             var emailParams = new SenderEmailParams
             {
