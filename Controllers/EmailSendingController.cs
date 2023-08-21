@@ -53,6 +53,12 @@ namespace EmailManager.Controllers
             _mail = new MailMessage();
             _mail.From = new MailAddress(_senderEmail, _senderName);
             _mail.To.Add(new MailAddress(email.Receiver.ReceiverData.EmailAddress));
+
+            var isReceiverCCExist = ReferenceEquals(email.ReceiverCC, null);
+
+            if (!isReceiverCCExist)
+                _mail.To.Add(new MailAddress(email.ReceiverCC.ReceiverData.EmailAddress));
+            
             _mail.IsBodyHtml = true;
             _mail.Subject = email.MessageSubject;
             _mail.BodyEncoding = Encoding.UTF8;
