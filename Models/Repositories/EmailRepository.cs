@@ -17,7 +17,7 @@ namespace EmailManager.Models.Repositories
 
             using (var context = new ApplicationDbContext())
             {
-                var emailsListIncludingReceiverCCs=context.Emails.
+                var emailsListIncludingReceiverCCs = context.Emails.
                 Include(x => x.Sender.SenderPersonalData).
                 Include(x => x.Receiver.ReceiverData).
                 Include(x => x.ReceiverCC.ReceiverData).
@@ -35,8 +35,8 @@ namespace EmailManager.Models.Repositories
                 allEmailsIncludingReceiverCCData.AddRange(emailsListIncludingReceiverCCs);
                 allEmailsIncludingReceiverCCData.AddRange(allEmailsSubtractedThoseIncludingReceiverCCs);
 
-                return allEmailsIncludingReceiverCCData.OrderBy(x=>x.Id).ToList();
-                
+                return allEmailsIncludingReceiverCCData.OrderBy(x => x.Id).ToList();
+
             }
         }
 
@@ -47,7 +47,7 @@ namespace EmailManager.Models.Repositories
                 var email = context.Emails.Single(x => x.UserId == userId && x.Id == emailId);
                 var receiverCC = context.ReceiverCCs.Single(x => x.Id == email.ReceiverCCId);
 
-                if (receiverCC.ReceiverDataId == null) 
+                if (receiverCC.ReceiverDataId == null)
                 {
                     return context.Emails
                         .Include(x => x.Attachments)
@@ -100,21 +100,6 @@ namespace EmailManager.Models.Repositories
             }
         }
 
-        //public static bool CheckReceiverCCExist(Email email)
-        //{
-        //    using (var context=new ApplicationDbContext())
-        //    {
-
-        //    var emailToUpdate = context.Emails.Single(x => x.Id == email.Id && x.UserId == email.UserId);
-        //    var receiverCC = context.ReceiverCCs.Single(x => x.Id == emailToUpdate.ReceiverCCId);
-
-        //        if (receiverCC.ReceiverDataId is null)
-        //            return false;
-        //        else
-        //            return true;
-        //    }
-        //}
-
         public void Update(Email email)
         {
             using (var context = new ApplicationDbContext())
@@ -165,9 +150,9 @@ namespace EmailManager.Models.Repositories
             {
                 //weryfikacja czy dany rekord istnieje w bazie danych
                 var email = context.Emails.Single(x => x.Id == attachmentVM.Attachment.EmailId && x.UserId == userId);
-                //var attachmentLp = email.Attachments.Select(x => x.Lp).Last();
+                var attachmentLp = _attachmentRepository.GetAttachments(email).Select(x => x.Lp).Count() > 0 ? _attachmentRepository.GetAttachments(email).Select(x => x.Lp).Last() : 0;
 
-                //attachmentVM.Attachment.Lp = attachmentLp + 1;
+                attachmentVM.Attachment.Lp = attachmentLp + 1;
                 attachmentVM.Attachment.FileData = _attachmentRepository.GetAttachmentContent(attachmentVM);
                 attachmentVM.Attachment.FileName = GetFileData.FileNameFromStreamFileName(attachmentVM.InputAttachmentData.FileName);
                 attachmentVM.Attachment.ContentType = GetFileData.FileExtension(attachmentVM.InputAttachmentData.FileName);
@@ -177,16 +162,17 @@ namespace EmailManager.Models.Repositories
             }
         }
 
-        public void UpdateEmailAttachment(Attachment attachment, string userId)
+        public void UpdateEmailAttachments(int emailId, string userId)
         {
             using (var context = new ApplicationDbContext())
             {
-                var attachmentToUpdate = context.Attachments.Include(x => x.Email).Include(x => x.FileData).Single(x => x.Id == attachment.Id && x.EmailId == attachment.EmailId && x.Email.UserId == userId);
+                var attachmentsToUpdate = context.Attachments.Where(x => x.EmailId == emailId && x.Email.UserId == userId);
+                var counter = 1;
 
-                attachmentToUpdate.Lp = attachment.Lp;
-                attachmentToUpdate.ContentType = attachment.ContentType;
-                attachmentToUpdate.FileName = attachment.FileName;
-                attachmentToUpdate.FileData = attachment.FileData;
+                foreach (var attachment in attachmentsToUpdate)
+                {
+                    attachment.Lp = counter++;
+                }
 
                 context.SaveChanges();
             }

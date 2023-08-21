@@ -77,9 +77,6 @@
 
             <div class="btn-lg mt-5">
                 <button class="btn btn-secondary mb-3" type="submit">Zapisz</button>
-                @*<button class="btn btn-secondary" onclick=@{((EmailManager.Controllers.EmailSendingController)ViewContext.Controller).SendEmailMethode().RunSynchronously();}>Wyślij2</button>*@
-
-
             </div>
         }
         <button class="btn btn-primary mb-5" onclick='window.location.href="@Url.Action("SendEmail","EmailSending", new {emailId=Model.Email.Id})"'>Wyślij</button>
@@ -88,11 +85,7 @@
 
     <div class="col-5 offset-lg-1">
 
-        @*@if (Model.Email.Id != 0)
-            {
-            }*@
         @Html.Partial("_EmailAttachment", Model.Email.Attachments)
-
 
     </div>
 </div>
@@ -139,10 +132,9 @@
                     alert(data.Message);
                 },
             });
-
         }
 
-        function deleteAttachment(attachmentId, btn) {
+        function deleteAttachment(attachmentId,emailId, btn) {
 
             if (!confirm("Czy na pewno chcesz usunąć załącznik?"))
                 return;
@@ -158,6 +150,27 @@
                     if (data.Success) {
                         var row = btn.parentNode.parentNode;
                         row.parentNode.removeChild(row);
+                        
+                        $.ajax({
+                            type: 'POST',
+                            url: "@Url.Action("UpdateAttachments","Home")",
+                            data: {
+                                emailId: emailId
+                            },
+                            success: function (data) {
+                                if (data.Success) {
+                                    location.reload();
+                                }
+                                else {
+                                    alert(data.Message);
+                                }
+                            },
+                            error: function (data) {
+                                alert(data.Message);
+                            },
+                            dataType: 'json'
+
+                        });
                     }
                     else
                     {
@@ -170,8 +183,7 @@
                 },
                 dataType:'json'
 
-                });
-
+            });
         }
 
         $(document).ready(function () {
@@ -183,9 +195,8 @@
             return this.optional(element) || !/Invalid|NaN/.test(new Date(d.toLocaleDateString(value)));
             } else {
             return this.optional(element) || !/Invalid|NaN/.test(new Date(value));
-            }
+             }
          };
-
 
             $('#EmailSendDate').datepicker({
                 format: "dd-mm-yyyy",

@@ -19,7 +19,7 @@
                     <td>@attachment.FileName</td>
                     <td>@attachment.ContentType</td>
                     <td>
-                        <button class="btn btn-danger btn-sm" onclick="deleteAttachment('@attachment.Id', this)">Usuń</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteAttachment('@attachment.Id','@attachment.EmailId', this)">Usuń</button>
                     </td>
                 </tr>
             }

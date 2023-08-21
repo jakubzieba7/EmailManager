@@ -172,6 +172,23 @@ namespace EmailManager.Controllers
             return Json(new { Success = true, /*Email = email*/ });
         }
 
+        [HttpPost]
+        public ActionResult UpdateAttachments(int emailId)
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                _emailRepository.UpdateEmailAttachments(emailId, userId);
+            }
+            catch (Exception exception)
+            {
+                //logowanie do pliku
+                return Json(new { Success = false, Message = exception.Message });
+            }
+
+            return Json(new { Success = true });
+        }
+
         [AllowAnonymous]
         public ActionResult About()
         {
