@@ -12,6 +12,6 @@ namespace EmailManager.Models.ViewModels
         public List<Attachment> Attachments { get; set; }
         public string Heading { get; set; }
         public HttpPostedFileBase InputAttachmentData { get; set; }
-
+        public Email Email { get; set; }
     }
 }

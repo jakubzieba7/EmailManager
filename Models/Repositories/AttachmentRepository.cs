@@ -1,6 +1,7 @@
 ﻿using EmailManager.Models.Domains;
 using EmailManager.Models.ViewModels;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 
@@ -12,7 +13,15 @@ namespace EmailManager.Models.Repositories
         {
             using (var context = new ApplicationDbContext())
             {
-                return context.Attachments.Where(x => x.Email.UserId == email.UserId && x.EmailId == email.Id).ToList();
+                return context.Attachments.Include(x => x.Email).Where(x => x.Email.UserId == email.UserId && x.EmailId == email.Id).ToList();
+            }
+        }
+
+        public Attachment GetAttachment(Email email, int attachmentId)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                return context.Attachments.Include(x => x.Email).Where(x => x.Email.UserId == email.UserId && x.EmailId == email.Id).Single(x=>x.Id==attachmentId);
             }
         }
 

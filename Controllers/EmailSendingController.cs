@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using EmailManager.Models.Repositories;
 using Microsoft.AspNet.Identity;
+using System.Web.Helpers;
 
 namespace EmailManager.Controllers
 {
@@ -58,12 +59,12 @@ namespace EmailManager.Controllers
 
             if (!isReceiverCCExist)
                 _mail.To.Add(new MailAddress(email.ReceiverCC.ReceiverData.EmailAddress));
-            
+
             _mail.IsBodyHtml = true;
             _mail.Subject = email.MessageSubject;
             _mail.BodyEncoding = Encoding.UTF8;
             _mail.SubjectEncoding = Encoding.UTF8;
-            
+
             var attachmentsData = _attachmentRepository.GetAttachments(email).Select(x => new { x.FileData, x.FileName, x.ContentType });
 
             if (_attachmentRepository.GetAttachments(email).Count() > 0)
@@ -111,6 +112,100 @@ namespace EmailManager.Controllers
             {
                 System.IO.File.WriteAllBytes(Path.Combine(attachmentDownloadFolderPath, attachmentData.FileName + "." + attachmentData.ContentType), attachmentData.FileData);
             }
+        }
+
+        private void SaveAttachmentsToSelectedFolder(Email email)
+        {
+            var attachmentsData = _attachmentRepository.GetAttachments(email).Select(x => new { x.FileData, x.FileName, x.ContentType });
+            attachmentDownloadFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EmailSenderApp");
+
+            if (!Directory.Exists(attachmentDownloadFolderPath))
+            {
+                Directory.CreateDirectory(attachmentDownloadFolderPath);
+            }
+
+            string filepath;
+
+            foreach (var attachmentData in attachmentsData)
+            {
+                System.IO.File.WriteAllBytes(Path.Combine(attachmentDownloadFolderPath, attachmentData.FileName + "." + attachmentData.ContentType), attachmentData.FileData);
+
+                filepath = Path.Combine(attachmentDownloadFolderPath, attachmentData.FileName + "." + attachmentData.ContentType);
+                FileInfo file = new FileInfo(filepath); // full file path on disk
+                Response.ClearContent(); // neded to clear previous (if any) written content
+                Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
+                Response.AddHeader("Content-Length", file.Length.ToString());
+                //Response.ContentType = "text/plain";
+                Response.ContentType = "application/octet-stream";
+                Response.TransmitFile(file.FullName);
+                Response.Flush();
+                Response.End();
+            }
+
+        }
+
+        private void SaveAttachmentToSelectedFolder(Email email, int attachmentId)
+        {
+            var attachmentData = _attachmentRepository.GetAttachment(email, attachmentId);
+
+            attachmentDownloadFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EmailSenderApp");
+
+            if (!Directory.Exists(attachmentDownloadFolderPath))
+            {
+                Directory.CreateDirectory(attachmentDownloadFolderPath);
+            }
+
+            string filepath;
+
+
+            System.IO.File.WriteAllBytes(Path.Combine(attachmentDownloadFolderPath, attachmentData.FileName + "." + attachmentData.ContentType), attachmentData.FileData);
+
+            filepath = Path.Combine(attachmentDownloadFolderPath, attachmentData.FileName + "." + attachmentData.ContentType);
+            FileInfo file = new FileInfo(filepath); // full file path on disk
+            Response.ClearContent(); // neded to clear previous (if any) written content
+            Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
+            Response.AddHeader("Content-Length", file.Length.ToString());
+            Response.ContentType = "text/plain";
+            //Response.ContentType = "application/octet-stream";
+            Response.TransmitFile(file.FullName);
+            Response.Flush();
+            Response.End();
+
+
+        }
+
+        public ActionResult SaveAttachments(int emailId)
+        {
+            var userId = User.Identity.GetUserId();
+
+            try
+            {
+                SaveAttachmentsToSelectedFolder(_emailRepository.GetEmail(emailId, userId));
+            }
+            catch (Exception exception)
+            {
+                //logowanie do pliku
+                return Json(new { Success = false, Message = exception.Message }, JsonRequestBehavior.AllowGet);
+            }
+            //return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
+            return View("Email", new { emailId = emailId });
+        }
+
+        public ActionResult SaveAttachment(int attachmentId, int emailId)
+        {
+            var userId = User.Identity.GetUserId();
+
+            try
+            {
+                SaveAttachmentToSelectedFolder(_emailRepository.GetEmail(emailId, userId), attachmentId);
+            }
+            catch (Exception exception)
+            {
+                //logowanie do pliku
+                return Json(new { Success = false, Message = exception.Message }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
         }
 
         private void OnSendCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)

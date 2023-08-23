@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EmailManager.Models.Domains.Attachment>
+﻿@model EmailManager.Models.Domains.Email
 
 <div class="row">
     <h2>Załączniki</h2>
@@ -12,12 +12,15 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var attachment in Model)
+            @foreach (var attachment in Model.Attachments)
             {
                 <tr>
                     <td>@attachment.Lp</td>
                     <td>@attachment.FileName</td>
                     <td>@attachment.ContentType</td>
+                    <td>
+                        <button class="btn btn-info btn-sm" onclick='window.location.href="@Url.Action("SaveAttachment","EmailSending", new { attachmentId=attachment.Id, emailId=Model.Id})"'>Pobierz</button>
+                    </td>
                     <td>
                         <button class="btn btn-danger btn-sm" onclick="deleteAttachment('@attachment.Id','@attachment.EmailId', this)">Usuń</button>
                     </td>
@@ -26,4 +29,14 @@
         </tbody>
     </table>
 
+    
+
+</div>
+
+<div>
+    @if (Model.Attachments.Count() > 0)
+    {
+
+        <button class="btn btn-primary mb-5" onclick='window.location.href="@Url.Action("SaveAttachments","EmailSending", new {emailId=Model.Id})"'>Pobierz wszystkie</button>
+    }
 </div>

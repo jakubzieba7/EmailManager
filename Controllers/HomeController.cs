@@ -65,7 +65,6 @@ namespace EmailManager.Controllers
 
         public ActionResult EmailAttachment(int emailId, int attachmentId = 0)
         {
-            var userId = User.Identity.GetUserId();
             var emailAttachment = GetNewAttachment(emailId, attachmentId);
             var vm = PrepareAttachmentVM(emailAttachment);
 
