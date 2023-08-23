@@ -296,6 +296,7 @@
     <Compile Include="Models\Repositories\AttachmentRepository.cs" />
     <Compile Include="Models\Repositories\EmailRepository.cs" />
     <Compile Include="Models\Repositories\FooterRepository.cs" />
+    <Compile Include="Models\Repositories\SavingAttachmentsHelper.cs" />
     <Compile Include="Models\Repositories\SenderRepository.cs" />
     <Compile Include="Models\ViewModels\AddPhoneNumberViewModel.cs" />
     <Compile Include="Models\Domains\ApplicationUser.cs" />

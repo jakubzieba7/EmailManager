@@ -11,13 +11,13 @@ using System.IO;
 using System.Linq;
 using EmailManager.Models.Repositories;
 using Microsoft.AspNet.Identity;
-using System.Web.Helpers;
 
 namespace EmailManager.Controllers
 {
     public class EmailSendingController : Controller
     {
         private EmailRepository _emailRepository = new EmailRepository();
+        private SavingAttachmentsHelper _savingAttachmentsHelper = new SavingAttachmentsHelper();
         private AttachmentRepository _attachmentRepository = new AttachmentRepository();
         private SmtpClient _smtp;
         private MailMessage _mail;
@@ -28,11 +28,11 @@ namespace EmailManager.Controllers
         private string _senderEmail;
         private string _senderEmailPassword;
         private string _senderName;
-        private string _filePath;
-        string attachmentDownloadFolderPath;
 
         private async Task Send(Email email)
         {
+            int attachmentId = 0;
+
             var emailParams = new SenderEmailParams
             {
                 Id = 1,
@@ -57,7 +57,7 @@ namespace EmailManager.Controllers
 
             var isReceiverCCExist = ReferenceEquals(email.ReceiverCC, null);
 
-            if (!isReceiverCCExist)
+            if (isReceiverCCExist)
                 _mail.To.Add(new MailAddress(email.ReceiverCC.ReceiverData.EmailAddress));
 
             _mail.IsBodyHtml = true;
@@ -65,15 +65,15 @@ namespace EmailManager.Controllers
             _mail.BodyEncoding = Encoding.UTF8;
             _mail.SubjectEncoding = Encoding.UTF8;
 
-            var attachmentsData = _attachmentRepository.GetAttachments(email).Select(x => new { x.FileData, x.FileName, x.ContentType });
+            var attachmentsData = _attachmentRepository.GetAttachments(email);
 
             if (_attachmentRepository.GetAttachments(email).Count() > 0)
             {
-                SaveFileBytesFromDBToDisk(email);
+                _savingAttachmentsHelper.AttachmentsFilePath(email, attachmentId);
 
                 foreach (var attachmentData in attachmentsData)
                 {
-                    _mail.Attachments.Add(new System.Net.Mail.Attachment(attachmentDownloadFolderPath + '\\' + attachmentData.FileName + '.' + attachmentData.ContentType));
+                    _mail.Attachments.Add(new System.Net.Mail.Attachment(_savingAttachmentsHelper.attachmentDownloadFolderPath + '\\' + attachmentData.FileName + '.' + attachmentData.ContentType));
                 }
             }
 
@@ -98,40 +98,11 @@ namespace EmailManager.Controllers
             await _smtp.SendMailAsync(_mail);
         }
 
-        private void SaveFileBytesFromDBToDisk(Email email)
+        private void SaveAttachmentsToSelectedFolder(Email email, int attachmentId = 0)
         {
-            var attachmentsData = _attachmentRepository.GetAttachments(email).Select(x => new { x.FileData, x.FileName, x.ContentType });
-            attachmentDownloadFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EmailSenderApp");
-
-            if (!Directory.Exists(attachmentDownloadFolderPath))
+            foreach (var attachmentFilePath in _savingAttachmentsHelper.AttachmentsFilePath(email, attachmentId))
             {
-                Directory.CreateDirectory(attachmentDownloadFolderPath);
-            }
-
-            foreach (var attachmentData in attachmentsData)
-            {
-                System.IO.File.WriteAllBytes(Path.Combine(attachmentDownloadFolderPath, attachmentData.FileName + "." + attachmentData.ContentType), attachmentData.FileData);
-            }
-        }
-
-        private void SaveAttachmentsToSelectedFolder(Email email)
-        {
-            var attachmentsData = _attachmentRepository.GetAttachments(email).Select(x => new { x.FileData, x.FileName, x.ContentType });
-            attachmentDownloadFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EmailSenderApp");
-
-            if (!Directory.Exists(attachmentDownloadFolderPath))
-            {
-                Directory.CreateDirectory(attachmentDownloadFolderPath);
-            }
-
-            string filepath;
-
-            foreach (var attachmentData in attachmentsData)
-            {
-                System.IO.File.WriteAllBytes(Path.Combine(attachmentDownloadFolderPath, attachmentData.FileName + "." + attachmentData.ContentType), attachmentData.FileData);
-
-                filepath = Path.Combine(attachmentDownloadFolderPath, attachmentData.FileName + "." + attachmentData.ContentType);
-                FileInfo file = new FileInfo(filepath); // full file path on disk
+                FileInfo file = new FileInfo(attachmentFilePath); // full file path on disk
                 Response.ClearContent(); // neded to clear previous (if any) written content
                 Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
                 Response.AddHeader("Content-Length", file.Length.ToString());
@@ -141,37 +112,6 @@ namespace EmailManager.Controllers
                 Response.Flush();
                 Response.End();
             }
-
-        }
-
-        private void SaveAttachmentToSelectedFolder(Email email, int attachmentId)
-        {
-            var attachmentData = _attachmentRepository.GetAttachment(email, attachmentId);
-
-            attachmentDownloadFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "EmailSenderApp");
-
-            if (!Directory.Exists(attachmentDownloadFolderPath))
-            {
-                Directory.CreateDirectory(attachmentDownloadFolderPath);
-            }
-
-            string filepath;
-
-
-            System.IO.File.WriteAllBytes(Path.Combine(attachmentDownloadFolderPath, attachmentData.FileName + "." + attachmentData.ContentType), attachmentData.FileData);
-
-            filepath = Path.Combine(attachmentDownloadFolderPath, attachmentData.FileName + "." + attachmentData.ContentType);
-            FileInfo file = new FileInfo(filepath); // full file path on disk
-            Response.ClearContent(); // neded to clear previous (if any) written content
-            Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
-            Response.AddHeader("Content-Length", file.Length.ToString());
-            Response.ContentType = "text/plain";
-            //Response.ContentType = "application/octet-stream";
-            Response.TransmitFile(file.FullName);
-            Response.Flush();
-            Response.End();
-
-
         }
 
         public ActionResult SaveAttachments(int emailId)
@@ -197,7 +137,7 @@ namespace EmailManager.Controllers
 
             try
             {
-                SaveAttachmentToSelectedFolder(_emailRepository.GetEmail(emailId, userId), attachmentId);
+                SaveAttachmentsToSelectedFolder(_emailRepository.GetEmail(emailId, userId), attachmentId);
             }
             catch (Exception exception)
             {
