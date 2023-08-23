@@ -11,6 +11,8 @@ using System.IO;
 using System.Linq;
 using EmailManager.Models.Repositories;
 using Microsoft.AspNet.Identity;
+using ICSharpCode.SharpZipLib.Zip;
+using System.Collections.Generic;
 
 namespace EmailManager.Controllers
 {
@@ -105,7 +107,7 @@ namespace EmailManager.Controllers
                 FileInfo file = new FileInfo(attachmentFilePath); // full file path on disk
                 Response.ClearContent(); // neded to clear previous (if any) written content
                 Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
-                Response.AddHeader("Content-Length", file.Length.ToString());
+                Response.AppendHeader("Content-Length", file.Length.ToString());
                 //Response.ContentType = "text/plain";
                 Response.ContentType = "application/octet-stream";
                 Response.TransmitFile(file.FullName);
@@ -114,21 +116,61 @@ namespace EmailManager.Controllers
             }
         }
 
-        public ActionResult SaveAttachments(int emailId)
+        public FileResult SaveAttachments(int emailId)
         {
             var userId = User.Identity.GetUserId();
+            var fileName = string.Format("{0}_SpakowaneZałączniki_{1}.zip", "Email_nr" + emailId, DateTime.Today.Date.ToString("dd-MM-yyyy"));
+            string tempOutPutPath = _savingAttachmentsHelper.attachmentDownloadFolderPath + fileName; ;
+            int attachmentId = 0;
 
-            try
+
+            //SaveAttachmentsToSelectedFolder(_emailRepository.GetEmail(emailId, userId));
+
+            using (ZipOutputStream s = new ZipOutputStream(System.IO.File.Create(tempOutPutPath)))
             {
-                SaveAttachmentsToSelectedFolder(_emailRepository.GetEmail(emailId, userId));
+                s.SetLevel(9); // 0-9, 9 being the highest compression  
+
+                byte[] buffer = new byte[4096];
+
+                var ImageList = new List<string>();
+
+                foreach (var attachmentFilePath in _savingAttachmentsHelper.AttachmentsFilePath(_emailRepository.GetEmail(emailId, userId), attachmentId))
+                {
+                    ImageList.Add(attachmentFilePath);
+
+                }
+
+                for (int i = 0; i < ImageList.Count; i++)
+                {
+                    ZipEntry entry = new ZipEntry(Path.GetFileName(ImageList[i]));
+                    entry.DateTime = DateTime.Now;
+                    entry.IsUnicodeText = true;
+                    s.PutNextEntry(entry);
+
+                    using (FileStream fs = System.IO.File.OpenRead(ImageList[i]))
+                    {
+                        int sourceBytes;
+                        do
+                        {
+                            sourceBytes = fs.Read(buffer, 0, buffer.Length);
+                            s.Write(buffer, 0, sourceBytes);
+                        } while (sourceBytes > 0);
+                    }
+                }
+                s.Finish();
+                s.Flush();
+                s.Close();
+
+                byte[] finalResult = System.IO.File.ReadAllBytes(tempOutPutPath);
+                if (System.IO.File.Exists(tempOutPutPath))
+                    System.IO.File.Delete(tempOutPutPath);
+
+                if (finalResult == null || !finalResult.Any())
+                    throw new Exception(String.Format("Brak załączników do załadowania"));
+                
+                return File(finalResult, "application/zip", fileName);
             }
-            catch (Exception exception)
-            {
-                //logowanie do pliku
-                return Json(new { Success = false, Message = exception.Message }, JsonRequestBehavior.AllowGet);
-            }
-            //return Json(new { Success = true }, JsonRequestBehavior.AllowGet);
-            return View("Email", new { emailId = emailId });
+
         }
 
         public ActionResult SaveAttachment(int attachmentId, int emailId)
