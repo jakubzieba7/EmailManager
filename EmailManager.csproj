@@ -520,6 +520,7 @@
     <Content Include="Views\Home\EmailAttachment.cshtml" />
     <Content Include="Views\Shared\_NullReferenceExError.cshtml" />
     <Content Include="Views\Print\EmailTemplate.cshtml" />
+    <Content Include="Views\Shared\_SystemExceptionError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -204,15 +204,16 @@ namespace EmailManager.Controllers
         public async Task<ActionResult> SendEmail(int emailId)
         {
             var userId = User.Identity.GetUserId();
-            var email = _emailRepository.GetEmail(emailId, userId);
+            Email email;
 
             try
             {
+                email = _emailRepository.GetEmail(emailId, userId);
                 await Send(email);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(ex.Message);
+                return View("_SystemExceptionError");
             }
 
             ViewBag.SuccessfulSentMailMessage = "Mail został wysłany";

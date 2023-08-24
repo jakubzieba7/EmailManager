@@ -160,7 +160,6 @@ namespace EmailManager.Controllers
             {
                 var userId = User.Identity.GetUserId();
                 _emailRepository.DeleteAttachment(attachmentId, userId);
-                //_emailRepository.Update(email);
             }
             catch (Exception exception)
             {
