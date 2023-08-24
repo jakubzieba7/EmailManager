@@ -116,22 +116,15 @@
         }
 
         function printEmail() {
-            $.ajax({
+            var url = '@Url.Action("EmailTemplate", "Print")' + '?id=' + '@Model.Email.Id';
+            var myWindow = window.open(url, '', 'width=800,height=600');
 
-                type: 'POST',
-                url: "@Url.Action("EmailTemplate", "Print", new { invoiceId = @Model.Email.Id })",
-                success: function (data)
-                {
-                    newWin = window.open("");
-                    newWin.document.write(data);
-                    newWin.print();
-                    newWin.close();
-                },
-                error: function (data)
-                {
-                    alert(data.Message);
-                },
-            });
+            myWindow.onload = function () {
+                myWindow.print();
+                myWindow.onafterprint = function () {
+                    myWindow.close();
+                };
+            };
         }
 
         function deleteAttachment(attachmentId,emailId, btn) {
@@ -150,7 +143,7 @@
                     if (data.Success) {
                         var row = btn.parentNode.parentNode;
                         row.parentNode.removeChild(row);
-                        
+
                         $.ajax({
                             type: 'POST',
                             url: "@Url.Action("UpdateAttachments","Home")",

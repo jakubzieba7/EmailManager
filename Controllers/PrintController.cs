@@ -54,12 +54,12 @@ namespace EmailManager.Controllers
             return File(data, "application/pdf", fileName);
         }
 
-        public ActionResult EmailTemplate(int emailId)
+        public ActionResult EmailTemplate(int id)
         {
             var userId = User.Identity.GetUserId();
-            var invoice = _emailRepository.GetEmail(emailId, userId);
+            var email = _emailRepository.GetEmail(id, userId);
 
-            return View(invoice);
+            return View(email);
         }
     }
 }
