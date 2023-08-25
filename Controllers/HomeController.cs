@@ -1,14 +1,8 @@
-﻿using EmailManager.Models;
-using EmailManager.Models.Domains;
+﻿using EmailManager.Models.Domains;
 using EmailManager.Models.Repositories;
 using EmailManager.Models.ViewModels;
 using Microsoft.AspNet.Identity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Web;
 using System.Web.Mvc;
 using Attachment = EmailManager.Models.Domains.Attachment;
 

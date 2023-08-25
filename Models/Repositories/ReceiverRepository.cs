@@ -1,6 +1,5 @@
 ﻿using EmailManager.Models;
 using EmailManager.Models.Domains;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -57,9 +57,9 @@ namespace EmailManager.Controllers
             _mail.From = new MailAddress(_senderEmail, _senderName);
             _mail.To.Add(new MailAddress(email.Receiver.ReceiverData.EmailAddress));
 
-            var isReceiverCCExist = ReferenceEquals(email.ReceiverCC, null);
+            var isReceiverCCNotExist = ReferenceEquals(email.ReceiverCC, null);
 
-            if (isReceiverCCExist)
+            if (!isReceiverCCNotExist)
                 _mail.To.Add(new MailAddress(email.ReceiverCC.ReceiverData.EmailAddress));
 
             _mail.IsBodyHtml = true;
