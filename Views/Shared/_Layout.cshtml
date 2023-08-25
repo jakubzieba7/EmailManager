@@ -21,7 +21,7 @@
                     <li>@Html.ActionLink("O mnie", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Kontakt", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
-                 @Html.Partial("_LoginPartial")
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </nav>
@@ -36,6 +36,25 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
+
+
+    <div class="privacyPoliceInfo" style="display:none;">
+        Serwis wykorzystuje pliki cookies. Korzystając ze strony wyrażasz zgodę na wykorzystywanie plików cookies.
+        <button onclick="closePrivacyPolice()" type="button" class="btn btn-light btn-sm mx-3 my-1 privacyPoliceBtn">Ok, rozumiem</button>
+    </div>
+
+    <script>
+        function closePrivacyPolice() {
+            $('.privacyPoliceInfo').css("display", "none");
+            $.cookie("privacyPolicy", "1", { path: '/', expires: 365 });
+        }
+
+        $(document).ready(function () {
+            if ($.cookie("privacyPolicy") !== "1")
+                $('.privacyPoliceInfo').css("display", "");
+        });
+    </script>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>
