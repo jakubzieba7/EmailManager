@@ -31,15 +31,20 @@
             @Html.ValidationMessageFor(x => x.Email.AttachmentId)
         </div>*@
 
-    <button class="btn btn-primary btn-lg mt-5 mb-3" type="submit">Załącz do maila</button>
+    <button class="btn btn-primary btn-lg mt-5 mb-3" type="submit" disabled>Załącz do maila</button>
 }
 
 <button class="btn btn-secondary btn-lg mb-5" onclick='window.location.href="@Url.Action("Email","Home", new {id=Model.Attachment.EmailId})"'>Wróć</button>
 
 @section Scripts
 {
+    <script type="text/javascript">
 
+        jQuery('#attachment1').on('input propertychange paste', function () {
+            $('button').prop('disabled', false);
+        });
+
+    </script>
 }
-
 
 
