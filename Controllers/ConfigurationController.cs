@@ -18,5 +18,15 @@ namespace EmailManager.Controllers
         {
             return View();
         }
+
+        public ActionResult SenderPersonalDataInput()
+        {
+            return View();
+        }
+
+        public ActionResult SenderPersonalData() 
+        {
+            return View();
+        }
     }
 }

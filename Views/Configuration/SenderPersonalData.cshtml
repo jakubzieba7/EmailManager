@@ -1,0 +1,51 @@
+﻿@model IEnumerable<EmailManager.Models.Domains.SenderPersonalData>
+
+@{
+    ViewBag.Title = "Dane osobiste Nadawcy";
+}
+
+<h2>SenderPersonalDataInput</h2>
+
+
+<button class="btn btn-primary mb-3" onclick='window.location.href="@Url.Action("SenderPersonalData","Configuration")"'>Dodaj</button>
+
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-hover table-striped mt-3 mb-5">
+        <thead>
+            <tr>
+                <th scope="col">L.p.</th>
+                <th scope="col">Nadawca</th>
+                <th scope="col">Stanowisko PL</th>
+                <th scope="col">Stanowisko EN</th>
+                <th scope="col">Numer telefonu</th>
+                <th scope="col"></th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var sender in Model)
+            {
+                <tr>
+                    <td><a class="font-weight-bold" href="@Url.Action("SenderPersonalData","Configuration",new {id=sender.Id})">@sender.Id</a></td>
+                    <td>@sender.Name</td>
+                    <td>@sender.CompanyPositionPl</td>
+                    <td>@sender.CompanyPositionEn</td>
+                    <td>@sender.PhoneNumber</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" onclick="deleteSenderPersonalData('@sender.Id', this)">Usuń</button>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div>
+        Brak danych Nadawcy do wyświetlenia
+    </div>
+}
+
