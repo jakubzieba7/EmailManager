@@ -20,7 +20,7 @@ namespace EmailManager.Controllers
             return View();
         }
 
-        public ActionResult Main() 
+        public ActionResult Main()
         {
             return View();
         }
@@ -30,7 +30,7 @@ namespace EmailManager.Controllers
             return View();
         }
 
-        public ActionResult SenderPersonalDataIndex() 
+        public ActionResult SenderPersonalDataIndex()
         {
             var userId = User.Identity.GetUserId();
             var senders = _senderRepository.GetSenders(userId);
@@ -53,6 +53,7 @@ namespace EmailManager.Controllers
             return new EditSenderPersonalDataViewModel
             {
                 Heading = sender.Id == 0 ? "Nowy Nadawca" : "Nadawca",
+                SenderPersonaldata = sender
             };
         }
 
@@ -64,6 +65,26 @@ namespace EmailManager.Controllers
             };
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SenderPersonalData(SenderPersonalData sender)
+        {
+            var userId = User.Identity.GetUserId();
+            sender.UserId = userId;
+
+            if (!ModelState.IsValid)
+            {
+                var vm = PrepareSenderVm(sender, userId);
+                return View("SenderPersonaldata", vm);
+            }
+
+            if (sender.Id == 0)
+                _senderRepository.Add(sender);
+            else
+                _senderRepository.Update(sender);
+
+            return RedirectToAction("SenderPersonaldataIndex");
+        }
 
         [HttpPost]
         public ActionResult DeleteSenderPersonalData(int senderId)

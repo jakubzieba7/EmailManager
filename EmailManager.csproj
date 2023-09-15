@@ -527,6 +527,7 @@
     <Content Include="Views\Shared\_SystemExceptionError.cshtml" />
     <Content Include="Views\Configuration\Main.cshtml" />
     <Content Include="Views\Configuration\SenderPersonalDataIndex.cshtml" />
+    <Content Include="Views\Configuration\SenderPersonalData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
