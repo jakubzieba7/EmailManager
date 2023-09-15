@@ -4,10 +4,10 @@
     ViewBag.Title = "Dane osobiste Nadawcy";
 }
 
-<h2>SenderPersonalDataInput</h2>
+<h3>Dane osobiste Nadawcy</h3>
 
 
-<button class="btn btn-primary mb-3" onclick='window.location.href="@Url.Action("SenderPersonalData","Configuration")"'>Dodaj</button>
+<button class="btn btn-primary mt-3 mb-3" onclick='window.location.href="@Url.Action("SenderPersonalData","Configuration")"'>Dodaj</button>
 
 
 @if (Model != null && Model.Any())
@@ -16,7 +16,7 @@
         <thead>
             <tr>
                 <th scope="col">L.p.</th>
-                <th scope="col">Nadawca</th>
+                <th scope="col">Nazwa</th>
                 <th scope="col">Stanowisko PL</th>
                 <th scope="col">Stanowisko EN</th>
                 <th scope="col">Numer telefonu</th>
@@ -47,5 +47,44 @@ else
     <div>
         Brak danych Nadawcy do wyświetlenia
     </div>
+}
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+        function deleteSenderPersonalData(senderId, btn) {
+
+            if (!confirm("Czy na pewno chcesz usunąć Nadawcę?"))
+                return;
+
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("DeleteSenderPersonalData", "Configuration")",
+                data: {
+                    senderId: senderId
+                },
+                success: function (data)
+                {
+                    if (data.Success) {
+                        var row = btn.parentNode.parentNode;
+                        row.parentNode.removeChild(row);
+                    }
+                    else
+                    {
+                        alert(data.Message);
+                    }
+                },
+                error: function (data)
+                {
+                    alert(data.Message);
+                },
+                dataType:'json'
+
+                });
+        }
+
+    </script>
+
 }
 
