@@ -15,6 +15,38 @@ namespace EmailManager.Models.Repositories
             }
         }
 
+        public SenderPersonalData GetSenderPersonalData(int senderId, string userId)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                return context.SendersPersonalData.Single(x => x.UserId == userId && x.Id == senderId);
+            }
+        }
+
+        public void Add(SenderPersonalData sender)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                context.SendersPersonalData.Add(sender);
+                context.SaveChanges();
+            }
+        }
+
+        public void Update(SenderPersonalData sender)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var senderToUpdate = context.SendersPersonalData.Single(x => x.Id == sender.Id && x.UserId == sender.UserId);
+
+                senderToUpdate.Name = sender.Name;
+                senderToUpdate.CompanyPositionPl = sender.CompanyPositionPl;
+                senderToUpdate.CompanyPositionEn = sender.CompanyPositionEn;
+                senderToUpdate.PhoneNumber = sender.PhoneNumber;
+
+                context.SaveChanges();
+            }
+        }
+
         public void DeleteSenderPersonalData(int senderId, string userId)
         {
             using (var context = new ApplicationDbContext())

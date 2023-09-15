@@ -1,4 +1,6 @@
-﻿using EmailManager.Models.Repositories;
+﻿using EmailManager.Models.Domains;
+using EmailManager.Models.Repositories;
+using EmailManager.Models.ViewModels;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -28,7 +30,7 @@ namespace EmailManager.Controllers
             return View();
         }
 
-        public ActionResult SenderPersonalData() 
+        public ActionResult SenderPersonalDataIndex() 
         {
             var userId = User.Identity.GetUserId();
             var senders = _senderRepository.GetSenders(userId);
@@ -36,10 +38,35 @@ namespace EmailManager.Controllers
             return View(senders);
         }
 
+        public ActionResult SenderPersonalData(int id = 0)
+        {
+            var userId = User.Identity.GetUserId();
+            var sender = id == 0 ? GetNewSenderPersonalData(userId) : _senderRepository.GetSenderPersonalData(id, userId);
+
+            var vm = PrepareSenderVm(sender, userId);
+
+            return View(vm);
+        }
+
+        private object PrepareSenderVm(SenderPersonalData sender, string userId)
+        {
+            return new EditSenderPersonalDataViewModel
+            {
+                Heading = sender.Id == 0 ? "Nowy Nadawca" : "Nadawca",
+            };
+        }
+
+        private SenderPersonalData GetNewSenderPersonalData(string userId)
+        {
+            return new SenderPersonalData
+            {
+                UserId = userId
+            };
+        }
 
 
         [HttpPost]
-        public ActionResult DeleteEmail(int senderId)
+        public ActionResult DeleteSenderPersonalData(int senderId)
         {
             try
             {
