@@ -20,7 +20,7 @@ namespace EmailManager.Controllers
             return View();
         }
 
-        public ActionResult Main()
+        public ActionResult Main() 
         {
             return View();
         }
@@ -43,12 +43,12 @@ namespace EmailManager.Controllers
             var userId = User.Identity.GetUserId();
             var sender = id == 0 ? GetNewSenderPersonalData(userId) : _senderRepository.GetSenderPersonalData(id, userId);
 
-            var vm = PrepareSenderVm(sender, userId);
+            var vm = PrepareSenderVm(sender);
 
             return View(vm);
         }
 
-        private object PrepareSenderVm(SenderPersonalData sender, string userId)
+        private object PrepareSenderVm(SenderPersonalData sender)
         {
             return new EditSenderPersonalDataViewModel
             {
@@ -69,12 +69,9 @@ namespace EmailManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SenderPersonalData(SenderPersonalData sender)
         {
-            var userId = User.Identity.GetUserId();
-            sender.UserId = userId;
-
             if (!ModelState.IsValid)
             {
-                var vm = PrepareSenderVm(sender, userId);
+                var vm = PrepareSenderVm(sender);
                 return View("SenderPersonaldata", vm);
             }
 
