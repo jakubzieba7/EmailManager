@@ -13,6 +13,7 @@ namespace EmailManager.Controllers
     public class ConfigurationController : Controller
     {
         private SenderRepository _senderRepository = new SenderRepository();
+        private FooterRepository _footerRepository = new FooterRepository();
 
         // GET: Configuration
         public ActionResult Index()
@@ -21,11 +22,6 @@ namespace EmailManager.Controllers
         }
 
         public ActionResult Main() 
-        {
-            return View();
-        }
-
-        public ActionResult SenderPersonalDataInput()
         {
             return View();
         }
@@ -64,6 +60,47 @@ namespace EmailManager.Controllers
                 UserId = userId
             };
         }
+
+
+
+        public ActionResult FooterDataIndex()
+        {
+            var userId = User.Identity.GetUserId();
+            var footers = _footerRepository.GetFooters(userId);
+
+            return View(footers);
+        }
+
+        public ActionResult FooterData(int id = 0)
+        {
+            var userId = User.Identity.GetUserId();
+            var footer = id == 0 ? GetNewFooterData(userId) : _footerRepository.GetFooterData(id, userId);
+
+            var vm = PrepareFooterVm(footer);
+
+            return View(vm);
+        }
+
+        private object PrepareFooterVm(FooterData footer)
+        {
+            return new EditFooterDataViewModel
+            {
+                Heading = footer.Id == 0 ? "Nowa Stopka" : "Stopka",
+                FooterData = footer
+            };
+        }
+
+        private FooterData GetNewFooterData(string userId)
+        {
+            return new FooterData
+            {
+                UserId = userId
+            };
+        }
+
+
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
