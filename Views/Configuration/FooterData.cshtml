@@ -1,0 +1,47 @@
+﻿@model EmailManager.Models.ViewModels.EditFooterDataViewModel
+
+@{
+    ViewBag.Title = Model.Heading;
+}
+
+<h1>@Model.Heading</h1>
+
+<div class="row">
+    <div class="col-lg-6">
+        @using (Html.BeginForm("FooterData", "Configuration"))
+        {
+            @Html.AntiForgeryToken()
+
+            if (Model.FooterData.Id == 0)
+            {
+                <p class="alert alert-info mt-4 mb-4">Pola nazwa, stanowisko PL oraz numer telefonu są <strong>wymagane</strong></p>
+            }
+
+            @Html.HiddenFor(x => x.FooterData.Id)
+            @Html.HiddenFor(x => x.FooterData.UserId)
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.FooterData.ComplimentaryClose)
+                @Html.TextBoxFor(x => x.FooterData.ComplimentaryClose, new { @class = "form-control", autofocus = "autofocus" })
+                @Html.ValidationMessageFor(x => x.FooterData.ComplimentaryClose)
+            </div>
+
+            <div class="btn-lg mt-5">
+                <button class="btn btn-primary mb-5" type="submit">Zapisz</button>
+            </div>
+        }
+
+        <button class="btn btn-secondary btn-lg mb-5" onclick='window.location.href="@Url.Action("FooterDataIndex","Configuration")"'>Wróć</button>
+
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+
+    </script>
+
+}
+

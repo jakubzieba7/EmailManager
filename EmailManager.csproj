@@ -529,6 +529,8 @@
     <Content Include="Views\Configuration\Main.cshtml" />
     <Content Include="Views\Configuration\SenderPersonalDataIndex.cshtml" />
     <Content Include="Views\Configuration\SenderPersonalData.cshtml" />
+    <Content Include="Views\Configuration\FooterDataIndex.cshtml" />
+    <Content Include="Views\Configuration\FooterData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

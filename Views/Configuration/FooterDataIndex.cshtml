@@ -1,0 +1,44 @@
+﻿@model IEnumerable<EmailManager.Models.Domains.FooterData>
+
+@{
+    ViewBag.Title = "Stopka";
+}
+
+<h3>Stopka</h3>
+
+
+<button class="btn btn-primary mt-3 mb-3" onclick='window.location.href="@Url.Action("FooterData","Configuration")"'>Dodaj</button>
+
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-hover table-striped mt-3 mb-5">
+        <thead>
+            <tr>
+                <th scope="col">L.p.</th>
+                <th scope="col">Tekst stopki</th>
+                <th scope="col"></th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var footer in Model)
+            {
+                <tr>
+                    <td><a class="font-weight-bold" href="@Url.Action("FooterData","Configuration",new {id=footer.Id})">@footer.Id</a></td>
+                    <td>@footer.ComplimentaryClose</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" onclick="deleteFooterData('@footer.Id', this)">Usuń</button>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div>
+        Brak danych Stopki do wyświetlenia
+    </div>
+}
