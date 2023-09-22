@@ -532,6 +532,8 @@
     <Content Include="Views\Configuration\SenderPersonalData.cshtml" />
     <Content Include="Views\Configuration\FooterDataIndex.cshtml" />
     <Content Include="Views\Configuration\FooterData.cshtml" />
+    <Content Include="Views\Configuration\ReceiverDataIndex.cshtml" />
+    <Content Include="Views\Configuration\ReceiverData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<EmailManager.Models.Domains.ReceiverData>
+
+@{
+    ViewBag.Title = "Dane Odbiorcy";
+}
+
+<h3>Stopka</h3>
+
+
+<button class="btn btn-primary mt-3 mb-3" onclick='window.location.href="@Url.Action("ReceiverData","Configuration")"'>Dodaj</button>
+
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-hover table-striped mt-3 mb-5">
+        <thead>
+            <tr>
+                <th scope="col">L.p.</th>
+                <th scope="col">Nazwa</th>
+                <th scope="col">Adres email</th>
+                <th scope="col"></th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var receiver in Model)
+            {
+                <tr>
+                    <td><a class="font-weight-bold" href="@Url.Action("FooterData","Configuration",new {id=receiver.Id})">@receiver.Id</a></td>
+                    <td>@receiver.Name</td>
+                    <td>@receiver.EmailAddress</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" onclick="deleteFooterData('@receiver.Id', this)">Usuń</button>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div>
+        Brak danych Odbiorcy do wyświetlenia
+    </div>
+}
