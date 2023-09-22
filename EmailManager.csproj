@@ -324,6 +324,7 @@
     <Compile Include="Models\ViewModels\EditEmailAttachmentViewModel.cs" />
     <Compile Include="Models\ViewModels\EditEmailViewModel.cs" />
     <Compile Include="Models\ViewModels\EditFooterDataViewModel.cs" />
+    <Compile Include="Models\ViewModels\EditReceiverDataViewModel.cs" />
     <Compile Include="Models\ViewModels\EditSenderPersonalDataViewModel.cs" />
     <Compile Include="Models\ViewModels\FactorViewModel.cs" />
     <Compile Include="Models\ViewModels\ForgotPasswordViewModel.cs" />

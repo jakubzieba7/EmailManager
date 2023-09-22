@@ -14,6 +14,7 @@ namespace EmailManager.Controllers
     {
         private SenderRepository _senderRepository = new SenderRepository();
         private FooterRepository _footerRepository = new FooterRepository();
+        private ReceiverRepository _receiverRepository = new ReceiverRepository();
 
         // GET: Configuration
         public ActionResult Index()
@@ -98,7 +99,40 @@ namespace EmailManager.Controllers
             };
         }
 
+        public ActionResult ReceiverDataIndex()
+        {
+            var userId = User.Identity.GetUserId();
+            var receivers = _receiverRepository.GetReceivers(userId);
 
+            return View(receivers);
+        }
+
+        public ActionResult ReceiverData(int id = 0)
+        {
+            var userId = User.Identity.GetUserId();
+            var receiver = id == 0 ? GetNewReceiverData(userId) : _receiverRepository.GetReceiverData(id, userId);
+
+            var vm = PrepareReceiverVm(receiver);
+
+            return View(vm);
+        }
+
+        private object PrepareReceiverVm(ReceiverData receiver)
+        {
+            return new EditReceiverDataViewModel
+            {
+                Heading = receiver.Id == 0 ? "Nowe dane Odbiorcy" : "Odbiorca",
+                ReceiverData = receiver
+            };
+        }
+
+        private ReceiverData GetNewReceiverData(string userId)
+        {
+            return new ReceiverData
+            {
+                UserId = userId
+            };
+        }
 
 
 
