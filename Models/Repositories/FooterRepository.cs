@@ -22,5 +22,16 @@ namespace EmailManager.Models.Repositories
                 return context.FooterDatas.Single(x => x.UserId == userId && x.Id == footerId);
             }
         }
+
+        public void DeleteFooterData(int footerId, string userId)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var footerToDelete = context.FooterDatas.Single(x => x.Id == footerId && x.UserId == userId);
+
+                context.FooterDatas.Remove(footerToDelete);
+                context.SaveChanges();
+            }
+        }
     }
 }

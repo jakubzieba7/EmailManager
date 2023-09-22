@@ -136,5 +136,22 @@ namespace EmailManager.Controllers
 
             return Json(new { Success = true });
         }
+
+        [HttpPost]
+        public ActionResult DeleteFooterData(int footerId)
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                _footerRepository.DeleteFooterData(footerId, userId);
+            }
+            catch (Exception exception)
+            {
+                //logowanie do pliku
+                return Json(new { Success = false, Message = exception.Message });
+            }
+
+            return Json(new { Success = true });
+        }
     }
 }

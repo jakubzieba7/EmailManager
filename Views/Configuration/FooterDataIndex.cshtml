@@ -42,3 +42,42 @@ else
         Brak danych Stopki do wyświetlenia
     </div>
 }
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+        function deleteFooterData(footerId, btn) {
+
+            if (!confirm("Czy na pewno chcesz usunąć Stopkę?"))
+                return;
+
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("DeleteFooterData", "Configuration")",
+                data: {
+                    footerId: footerId
+                },
+                success: function (data)
+                {
+                    if (data.Success) {
+                        var row = btn.parentNode.parentNode;
+                        row.parentNode.removeChild(row);
+                    }
+                    else
+                    {
+                        alert(data.Message);
+                    }
+                },
+                error: function (data)
+                {
+                    alert(data.Message);
+                },
+                dataType:'json'
+
+                });
+        }
+
+    </script>
+
+}
