@@ -35,7 +35,7 @@ namespace EmailManager.Controllers
             return View(vm);
         }
 
-        private object PrepareEmailVm(Email email, string userId)
+        private EditEmailViewModel PrepareEmailVm(Email email, string userId)
         {
             return new EditEmailViewModel
             {

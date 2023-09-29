@@ -22,7 +22,7 @@ namespace EmailManager.Controllers
             return View();
         }
 
-        public ActionResult Main() 
+        public ActionResult Main()
         {
             return View();
         }
@@ -45,12 +45,12 @@ namespace EmailManager.Controllers
             return View(vm);
         }
 
-        private object PrepareSenderVm(SenderPersonalData sender)
+        private EditSenderPersonalDataViewModel PrepareSenderVm(SenderPersonalData sender)
         {
             return new EditSenderPersonalDataViewModel
             {
                 Heading = sender.Id == 0 ? "Nowy Nadawca" : "Nadawca",
-                SenderPersonaldata = sender
+                SenderPersonaldata = sender,
             };
         }
 
@@ -82,7 +82,7 @@ namespace EmailManager.Controllers
             return View(vm);
         }
 
-        private object PrepareFooterVm(FooterData footer)
+        private EditFooterDataViewModel PrepareFooterVm(FooterData footer)
         {
             return new EditFooterDataViewModel
             {
@@ -117,7 +117,7 @@ namespace EmailManager.Controllers
             return View(vm);
         }
 
-        private object PrepareReceiverVm(ReceiverData receiver)
+        private EditReceiverDataViewModel PrepareReceiverVm(ReceiverData receiver)
         {
             return new EditReceiverDataViewModel
             {
@@ -140,6 +140,9 @@ namespace EmailManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SenderPersonalData(SenderPersonalData sender)
         {
+            var userId = User.Identity.GetUserId();
+            sender.UserId = userId;
+
             if (!ModelState.IsValid)
             {
                 var vm = PrepareSenderVm(sender);
@@ -152,6 +155,28 @@ namespace EmailManager.Controllers
                 _senderRepository.Update(sender);
 
             return RedirectToAction("SenderPersonaldataIndex");
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult FooterData(FooterData footer)
+        {
+            var userId = User.Identity.GetUserId();
+            footer.UserId = userId;
+
+            if (!ModelState.IsValid)
+            {
+                var vm = PrepareFooterVm(footer);
+                return View("FooterData", vm);
+            }
+
+            if (footer.Id == 0)
+                _footerRepository.Add(footer);
+            else
+                _footerRepository.Update(footer);
+
+            return RedirectToAction("FooterDataIndex");
         }
 
         [HttpPost]

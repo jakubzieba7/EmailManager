@@ -45,9 +45,8 @@
                 @Html.ValidationMessageFor(x => x.SenderPersonaldata.PhoneNumber)
             </div>
 
-            <div class="btn-lg mt-5">
-                <button class="btn btn-primary mb-5" type="submit">Zapisz</button>
-            </div>
+            <button class="btn btn-primary btn-lg mt-5 mb-5" type="submit">Zapisz</button>
+
         }
 
         <button class="btn btn-secondary btn-lg mb-5" onclick='window.location.href="@Url.Action("SenderPersonalDataIndex","Configuration")"'>Wróć</button>
