@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace EmailManager.Controllers
 {
+    [Authorize]
     public class ConfigurationController : Controller
     {
         private SenderRepository _senderRepository = new SenderRepository();
@@ -143,6 +144,8 @@ namespace EmailManager.Controllers
             var userId = User.Identity.GetUserId();
             sender.UserId = userId;
 
+            ModelState.Remove("sender.UserId");
+
             if (!ModelState.IsValid)
             {
                 var vm = PrepareSenderVm(sender);
@@ -164,6 +167,8 @@ namespace EmailManager.Controllers
         {
             var userId = User.Identity.GetUserId();
             footer.UserId = userId;
+
+            ModelState.Remove("footer.UserId");
 
             if (!ModelState.IsValid)
             {

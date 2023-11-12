@@ -16,6 +16,7 @@ using System.Collections.Generic;
 
 namespace EmailManager.Controllers
 {
+    [Authorize]
     public class EmailSendingController : Controller
     {
         private EmailRepository _emailRepository = new EmailRepository();
