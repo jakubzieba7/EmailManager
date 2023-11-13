@@ -135,27 +135,48 @@ namespace EmailManager.Controllers
             };
         }
 
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SenderPersonalData(SenderPersonalData sender)
+        public ActionResult ReceiverData(ReceiverData receiverData)
         {
             var userId = User.Identity.GetUserId();
-            sender.UserId = userId;
+            receiverData.UserId = userId;
 
-            ModelState.Remove("sender.UserId");
+            ModelState.Remove("receiverData.UserId");
 
             if (!ModelState.IsValid)
             {
-                var vm = PrepareSenderVm(sender);
+                var vm = PrepareReceiverVm(receiverData);
+                return View("ReceiverData", vm);
+            }
+
+            if (receiverData.Id == 0)
+                _receiverRepository.Add(receiverData);
+            else
+                _receiverRepository.Update(receiverData);
+
+            return RedirectToAction("ReceiverDataIndex");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SenderPersonalData(SenderPersonalData senderPersonalData)
+        {
+            var userId = User.Identity.GetUserId();
+            senderPersonalData.UserId = userId;
+
+            ModelState.Remove("senderPersonalData.UserId");
+
+            if (!ModelState.IsValid)
+            {
+                var vm = PrepareSenderVm(senderPersonalData);
                 return View("SenderPersonaldata", vm);
             }
 
-            if (sender.Id == 0)
-                _senderRepository.Add(sender);
+            if (senderPersonalData.Id == 0)
+                _senderRepository.Add(senderPersonalData);
             else
-                _senderRepository.Update(sender);
+                _senderRepository.Update(senderPersonalData);
 
             return RedirectToAction("SenderPersonaldataIndex");
         }
@@ -163,23 +184,23 @@ namespace EmailManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult FooterData(FooterData footer)
+        public ActionResult FooterData(FooterData footerData)
         {
             var userId = User.Identity.GetUserId();
-            footer.UserId = userId;
+            footerData.UserId = userId;
 
-            ModelState.Remove("footer.UserId");
+            ModelState.Remove("footerData.UserId");
 
             if (!ModelState.IsValid)
             {
-                var vm = PrepareFooterVm(footer);
+                var vm = PrepareFooterVm(footerData);
                 return View("FooterData", vm);
             }
 
-            if (footer.Id == 0)
-                _footerRepository.Add(footer);
+            if (footerData.Id == 0)
+                _footerRepository.Add(footerData);
             else
-                _footerRepository.Update(footer);
+                _footerRepository.Update(footerData);
 
             return RedirectToAction("FooterDataIndex");
         }
@@ -208,6 +229,23 @@ namespace EmailManager.Controllers
             {
                 var userId = User.Identity.GetUserId();
                 _footerRepository.DeleteFooterData(footerId, userId);
+            }
+            catch (Exception exception)
+            {
+                //logowanie do pliku
+                return Json(new { Success = false, Message = exception.Message });
+            }
+
+            return Json(new { Success = true });
+        }
+
+        [HttpPost]
+        public ActionResult DeleteReceiverData(int receiverId)
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                _receiverRepository.DeleteReceiverData(receiverId, userId);
             }
             catch (Exception exception)
             {

@@ -1,17 +1,17 @@
 ﻿@model IEnumerable<EmailManager.Models.Domains.ReceiverData>
 
-@{
+    @{
     ViewBag.Title = "Dane Odbiorcy";
-}
+    }
 
-<h3>Stopka</h3>
-
-
-<button class="btn btn-primary mt-3 mb-3" onclick='window.location.href="@Url.Action("ReceiverData","Configuration")"'>Dodaj</button>
+    <h3>Dane Adresata</h3>
 
 
-@if (Model != null && Model.Any())
-{
+    <button class="btn btn-primary mt-3 mb-3" onclick='window.location.href="@Url.Action("ReceiverData","Configuration")"'>Dodaj</button>
+
+
+    @if (Model != null && Model.Any())
+    {
     <table class="table table-hover table-striped mt-3 mb-5">
         <thead>
             <tr>
@@ -25,22 +25,61 @@
         <tbody>
             @foreach (var receiver in Model)
             {
-                <tr>
-                    <td><a class="font-weight-bold" href="@Url.Action("FooterData","Configuration",new {id=receiver.Id})">@receiver.Id</a></td>
-                    <td>@receiver.Name</td>
-                    <td>@receiver.EmailAddress</td>
-                    <td>
-                        <button class="btn btn-danger btn-sm" onclick="deleteFooterData('@receiver.Id', this)">Usuń</button>
-                    </td>
-                </tr>
+            <tr>
+                <td><a class="font-weight-bold" href="@Url.Action(" ReceiverData","Configuration",new {id=receiver.Id})">@receiver.Id</a></td>
+                <td>@receiver.Name</td>
+                <td>@receiver.EmailAddress</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" onclick="deleteReceiverData('@receiver.Id', this)">Usuń</button>
+                </td>
+            </tr>
 
             }
         </tbody>
     </table>
-}
-else
-{
+    }
+    else
+    {
     <div>
         Brak danych Odbiorcy do wyświetlenia
     </div>
-}
+    }
+
+    @section Scripts
+    {
+    <script type="text/javascript">
+
+        function deleteReceiverData(receiverId, btn) {
+
+            if (!confirm("Czy na pewno chcesz usunąć dane Adresata?"))
+                return;
+
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("DeleteReceiverData", "Configuration")",
+                data: {
+                    receiverId: receiverId
+                },
+                success: function (data)
+                {
+                    if (data.Success) {
+                        var row = btn.parentNode.parentNode;
+                        row.parentNode.removeChild(row);
+                    }
+                    else
+                    {
+                        alert(data.Message);
+                    }
+                },
+                error: function (data)
+                {
+                    alert(data.Message);
+                },
+                dataType:'json'
+
+                });
+        }
+
+    </script>
+
+    }
